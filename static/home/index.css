@@ -1,0 +1,800 @@
+/* ========================================================================== #
+#                           Junior School and College
+#                    A School Management System with FLASK
+#   
+#       Create by some intelligent programmer
+#       Full CRUD facility
+#   
+#       Github: https://github.com/hacker-tesla/Junior_School_and_College
+# ========================================================================== */
+
+/*-----------------------------------------------------------------
+    # This section will help you to find specific section 
+
+    1: Slider section
+        1.0: Navigation menu
+        1.1: Text section
+            1.1.0: Green highlight text
+            1.1.1: Styling iqra junior school name
+            1.1.2: know more blue button
+
+    2: Principal section
+        2.0: Resize image of principal
+        2.1: Styling text of principal speech
+
+    3: Event and Notice section
+        3.1: Event section
+            3.1.0: All indivisial events beautify
+            3.1.1: Make shadow on events hover
+            3.1.2: Resizing events image
+
+        3.2: Notice section
+            3.2.0: Make all notice inline with flexbox
+                3.2.0.0: Align right-top notice date with blue background
+                3.2.0.1: Styling text of notice section
+                3.2.0.2: Resize image of notice section
+    
+    4: What parents say about us
+        4.0: First Parents
+
+    5: Admission fair
+        5.0: Admission fair text
+        5.1: Using flexbox for two section
+        5.2: Styling admission and contact class header
+
+    6: Footer section
+        6.0: School name in footer 
+        6.1: Contact section
+        6.2: Quick link section
+        6.3: Follow us section
+        6.4: Copyright section
+            6.4.0: Developer profile link
+    
+-----------------------------------------------------------------------*/
+
+
+
+
+*{
+    margin: 0px;
+    padding: 0px;
+}
+
+
+
+/*Intializing color variable*/
+
+:root{
+
+    /*  color section   */
+    --green-highlight-text: #27ae60;
+    --green-admission-bgcolor: #09e665;
+    --button-blue: #009ddc;
+    --text-white: #fff;
+    --principal-background: #f7f7f7;
+    --default-font-color: #81878c;
+    --black-color: #000;
+    --footer-link-color: #e0d2d2;
+    --footer-email-color: #2bbde8;
+
+    
+    /* font section */
+    --default-font: arial, sans-serif;
+
+    --meet-star-size: 12px;
+    --meet-principal-size: 30px;
+    --principle-name-size: 15px;
+    --event-time: 20px;
+    --admission-fair-size: 5rem;
+    --footer-school-name-size: 3rem;
+
+    --small-font-weight: 800;
+    --large-font-weight: 1000;
+
+    --principal-name-height: 5;
+    --meet-principal-height: 2.1;
+    --pricipal-speech-height: 1.8;
+}
+
+
+
+body{
+    display: block;
+    box-sizing: border-box;
+    color: var(--default-font-color, #81878c);
+
+    overflow-x: hidden;
+
+    font-family: var(--default-font, arial);
+}
+
+
+
+
+
+
+
+
+/*========== 1: slider section ==========*/
+
+.slider-section{
+    height: 100vh;
+
+    background: url('./slide1.jpg');      /*  slider image in this current directory  */
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+    /*----- 1.0: Navigation Menu -----*/
+    nav{
+        color: var(--text-white, #fff);
+
+        display: flex;
+        justify-content: space-between;
+        z-index: 100;
+    }
+
+    nav > div{
+        margin: 2%;
+    }
+
+        nav .navbar{
+            display: flex;
+            justify-content: space-around;
+        }
+
+        nav .navbar a{
+            font-style: normal;
+            text-decoration: none;
+            color: #fff;
+        }
+        
+        nav .navbar > div{
+            margin: auto 10px;
+            outline: none;
+            font-weight: bold;
+            font-size: var(--principle-name-size, 15px);
+        }
+
+        nav .navbar > div a{
+            border-top: transparent;
+            padding-top: 5px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        nav .navbar > div:hover a,
+        nav .navbar > div:focus a{
+            border-top: 2px solid var(--button-blue, #009ddc);
+            color: var(--button-blue, #009ddc);
+        }
+
+    /*----- End of Navigation Menu -----*/
+
+    /*----- 1.1: Text Section -----*/
+        .text-section{
+            text-align: center;
+            padding-top: 10%;
+            
+            color: var(--text-white, #fff);
+        }
+
+            .text-section h1{
+                font-weight: var(--small-font-weight, 1000);
+                font-size: 3rem;
+            }
+
+            /* 1.1.0: green highlight text */
+            .text-section .green-text{
+                color: var(--green-highlight-text, #27ae60);
+            }
+
+            .text-section h2{
+                font-weight: var(--small-font-weight, 800);
+            }
+
+            .text-section h4{
+                font-size: 1rem;
+            }
+            
+            /* 1.1.1: Styling Iqra Junior School Name */
+            .text-section .iqra{
+                font-weight: 1000;
+                font-size: 1.1rem;
+            }
+            
+
+            /* 1.1.2: know more blue button */
+            .text-section button{
+                margin-top: 5rem;
+                border: 2px solid transparent;
+                border-radius: 20px;
+                padding: 10px 50px;
+                font-size: 20px;
+                font-weight: 1000;
+                background-color: var(--button-blue, #009ddc);
+                color: var(--text-white, #fff);
+                transition: all ease-in-out 0.3s;
+            }
+
+            .text-section button:hover,
+            .text-section button:focus{
+                background: transparent;
+                border: 2px solid var(--text-white, #fff);
+                font-size: 19px;
+                border-radius: 0;
+                outline: none;
+            }
+
+
+
+
+
+
+
+
+
+/*========== 2: principal section ==========*/
+.principal-section{
+    height: 100vh;
+    padding: 3rem;
+    padding-bottom: 0px;
+
+    background-color: var(--principal-background, #f7f7f7);
+
+    display: flex;
+    justify-content: space-around;
+}
+
+    /*  2.0: resize image of principal   */
+    .principal-section .principal-img{
+        height: 450px;
+        width: 350px;
+    }
+
+    /* 2.1: styling text of principal speech */
+    .principal-section .principal-speech{
+        padding: 0 2rem;
+    }
+
+        .principal-speech h3{
+            font-weight: var(--small-font-weight, 800);
+            font-size: var(--meet-star-size, 12px);
+            line-height: var(--meet-principal-height, 2.1);
+        }
+
+        .principal-speech h1{
+            font-size: var(--meet-principal-size, 30px);
+            font-weight: var(--small-font-weight, 800);
+            color: var(--green-highlight-text, #27ae60);
+            line-height: var(--meet-principal-height, 2.1);
+        }
+
+        .principal-speech p{
+            line-height: var(--pricipal-speech-height, 1.8);
+            text-align: justify;
+
+        }
+
+        .principal-speech .principal-name{
+            font-size: var(--principal-name-size, 15px);
+            font-weight: var(--small-font-weight, 800);
+            line-height: var(--principal-name-height, 5);
+        }
+
+        .principal-speech button{
+            border: 2px solid var(--green-highlight-text ,#27ae60);
+            border-radius: 20px;
+            padding: 10px 50px;
+            font-size: 20px;
+            font-weight: 1000;
+            background-color: transparent;
+            color: var(--green-highlight-text, #27ae60);
+            transition: all ease-in-out 0.6s;
+        }
+
+        .principal-speech button:hover,
+        .principal-speech button:focus{
+            color: var(--text-white, #fff);
+            background: var(--button-blue,#009ddc);
+            border: 2px solid var(--text-white, #fff);
+            outline: none;
+        }
+
+
+
+
+
+
+
+
+
+
+/*========== 3: event and notice section ==========*/
+.event-notice{
+    padding: 1rem;
+}  
+
+
+    /*----------   3.1: Event section   ----------*/
+
+    /* title of event and notice section. Both section apply this css rule */
+    .event-notice .title{
+        text-align: center;
+    }
+
+        .event-notice .title h1{
+            margin-top: 5rem;
+            margin-bottom: 2rem;
+            font-weight: var(--large-font-weight, 1000);
+            font-size: var(--events-size, 3.5rem);
+            color: var(--green-highlight-text, #27ae60);
+        }
+
+        .event-notice .title .events-button a{
+            text-decoration: none;
+            color: var(--green-highlight-text, #27ae60)
+        }
+
+        .event-notice .title .events-button{
+            display: flex;
+            justify-content: space-evenly;
+        }
+
+        .event-notice .title .events-button div{
+            cursor: pointer;
+            margin-top: 1.5rem;
+            padding: 10px 30px;
+            background-color: transparent;
+            color: var(--green-highlight-text, #27ae60);
+            font-weight: 800;
+            border: 2px solid var(--green-highlight-text, #27ae60);
+            background-color: transparent;
+            transition: all ease-in-out 0.3s;
+        }
+
+        .event-notice .title .events-button div:hover,
+        .event-notice .title .events-button div:focus{
+            border-radius: 15px;
+            border: 2px solid var(--button-blue, #009ddc);
+
+            background-color: var(--button-blue, #009ddc);
+            color: var(--text-white, #fff);
+            outline: none;
+        }
+        
+           
+        .event-notice .title .events-button div:hover a,
+        .event-notice .title .events-button div:focus a{
+            color: var(--text-white, #fff);
+        }
+        
+
+        
+
+        
+
+
+    
+    /*  3.1.0: all indivisial events beautify  */
+    .events > div {
+        display: flex;
+        justify-content: space-evenly;
+
+        padding: 10px;
+        margin-top: 30px;
+        margin-left: 50px;
+        margin-right: 30px;
+        box-shadow: 0 0 10px 0px rgba(0, 0, 0, 0.4);
+        transition: all 0.4s ease-in-out;
+    }
+
+
+    /* 3.1.1: make shadow on events hover */
+    .events > div:hover,
+    .events > div:focus{
+        box-shadow: 5px 5px 50px 0px rgba(91, 105, 105, 0.527),
+                    -5px -5px 50px 0px rgba(91, 105, 105, 0.527);
+        transition: all ease-in-out 0.2s;
+        outline: none;
+    }
+
+    .events .text-content h2{ 
+        color: var(--green-highlight-text, #27ae60);
+        font-size: var(--event-time, 20px);
+        font-weight: var(--small-font-weight, 800);
+    }
+
+    .events .text-content .date{
+        font-weight: var(--small-font-weight, 1000);
+        font-size: 30px;
+    }
+
+    .events .text-content h1{
+        color: var(--black-color, #000);
+        line-height: var(--meet-principal-height, 2.1);
+    }
+
+    .events .text-content p{
+        padding-right: 20px;
+        padding-left: 20px;
+        text-align: justify;
+    }
+
+    .events .text-content button{
+        margin: 20px 20px;
+        border: 2px solid #27ae60;
+        border-radius: 50px;
+        padding: 5px 20px;
+        font-size: var(--principle-name-size, 20px);
+        font-weight: 1000;
+        background-color: transparent;
+        color: var(--green-highlight-text, #27ae60);
+        transition: all ease-in-out 0.6s;
+    }
+
+    .events .text-content button:hover,
+    .events .text-content button:focus{
+        padding: 5px 40px;
+        background-color: var(--green-highlight-text, #27ae60);
+        color: var(--text-white, #fff);
+        outline: none;
+    }
+        /* 3.1.2: resizing events image */
+        .events div img{
+            height: 280px;
+            width: 390px;
+        }
+
+
+
+    
+    /* ----------   3.2: notice section    ---------- */
+
+    .notice-section{
+        height: 100vh;
+        background-color: var(--principal-background, #f7f7f7);
+    }
+
+    .event-notice .notice-heading h1{
+        margin-top: 5rem;
+        margin-bottom: 2rem;
+    }
+
+    /* 3.2.0: make all notice inline with flexbox */
+    .event-notice .notice{
+        text-align: center;
+        display: flex;
+        justify-content: space-evenly;
+    }
+
+        .event-notice .notice > div{
+            margin-right: 15px;
+            margin-left: 15px;
+            box-shadow: 0 0 7px 0px rgba(0, 0, 0, 0.4);
+            transition: all 0.4s ease-in-out;
+            
+            position: relative;
+        }
+
+        .event-notice .notice > div:hover,
+        .event-notice .notice > div:focus{
+             box-shadow: 5px 5px 50px 0px rgba(91, 105, 105, 0.527),
+                        -5px -5px 50px 0px rgba(91, 105, 105, 0.527);
+        }
+
+        /* 3.2.0.0: align right-top notice date with blue background */ 
+        .event-notice .notice .notice-date{
+            text-align: right;
+            padding: 10px 15px;
+            position: absolute;
+            top: 0px;
+            right: 0px;
+
+            background-color: var(--button-blue, #009ddc);
+            color: var(--text-white, #fff);
+        }
+
+
+        /* 3.2.0.1: styling text of notice section */
+        .event-notice .notice .notice-text{
+            padding:15px 30px 30px;
+            font-size: 1rem;
+        }
+
+        .event-notice .notice .notice-text h2{
+            text-align: left;
+            padding: 10px 0px 10px 10px;
+            color: var(--black-color, #000);
+        }
+
+        .event-notice .notice .notice-text p{
+            text-align: justify;
+            margin: 15px 0 20px;
+            line-height: 2;
+
+            color: var(--default-font-color, #81878c);
+        }
+
+        .event-notice .notice .notice-text button{
+            padding: 10px 15px;
+            font-size: 13px;
+            font-weight: var(--small-font-weight, 800);
+            color: var(--green-highlight-text, #27ae60);
+            background-color: transparent;
+            border: 2px solid var(--green-highlight-text, #27ae60);
+            transition: all ease-in-out 0.3s;
+        }
+
+        .event-notice .notice .notice-text button:hover,
+        .event-notice .notice .notice-text button:focus{
+            font-weight: 1000;
+            padding: 10px 30px;
+            background-color: var(--green-highlight-text, #27ae60);
+            color: var(--text-white, #fff);
+            outline: none;
+        }
+
+        /* 3.2.0.2: resize image of notice section */
+        .event-notice .notice div > img{
+            height: 180px;
+            width: 100%;
+        }
+
+
+
+
+
+
+
+
+
+
+
+/*========== 4: what parents say about us ==========*/
+
+.parents-speech{
+    height: 100vh;
+    background: linear-gradient(rgba(12, 40, 45, 0.72), rgba(12, 40, 45, 0.72)), 
+                url(./parents.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+
+    text-align: center;
+    padding: 2%;
+}
+
+.parents-speech .parents-title{
+    color: var(--text-white, #fff);
+    margin-top: 2rem;
+    font-size: 1.7rem;
+}
+
+
+    /* ----------   4.0: First parents  ---------- */
+
+    .parents-speech .first-parents{
+        margin: 13% 20%;
+        padding: 2% 5%;
+        text-align: justify;
+        background-color: rgba(31, 115, 110, 0.35);
+    }
+
+    .parents-speech .first-parents h1{
+        padding-bottom: 10px;
+        text-align: center;
+        font-size: 2rem;
+        color: rgb(255, 255, 255);
+    }
+
+    .parents-speech .first-parents p{
+        color: rgba(211, 222, 224, 0.83);
+        font-weight: bold;
+        font-size: 1.2rem;
+    }
+
+
+
+
+
+
+
+
+
+/*========== 5: Admission fair ==========*/
+.admission-fair{
+    color: var(--text-white, #fff);
+    background-color: var(--green-admission-bgcolor, #09e665);
+
+    text-align: center;
+    height: 50vh;
+
+    padding: 2%;
+}
+
+    /* 5.0: admission fair text */
+    .admission-fair h1{
+        font-size: var(--admission-fair-size, 5rem);
+    }
+
+    /* 5.1: using flexbox for two section */
+    .admission-fair .admission-contact{
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        padding-top: 5%;
+    }
+
+    .admission-fair .admission-contact .admission,
+    .admission-fair .admission-contact .contact{
+        flex: 1;
+    }
+
+    /* 5.2: styling admission and contact class header */
+    .admission-fair .admission-contact h3{
+        font-size: var(--meet-principal-size, 30px);
+    }
+
+    .admission-fair .admission-contact p{
+        font-size: 1.4rem;
+    }
+
+
+
+
+
+
+
+
+
+
+
+/*========== 6: Foote section ==========*/
+    
+footer{
+    height: 100vh;
+    background: linear-gradient( rgba(0, 0, 0, 0.705), rgba(0, 0, 0, 0.705) ),
+                url(./footer.jpg);
+
+}
+
+    /* 6.0: school name in footer */
+    footer h1{
+        text-align: center;
+        padding-top: 2%;
+        font-size: var(--footer-school-name-size, 3rem);
+    }
+
+    footer .three-column{
+        margin: 5% 2%;
+        text-align: center;
+
+        display: flex;
+        justify-content: space-between;
+    }
+
+    footer .three-column div{
+        flex: 1;
+    }
+    
+    /* ---------- 6.1: contact section ---------- */
+
+    /* beautify title name and Location address */
+    .location h3,
+    .follow-us h3,
+    .quick-link h3{
+        color: var(--green-highlight-text, #27ae60);
+        margin-bottom: 5%;
+        font-size: var(--meet-principal-size, 30px);
+        font-weight: bold;
+    }
+
+    .location p{
+        font-size: 20px;
+        font-weight: var(--small-font-weight, 800);
+        color: var(--footer-link-color, #e0d2d2);
+    }
+
+    /* 6.1.0: school time */
+    .contact .school-time p{
+        margin-top: 25%;
+        margin-bottom: 5%;
+        font-size: var(--meet-principal-size, 30px);
+        font-weight: bold;
+        color: var(--button-blue, #009ddc);
+    }
+    
+        .school-time span{
+            line-height: var(--pricipal-speech-height, 1.8);
+            font-size: 20px;
+            font-weight: var(--small-font-weight, 800);
+            color: var(--footer-link-color, #e0d2d2);
+        }
+
+
+    
+    
+
+    
+
+    /* ---------- 6.2: quick link section ---------- */
+    
+    .quick-link div{
+        margin-top: 5%;
+    }
+
+    .quick-link div a:focus,
+    .quick-link div a:hover{
+        color:  #6fe6aa;
+        outline: none;
+    }
+
+    .quick-link div a{
+        text-decoration: none;
+        color: var(--footer-link-color, #e0d2d2);
+        font-weight: var(--small-font-weight, 800);
+    }
+
+
+    
+    
+
+    
+
+    /* ---------- 6.3: follow us section ---------- */
+    
+    .follow-us div{
+        margin-top: 5%;
+    }
+
+    .follow-us div a{
+        text-decoration: none;
+        color: var(--footer-link-color, #e0d2d2);
+        font-weight: var(--small-font-weight, 800);
+    }
+
+    .follow-us div a:focus,
+    .follow-us div a:hover{
+        color:  #6fe6aa;
+        outline: none;
+    }
+
+    .follow-us .e-mail a{
+        color: var(--footer-email-color, #2bbde8);
+    }
+
+
+    
+    
+
+    
+
+    /* ---------- 6.4: copyright section ---------- */
+    
+    .copyright-container{
+        display: flex;
+        justify-content: space-evenly;
+
+        margin: auto 2%;
+    }
+
+    .copyright-container div p{
+        text-align: center;
+        line-height: var(--meet-principal-height, 2.1);
+        font-weight: bold;
+    }
+
+        /* 6.4.0: developer profile link */
+        .mantain-by p a{
+            text-decoration: none;
+            color: #a8bdce;
+        }
+
+        .mantain-by p a:hover,
+        .mantain-by p a:focus{
+            color: rgb(23, 172, 231);
+            outline: none;
+        }
+
+
+
