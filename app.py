@@ -18,11 +18,7 @@
 
 
 #   importin basic module for flask
-from flask import Flask
-from flask import url_for
-from flask import render_template
-from flask import redirect
-from flask import request
+from flask import Flask,url_for,render_template,redirect,request
 
 #   pass this app through flask
 app = Flask(__name__)
