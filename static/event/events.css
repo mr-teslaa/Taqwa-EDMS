@@ -1,0 +1,388 @@
+/* ========================================================================== #
+#                           Junior School and College
+#                    A School Management System with FLASK
+#   
+#       Create by some intelligent programmer
+#       Full CRUD facility
+#   
+#       Github: https://github.com/hacker-tesla/Junior_School_and_College
+# ========================================================================== */
+
+/*-----------------------------------------------------------------
+    # This section will help you to find specific section 
+
+    1: Main section
+        1.0: Navigation menu
+            1.1: Events
+                1.1.0: All indivisual events beautify
+                1.1.1: Make shadow on events hover
+                1.1.2: Resizing events image                     
+
+    6: Footer section
+        6.0: School name in footer 
+        6.1: Contact section
+        6.2: Quick link section
+        6.3: Follow us section
+        6.4: Copyright section
+            6.4.0: Developer profile link
+    
+-----------------------------------------------------------------------*/
+
+
+
+
+
+
+*{
+    margin: 0px;
+    padding: 0px;
+}
+
+
+
+/*Intializing color variable*/
+
+:root{
+
+    /*  color section   */
+    --green-highlight-text: #27ae60;
+    --green-admission-bgcolor: #09e665;
+    --button-blue: #009ddc;
+    --text-white: #fff;
+    --principal-background: #f7f7f7;
+    --default-font-color: #81878c;
+    --black-color: #000;
+    --footer-link-color: #e0d2d2;
+    --footer-email-color: #2bbde8;
+    --link-bg-color: a5a0a024;
+
+    
+    /* font section */
+    --default-font: arial, sans-serif;
+
+    --meet-star-size: 12px;
+    --meet-principal-size: 30px;
+    --principle-name-size: 15px;
+    --event-time: 20px;
+    --admission-fair-size: 5rem;
+    --footer-school-name-size: 3rem;
+    --link-size: 1.5rem;
+
+    --small-font-weight: 800;
+    --large-font-weight: 1000;
+
+    --principal-name-height: 5;
+    --meet-principal-height: 2.1;
+    --pricipal-speech-height: 1.8;
+}
+
+
+
+body{
+    display: block;
+    box-sizing: border-box;
+    color: var(--default-font-color, #81878c);
+
+    overflow-x: hidden;
+
+    font-family: var(--default-font, arial);
+}
+
+
+
+
+
+
+
+
+/*========== 1: main section ==========*/
+
+.background-image{
+    height: 40vh;
+
+    background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ),
+                url('https://images.squarespace-cdn.com/content/v1/5bc61d2fe8ba444c34670808/1547478992060-KS378MZ4SZICDADXGCDK/ke17ZwdGBToddI8pDm48kLkXF2pIyv_F2eUT9F60jBl7gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z4YTzHvnKhyp6Da-NYroOW3ZGjoBKy3azqku80C789l0iyqMbMesKd95J-X4EagrgU9L3Sa3U8cogeb0tjXbfawd0urKshkc5MgdBeJmALQKw/john-schnobrich-520022-unsplash.jpg');   
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+    /*----- 1.0: Navigation Menu -----*/
+    nav{
+        color: var(--text-white, #fff);
+
+        display: flex;
+        justify-content: space-between;
+    }
+
+    nav > div{
+        margin: 2%;
+    }
+
+        nav .navbar{
+            display: flex;
+            justify-content: space-around;
+        }
+
+        nav .navbar a{
+            font-style: normal;
+            text-decoration: none;
+            color: #fff;
+        }
+        
+        nav .navbar > div{
+            margin: auto 10px;
+            outline: none;
+            font-weight: bold;
+            font-size: var(--principle-name-size, 15px);
+        }
+
+        nav .navbar > div a{
+            padding-top: 5px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        nav .navbar > div:hover a{
+            border-top: 2px solid var(--button-blue, #009ddc);
+            color: var(--button-blue, #009ddc);
+        }
+
+    /*----- End of Navigation Menu -----*/
+
+
+    /* 1.1: Events */
+    .background-image h2{
+        font-size: var(--footer-school-name-size, 3rem); 
+        color: var(--green-admission-bgcolor, #09e665);
+        text-align: center;
+        margin-top: 10vh;
+    }
+
+        /*  1.1.0: all indivisial events beautify  */
+        .events > div {
+            display: flex;
+            justify-content: space-evenly;
+
+            padding: 10px;
+            margin-top: 30px;
+            margin-left: 50px;
+            margin-right: 30px;
+            box-shadow: 0 0 10px 0px rgba(0, 0, 0, 0.4);
+        }
+
+
+        /* 1.1.1: make shadow on events hover */
+        .events > div:hover,
+        .events > div:focus{
+            box-shadow: 5px 5px 50px 0px rgba(91, 105, 105, 0.527),
+                        -5px -5px 50px 0px rgba(91, 105, 105, 0.527);
+            transition: all ease-in-out 0.2s;
+            outline: none;
+        }
+
+        .events .text-content h2{ 
+            color: var(--green-highlight-text, #27ae60);
+            font-size: var(--event-time, 20px);
+            font-weight: var(--small-font-weight, 800);
+        }
+
+        .events .text-content .date{
+            font-weight: var(--small-font-weight, 1000);
+            font-size: 30px;
+        }
+
+        .events .text-content h1{
+            color: var(--black-color, #000);
+            line-height: var(--meet-principal-height, 2.1);
+        }
+
+        .events .text-content p{
+            padding-right: 20px;
+            padding-left: 20px;
+            text-align: justify;
+        }
+
+        .events .text-content button{
+            margin: 20px 20px;
+            border: 2px solid #27ae60;
+            border-radius: 50px;
+            padding: 5px 20px;
+            font-size: var(--principle-name-size, 20px);
+            font-weight: bold;
+            background-color: transparent;
+            color: var(--green-highlight-text, #27ae60);
+            transition: all ease-in-out 0.4s;
+        }
+
+        .events .text-content button:hover,
+        .events .text-content button:focus{
+            font-weight: 1000;
+            padding: 5px 40px;
+            background-color: var(--green-highlight-text, #27ae60);
+            color: var(--text-white, #fff);
+            outline: none;
+        }
+            /* 1.1.2: resizing events image */
+            .events div img{
+                height: 280px;
+                width: 390px;
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+/*========== 6: Footer section ==========*/
+    
+footer{
+    height: 100vh;
+    background: linear-gradient( rgba(0, 0, 0, 0.705), rgba(0, 0, 0, 0.705) ),
+                url(../home/footer.jpg);
+
+    margin-top: 5%;
+}
+
+    /* 6.0: school name in footer */
+    footer h1{
+        text-align: center;
+        padding-top: 2%;
+        font-size: var(--footer-school-name-size, 3rem);
+    }
+
+    footer .three-column{
+        margin: 5% 2%;
+        text-align: center;
+
+        display: flex;
+        justify-content: space-between;
+    }
+
+    footer .three-column div{
+        flex: 1;
+    }
+    
+    /* ---------- 6.1: contact section ---------- */
+
+    /* beautify title name and Location address */
+    .location h3,
+    .follow-us h3,
+    .quick-link h3{
+        color: var(--green-highlight-text, #27ae60);
+        margin-bottom: 5%;
+        font-size: var(--meet-principal-size, 30px);
+        font-weight: bold;
+    }
+
+    .location p{
+        font-size: 20px;
+        font-weight: var(--small-font-weight, 800);
+        color: var(--footer-link-color, #e0d2d2);
+    }
+
+    /* 6.1.0: school time */
+    .contact .school-time p{
+        margin-top: 25%;
+        margin-bottom: 5%;
+        font-size: var(--meet-principal-size, 30px);
+        font-weight: bold;
+        color: var(--button-blue, #009ddc);
+    }
+    
+        .school-time span{
+            line-height: var(--pricipal-speech-height, 1.8);
+            font-size: 20px;
+            font-weight: var(--small-font-weight, 800);
+            color: var(--footer-link-color, #e0d2d2);
+        }
+
+
+    
+    
+
+    
+
+    /* ---------- 6.2: quick link section ---------- */
+    
+    .quick-link div{
+        margin-top: 5%;
+    }
+
+    .quick-link div a:focus,
+    .quick-link div a:hover{
+        color:  #6fe6aa;
+        outline: none;
+    }
+
+    .quick-link div a{
+        text-decoration: none;
+        color: var(--footer-link-color, #e0d2d2);
+        font-weight: var(--small-font-weight, 800);
+    }
+
+
+    
+    
+
+    
+
+    /* ---------- 6.3: follow us section ---------- */
+    
+    .follow-us div{
+        margin-top: 5%;
+    }
+
+    .follow-us div a{
+        text-decoration: none;
+        color: var(--footer-link-color, #e0d2d2);
+        font-weight: var(--small-font-weight, 800);
+    }
+
+    .follow-us div a:focus,
+    .follow-us div a:hover{
+        color:  #6fe6aa;
+        outline: none;
+    }
+
+    .follow-us .e-mail a{
+        color: var(--footer-email-color, #2bbde8);
+    }
+
+
+    
+    
+
+    
+
+    /* ---------- 6.4: copyright section ---------- */
+    
+    .copyright-container{
+        display: flex;
+        justify-content: space-evenly;
+
+        margin: auto 2%;
+    }
+
+    .copyright-container div p{
+        text-align: center;
+        line-height: var(--meet-principal-height, 2.1);
+        font-weight: bold;
+    }
+
+        /* 6.4.0: developer profile link */
+        .mantain-by p a{
+            text-decoration: none;
+            color: #a8bdce;
+        }
+
+        .mantain-by p a:hover,
+        .mantain-by p a:focus{
+            color: rgb(23, 172, 231);
+            outline: none;
+        }

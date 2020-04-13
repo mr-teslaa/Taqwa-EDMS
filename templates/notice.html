@@ -1,0 +1,290 @@
+{% extends 'layout.html' %}
+
+
+{% block help_developer %}
+
+ <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ >
+	# This Section help you to find 
+	  specific section. 
+
+	0: head
+		0.0: styles
+		0.1: fonts
+
+	1: body
+		1.0: main
+			1.0.0: Background Image
+				1.0.0.0: Navigation men
+				1.0.0.1: Notice text
+				
+			1.0.1: All main content 
+			
+
+	3: Footer section
+		3.0: Using flexbox for three column
+			3.0.0: Contact
+			3.0.1: Quick link
+			3.0.2: Follow us
+			
+		3.1: copyright and other important thing
+
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+
+{% endblock %}
+
+
+
+
+{% block additional_link %}
+	<link rel="stylesheet" href=" {{  url_for('static', filename='notice/notice.css')  }} " />
+{% endblock %}
+
+
+
+
+
+{% block body %}
+
+<header>
+
+	<!-- 1.0.0: Background image -->
+	<div class="background-image">
+
+		<!-- 1.0.0.0: Navigation menu -->
+		{% include 'plugin/_navigationMenu.html' %}
+		
+		<!-- 1.0.0.1: Notice text -->
+		<h2>NOTICE</h2>
+		
+	</div>
+
+</header>
+
+
+
+
+
+<main>
+
+	<!-- 1.0.1: All main content -->
+	<div class="all-content">
+
+		<div class="notice">
+
+			<div class="row">
+				<div class="orientaton">
+					<img 
+						src=" {{  url_for('static', filename='home/notice1.jpg')  }} "
+						alt="Orientation Class" 
+					/>
+
+					<div class="notice-text">
+						<h2>Orientation Class</h2>
+					
+						<p>
+							It is a long established fact that a reader will be distracted
+							by the readable content of a page when looking at its layout.
+						</p>
+					
+						<button>View Details</button>
+					</div>
+					
+					<div class="notice-date">
+						<p>01 Jan 2020</p>
+					</div>
+				</div>
+
+				<div class="pec-jsc">
+					<img 
+						src=" {{  url_for('static', filename='home/notice2.jpg')  }} " 
+						alt="PEC JSC Results" 
+					/>
+
+					<div class="notice-text">
+						<h2>PEC JSC Result Published</h2>
+					
+						<p>
+							It is a long established fact that a reader will be distracted
+							by the readable content of a page when looking at its layout.
+						</p>
+					
+						<button>View Details</button>
+					</div>
+					
+					<div class="notice-date">
+						<p>01 Jan 2020</p>
+					</div>
+				</div>
+
+				<div class="result">
+					<img 
+						src=" {{  url_for('static', filename='home/notice3.jpg')  }} " 
+						alt="Results" 
+					/>
+					
+					<div class="notice-text">
+						<h2>Annual Exam Result Published</h2>
+					
+						<p>
+							It is a long established fact that a reader will be distracted
+							by the readable content of a page when looking at its layout.
+						</p>
+					
+						<button>View Details</button>
+					</div>
+					
+					<div class="notice-date">
+						<p>01 Jan 2020</p>
+					</div>
+				</div>
+
+			</div>
+
+			<div class="row">
+				<div class="orientaton">
+					<img 
+						src=" {{  url_for('static', filename='home/notice1.jpg')  }} "
+						alt="Orientation Class" 
+					/>
+
+					<div class="notice-text">
+						<h2>Orientation Class</h2>
+					
+						<p>
+							It is a long established fact that a reader will be distracted
+							by the readable content of a page when looking at its layout.
+						</p>
+					
+						<button>View Details</button>
+					</div>
+					
+					<div class="notice-date">
+						<p>01 Jan 2020</p>
+					</div>
+				</div>
+
+				<div class="pec-jsc">
+					<img 
+						src=" {{  url_for('static', filename='home/notice2.jpg')  }} " 
+						alt="PEC JSC Results" 
+					/>
+
+					<div class="notice-text">
+						<h2>PEC JSC Result Published</h2>
+					
+						<p>
+							It is a long established fact that a reader will be distracted
+							by the readable content of a page when looking at its layout.
+						</p>
+					
+						<button>View Details</button>
+					</div>
+					
+					<div class="notice-date">
+						<p>01 Jan 2020</p>
+					</div>
+				</div>
+
+				<div class="result">
+					<img 
+						src=" {{  url_for('static', filename='home/notice3.jpg')  }} " 
+						alt="Results" 
+					/>
+					
+					<div class="notice-text">
+						<h2>Annual Exam Result Published</h2>
+					
+						<p>
+							It is a long established fact that a reader will be distracted
+							by the readable content of a page when looking at its layout.
+						</p>
+					
+						<button>View Details</button>
+					</div>
+					
+					<div class="notice-date">
+						<p>01 Jan 2020</p>
+					</div>
+				</div>
+
+			</div>
+			
+			<div class="row">
+				<div class="orientaton">
+					<img 
+						src=" {{  url_for('static', filename='home/notice1.jpg')  }} "
+						alt="Orientation Class" 
+					/>
+
+					<div class="notice-text">
+						<h2>Orientation Class</h2>
+					
+						<p>
+							It is a long established fact that a reader will be distracted
+							by the readable content of a page when looking at its layout.
+						</p>
+					
+						<button>View Details</button>
+					</div>
+					
+					<div class="notice-date">
+						<p>01 Jan 2020</p>
+					</div>
+				</div>
+
+				<div class="pec-jsc">
+					<img 
+						src=" {{  url_for('static', filename='home/notice2.jpg')  }} " 
+						alt="PEC JSC Results" 
+					/>
+
+					<div class="notice-text">
+						<h2>PEC JSC Result Published</h2>
+					
+						<p>
+							It is a long established fact that a reader will be distracted
+							by the readable content of a page when looking at its layout.
+						</p>
+					
+						<button>View Details</button>
+					</div>
+					
+					<div class="notice-date">
+						<p>01 Jan 2020</p>
+					</div>
+				</div>
+
+				<div class="result">
+					<img 
+						src=" {{  url_for('static', filename='home/notice3.jpg')  }} " 
+						alt="Results" 
+					/>
+					
+					<div class="notice-text">
+						<h2>Annual Exam Result Published</h2>
+					
+						<p>
+							It is a long established fact that a reader will be distracted
+							by the readable content of a page when looking at its layout.
+						</p>
+					
+						<button>View Details</button>
+					</div>
+					
+					<div class="notice-date">
+						<p>01 Jan 2020</p>
+					</div>
+				</div>
+
+			</div>
+
+		</div>
+
+
+	</div>
+
+
+	
+</main>
+
+{% endblock %}
