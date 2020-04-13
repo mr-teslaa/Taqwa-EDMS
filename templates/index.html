@@ -1,0 +1,348 @@
+{%  extends 'layout.html'  %}
+
+
+
+{% block help_developer %}
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ >
+# This Section help you to find specific section. 
+
+	0: head
+		0.0: styles
+		0.1: fonts
+
+	1: body
+		1.0: main
+			1.0.0: Slider section start here. Including nav bar
+				1.0.0.0: Navigation men
+				1.0.0.1: Choose the best section
+				
+			1.0.1: Principle Section. Including speech and image
+			1.0.2: Event and Notice Section. Including Academic, Admission, Sports
+				1.0.2.0: Events section
+				1.0.2.1: Notice section
+
+			1.0.3: What parents say about us
+			1.0.4: Admission Fair
+
+	2: Footer section
+		2.0: Using flexbox for three column
+			2.0.0: Contact
+			2.0.1: Quick link
+			2.0.2: Follow us
+			
+		2.1: copyright and other important thing
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+{% endblock %}
+
+
+
+{% block body %}
+<header>
+
+    <!-- 1.0.0: Slider Section start here. Including nav bar -->
+    <div class="slider-section">
+
+
+        <!-- 1.0.0.0: Navigation menu -->
+        {% include './plugin/_navigationMenu.html' %}
+
+        <!-- 1.0.0.1: Choose the best section -->
+        <div class="text-section">
+            <h2>
+                <i class="fa fa-star-o"></i>
+                WE ARE THE BEST
+                <i class="fa fa-star-o"></i>
+            </h2>
+            <h1>CHOOSE <span class="green-text">BEST</span> FOR YOUR CHILD</h1>
+            <h4>
+                We here in <span class="iqra">Junior School and College</span> provides 
+                best education for your child
+            </h4>
+            <button>Know More</button>
+        </div>
+    </div>
+
+</header>
+
+<main>
+
+    <!-- 1.0.1: Principle Section. Including speech and image -->
+    <div class="principal-section">
+        <div class="principal-image">
+            <img class="principal-img" 
+                 src=" http://limpidthemes.com/Themeforest/Pathshala/Pathshala-HTML/assets/img/principal1.jpg "
+                 alt="Junior School and College School principal" />
+        </div>
+
+        <div class="principal-speech">
+            <h3>
+                <i class="fa fa-star-o"></i>
+                Meet Our Star
+                <i class="fa fa-star-o"></i>
+            </h3>
+
+            <h1>MEET OUR PRINCIPAL</h1>
+            
+            <p>
+                Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                when an unknown printer took a galley of type and scrambled it to make
+                a type specimen book. It has survived not only five centuries, but also 
+                the leap into electronic typesetting, remaining essentially unchanged.
+            </p>
+            
+            <br/>
+            
+            <p>
+                It is a long established fact that a reader will be distracted by
+                the readable content of a page when looking at its layout
+            </p>
+            
+            <h3 class="principal-name">
+                Mamunur Rashid, M.D, P.C
+            </h3>
+            
+            <button>Read More</button>
+        </div>
+    
+    </div>
+
+    <!-- 1.0.2: Event and Notice Section. Including Academic, Admission, Sports --> 
+    <div class="event-notice">
+
+        <!-- 1.0.2.0: Events section -->
+        <div class="event-section">
+        
+            <div class="title event-heading">
+
+                <h1>EVENTS</h1>
+                
+                <div class="events-button">
+                    <div class="all">
+                        <a href="./event/events.html">
+                            ALL EVENTS
+                        </a>
+                    </div>
+
+                    <div class="academic">
+                        <a href="./event/events.html">
+                            ACADEMIC
+                        </a>
+                    </div>
+
+                    <div class="admission">
+                        <a href="./event/events.html">
+                            ADMISSION
+                        </a>
+                    </div>
+
+                    <div class="sports">
+                        <a href="./event/events.html">
+                            SPORTS
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+            
+            <div class="events">
+                <div class="orientation-2020">
+                    <div class="text-content">
+                        <h2>
+                            <span class="date">01</span>
+                            JANUARY
+                            <span class="year">2020</span> 
+                        </h2>
+                        <h1>Orientation Class</h1>
+                        <p>
+                            Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                            Lorem Ipsum has been the industry's standard dummy text ever since 
+                            the 1500s, when an unknown printer took a galley of type and scrambled 
+                            it to make a type specimen book. It has survived not only five centuries,
+                            but also the leap into electronic typesetting, remaining 
+                            essentially unchanged
+                        </p>
+                        <button>Read More</button>
+                    </div>
+
+                    <div class="imge-content">
+                        <img 
+                            src=" http://limpidthemes.com/Themeforest/Pathshala/Pathshala-HTML/assets/img/news/news-sm1.jpg " 
+                            alt="Orientation in 2020"
+                        />
+                    </div>
+                </div>
+
+                <div class="book-giving">
+                    <div class="text-content">
+                        <h2>
+                            <span class="date">01</span>
+                            JANUARY
+                            <span class="year">2020</span> 
+                        </h2>
+                        <h1>Book Giving Cerimony</h1>
+                        <p>
+                                Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                                Lorem Ipsum has been the industry's standard dummy text ever since 
+                                the 1500s, when an unknown printer took a galley of type and scrambled 
+                                it to make a type specimen book. It has survived not only five centuries,
+                                but also the leap into electronic typesetting, remaining 
+                                essentially unchanged
+                        </p>
+                        <button>Read More</button>
+                    </div>
+
+                    <div class="imge-content">
+                        <img 
+                            src=" http://limpidthemes.com/Themeforest/Pathshala/Pathshala-HTML/assets/img/news/news-sm2.jpg  " 
+                            alt="Orientation in 2020"
+                        />
+                    </div>
+                </div>
+
+
+                <div class="annual-result-2019">
+                    <div class="text-content">
+                        <h2>
+                            <span class="date">31</span>
+                            December
+                            <span class="year">2019</span> 
+                        </h2>
+                        <h1>Annual Result</h1>
+                        <p>
+                                Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                                Lorem Ipsum has been the industry's standard dummy text ever since 
+                                the 1500s, when an unknown printer took a galley of type and scrambled 
+                                it to make a type specimen book. It has survived not only five centuries,
+                                but also the leap into electronic typesetting, remaining 
+                                essentially unchanged
+                        </p>
+                        <button>Read More</button>
+                    </div>
+
+                    <div class="imge-content">
+                        <img 
+                            src=" http://limpidthemes.com/Themeforest/Pathshala/Pathshala-HTML/assets/img/news/news-sm3.jpg " 
+                            alt="Orientation in 2020"
+                        />
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+        <!-- 1.0.2.1: Notice section -->
+        <div class="notice-section">
+
+            <div class="title notice-heading">
+                <h1>NOTICE</h1>
+            </div>
+            
+            <div class="notice">
+                <div class="orientaton">
+                    <img 
+                        src=" http://limpidthemes.com/Themeforest/Pathshala/Pathshala-HTML/assets/img/news/news-sm1.jpg " 
+                        alt="Orientation Class" 
+                    />
+
+                    <div class="notice-text">
+                        <h2>Orientation Class</h2>
+                        <p>
+                            It is a long established fact that a reader will be distracted
+                            by the readable content of a page when looking at its layout.
+                        </p>
+                        <button>View Details</button>
+                    </div>
+
+                    <div class="notice-date">
+                        <p>01 Jan 2020</p>
+                    </div>
+                </div>
+
+                <div class="pec-jsc">
+                    <img 
+                        src=" http://limpidthemes.com/Themeforest/Pathshala/Pathshala-HTML/assets/img/news/news-sm2.jpg " 
+                        alt="PEC JSC Results" 
+                    />
+                    <div class="notice-text">
+                        <h2>PEC JSC Result Published</h2>
+                        <p>
+                            It is a long established fact that a reader will be distracted
+                            by the readable content of a page when looking at its layout.
+                        </p>
+                        <button>View Details</button>
+                    </div>
+                    <div class="notice-date">
+                        <p>01 Jan 2020</p>
+                    </div>
+                </div>
+
+                <div class="result">
+                    <img 
+                        src=" http://limpidthemes.com/Themeforest/Pathshala/Pathshala-HTML/assets/img/news/news-sm3.jpg " 
+                        alt="Annual Exam Results" 
+                    />
+                    <div class="notice-text">
+                        <h2>Annual Exam Result Published</h2>
+                        <p>
+                            It is a long established fact that a reader will be distracted
+                            by the readable content of a page when looking at its layout.
+                        </p>
+                        <button>View Details</button>
+                    </div>
+                    <div class="notice-date">
+                        <p>01 Jan 2020</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+
+    <!-- 1.0.3: What parents say about us -->
+    <div class="parents-speech">
+        
+        <div class="parents-title">
+            <h1>What Parents Say About Us</h1>
+        </div>
+
+        <div class="first-parents">
+            <h1>Abdur Rohoman</h1>
+            <p>
+                Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                when an unknown printer took a galley of type and scrambled it to make
+                a type specimen book. It has survived not only five centuries, but also 
+                the leap into electronic typesetting, remaining essentially unchanged.
+            </p>
+        </div>	
+
+    </div>
+
+    <!-- 1.0.4: Admission Fair -->
+    <div class="admission-fair">
+
+        <h1>ADMISSION FAIR</h1>
+
+        <div class="admission-contact">
+            <div class="admission">
+                <h3>Admission going on PLAY to CLASS EIGHT</h3>
+            </div>
+            
+            <div class="contact">
+                <P>For more information you are welcome to our school.</P>
+                <p class="or">OR</p>
+                <P>E-Mail Us: example@protonmail.com</P>
+            </div>
+        </div>
+
+    </div>
+
+</main>
+
+
+{% endblock %}

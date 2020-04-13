@@ -1,0 +1,387 @@
+/* ========================================================================== #
+#                           Junior School and College
+#                    A School Management System with FLASK
+#   
+#       Create by some intelligent programmer
+#       Full CRUD facility
+#   
+#       Github: https://github.com/hacker-tesla/Junior_School_and_College
+# ========================================================================== */
+
+/*-----------------------------------------------------------------
+    # This section will help you to find specific section 
+
+    1: Main section
+        1.0: Navigation menu
+        1.1: Academic - Curicullam
+        1.2: Align all image of curicullam
+            1.2.0: Resize image of  curiculam
+            1.2.1: Positioning edit and download button
+            1.2.2: Beautify all class name
+            1.2.3: Make shadow and modify image of curiculam
+
+    6: Footer section
+        6.0: School name in footer 
+        6.1: Contact section
+        6.2: Quick link section
+        6.3: Follow us section
+        6.4: Copyright section
+            6.4.0: Developer profile link
+    
+-----------------------------------------------------------------------*/
+
+
+
+
+
+
+*{
+    margin: 0px;
+    padding: 0px;
+}
+
+
+
+/*Intializing color variable*/
+
+:root{
+
+    /*  color section   */
+    --green-highlight-text: #27ae60;
+    --green-admission-bgcolor: #09e665;
+    --button-blue: #009ddc;
+    --text-white: #fff;
+    --principal-background: #f7f7f7;
+    --default-font-color: #81878c;
+    --black-color: #000;
+    --footer-link-color: #e0d2d2;
+    --footer-email-color: #2bbde8;
+    --curicullam-class-color: #3a3030;
+
+    
+    /* font section */
+    --default-font: arial, sans-serif;
+
+    --meet-star-size: 12px;
+    --meet-principal-size: 30px;
+    --principle-name-size: 15px;
+    --event-time: 20px;
+    --admission-fair-size: 5rem;
+    --footer-school-name-size: 3rem;
+    --link-size: 1.5rem;
+
+    --small-font-weight: 800;
+    --large-font-weight: 1000;
+
+    --principal-name-height: 5;
+    --meet-principal-height: 2.1;
+    --pricipal-speech-height: 1.8;
+}
+
+
+
+body{
+    display: block;
+    box-sizing: border-box;
+    color: var(--default-font-color, #81878c);
+
+    overflow-x: hidden;
+
+    font-family: var(--default-font, arial);
+}
+
+
+
+
+
+
+
+
+/*========== 1: main section ==========*/
+
+.background-image{
+    height: 40vh;
+
+    background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ),
+                url('./../academic/pencil-backgorund.jpg');     
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+    /*----- 1.0: Navigation Menu -----*/
+    nav{
+        color: var(--text-white, #fff);
+
+        display: flex;
+        justify-content: space-between;
+    }
+
+    nav > div{
+        margin: 2%;
+    }
+
+        nav .navbar{
+            display: flex;
+            justify-content: space-around;
+        }
+
+        nav .navbar a{
+            font-style: normal;
+            text-decoration: none;
+            color: #fff;
+        }
+        
+        nav .navbar > div{
+            margin: auto 10px;
+            outline: none;
+            font-weight: bold;
+            font-size: var(--principle-name-size, 15px);
+        }
+
+        nav .navbar > div a{
+            padding-top: 5px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        nav .navbar > div:hover a{
+            border-top: 2px solid var(--button-blue, #009ddc);
+            color: var(--button-blue, #009ddc);
+        }
+
+    /*----- End of Navigation Menu -----*/
+
+
+    /* 1.1: Academic - Curicullam */
+    .background-image h2{
+        font-size: var(--footer-school-name-size, 3rem); 
+        color: var(--green-admission-bgcolor, #09e665);
+        text-align: center;
+        margin-top: 10vh;
+    }
+
+    /*--- 1.2: align all image of curicullam ---*/
+    .all-content .row{
+        display: flex;
+        justify-content: space-evenly;
+
+        margin-top: 20px;
+        margin-bottom: 80px;
+    }
+
+    .all-content .row > div{
+        position: relative;
+    }
+
+        /* 1.2.0: resize image of curiculam */
+        .row img{
+            height: 250px;
+            width: 350px;
+            margin-top: 20px;
+        }
+
+        /* 1.2.1: positioning edit and download button */
+        .row .download{
+            position: absolute;
+            top: 0;
+            right: 0;    
+
+            outline: none;     
+            border: none;
+        }
+
+        .row .edit{
+            position: absolute;
+            top: 0;
+            right: 8rem;
+
+            outline: none;
+            border: none;
+        }
+
+        .row button a{
+            text-decoration: none;
+            color: #f7f7f7;
+            background-color: #00be4f;
+            padding: 5px 15px;
+            border-radius: 5px;
+
+            font-weight: 1000;
+            font-size: 1rem;
+        }
+
+        /*  make some hover effect */
+        .row button a:hover{
+            filter: brightness(90%);
+        }
+
+        .row .edit a{
+            background-color: #0c90c4;
+        }
+
+        /* 1.2.2: beautify all class name */
+        .row p{
+            font-size: 1.2rem;
+            color: var(--curicullam-class-color, 3a3030);
+            font-weight: 1000;
+
+            padding-bottom: 10px;
+        }
+
+        /* 1.2.3: make shadow and modify images of curiculam */
+        .row .classes img{
+            padding: 2%;
+            box-shadow: 0 0 20px 0px rgba(0, 0, 0, 0.4);
+        }
+
+
+
+
+
+/*========== 6: Footer section ==========*/
+    
+footer{
+    height: 100vh;
+    background: linear-gradient( rgba(0, 0, 0, 0.705), rgba(0, 0, 0, 0.705) ),
+                url(../home/footer.jpg);
+    
+    margin-top: 5%;
+}
+
+    /* 6.0: school name in footer */
+    footer h1{
+        text-align: center;
+        padding-top: 2%;
+        font-size: var(--footer-school-name-size, 3rem);
+    }
+
+    footer .three-column{
+        margin: 5% 2%;
+        text-align: center;
+
+        display: flex;
+        justify-content: space-between;
+    }
+
+    footer .three-column div{
+        flex: 1;
+    }
+    
+    /* ---------- 6.1: contact section ---------- */
+
+    /* beautify title name and Location address */
+    .location h3,
+    .follow-us h3,
+    .quick-link h3{
+        color: var(--green-highlight-text, #27ae60);
+        margin-bottom: 5%;
+        font-size: var(--meet-principal-size, 30px);
+        font-weight: bold;
+    }
+
+    .location p{
+        font-size: 20px;
+        font-weight: var(--small-font-weight, 800);
+        color: var(--footer-link-color, #e0d2d2);
+    }
+
+    /* 6.1.0: school time */
+    .contact .school-time p{
+        margin-top: 25%;
+        margin-bottom: 5%;
+        font-size: var(--meet-principal-size, 30px);
+        font-weight: bold;
+        color: var(--button-blue, #009ddc);
+    }
+    
+        .school-time span{
+            line-height: var(--pricipal-speech-height, 1.8);
+            font-size: 20px;
+            font-weight: var(--small-font-weight, 800);
+            color: var(--footer-link-color, #e0d2d2);
+        }
+
+
+    
+    
+
+    
+
+    /* ---------- 6.2: quick link section ---------- */
+    
+    .quick-link div{
+        margin-top: 5%;
+    }
+
+    .quick-link div a:focus,
+    .quick-link div a:hover{
+        color:  #6fe6aa;
+        outline: none;
+    }
+
+    .quick-link div a{
+        text-decoration: none;
+        color: var(--footer-link-color, #e0d2d2);
+        font-weight: var(--small-font-weight, 800);
+    }
+
+
+    
+    
+
+    
+
+    /* ---------- 6.3: follow us section ---------- */
+    
+    .follow-us div{
+        margin-top: 5%;
+    }
+
+    .follow-us div a{
+        text-decoration: none;
+        color: var(--footer-link-color, #e0d2d2);
+        font-weight: var(--small-font-weight, 800);
+    }
+
+    .follow-us div a:focus,
+    .follow-us div a:hover{
+        color:  #6fe6aa;
+        outline: none;
+    }
+
+    .follow-us .e-mail a{
+        color: var(--footer-email-color, #2bbde8);
+    }
+
+
+    
+    
+
+    
+
+    /* ---------- 6.4: copyright section ---------- */
+    
+    .copyright-container{
+        display: flex;
+        justify-content: space-evenly;
+
+        margin: auto 2%;
+    }
+
+    .copyright-container div p{
+        text-align: center;
+        line-height: var(--meet-principal-height, 2.1);
+        font-weight: bold;
+    }
+
+        /* 6.4.0: developer profile link */
+        .mantain-by p a{
+            text-decoration: none;
+            color: #a8bdce;
+        }
+
+        .mantain-by p a:hover,
+        .mantain-by p a:focus{
+            color: rgb(23, 172, 231);
+            outline: none;
+        }
