@@ -1,23 +1,6 @@
-# ========================================================================== #
-#                           Junior School and College
-#                    A School Management System with FLASK
-#   
-#       Create by some intelligent programmer
-#       Full CRUD facility
-#   
-#       Github: https://github.com/hacker-tesla/Junior_School_and_College
-# ========================================================================== #
-
-
-
-
-
-
-
-
-
-
 #   importing basic module for flask
+from main_app import app, db, bcrypi
+from main_app.model_users import User
 from flask import Flask
 from flask import url_for
 from flask import render_template
@@ -25,20 +8,17 @@ from flask import redirect
 from flask import request
 
 #   importing wtf module from form.py
-from form import AdmissionForm
+from main_app.form import AdmissionForm, Loginform, RegistrationForm
 
-#   pass this app through flask
-app = Flask(__name__)
-
-
-
-#   genarate a secret key
-app.config['SECRET_KEY'] = '248fb9a5bdffa13c0bc136504ebf75c2'
+#importing login from flask_login
+from flask_login import login_user, current_user, logout_user, login_required
 
 
 
+print("routes")
 #   default route of web app
 @app.route('/')
+@login_required
 def index():
     return render_template('index.html')
 
@@ -139,7 +119,31 @@ def admission():
 def about():
     return render_template('about.html')
 
+@app.route('/login')
+def login():
+    form = Loginform()
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data).first()
+        if user and bcrypi.check_password_hash(user.password,form.password.data):
+            login_user(user, remember=form.remember.data)
+            next_page = request.args.get('next')
+            flash(f'success login {form.email.data}!','success')
+            return redirect(next_page) if next_page else redirect(url_for('home'))
+        else:   
+            flash(f'failed autentication {form.email.data}!','Danger')
+    return render_template('login.html', title='Login',form=form)  
 
-if __name__ == '__main__':
-    app.debug=True
-    app.run()
+@app.route("/register", methods=['GET','POST'])
+def register():
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        pass_encripted = bcrypi.generate_password_hash(form.password.data).decode('UTF-8')
+        user = User(username=form.username.data,email=form.email.data,password=pass_encripted)
+        db.session.add(user)
+        db.session.commit()
+        flash(f'Account created for {form.username.data}!','success')
+        print({form.username.data})
+        return redirect(url_for('login'))   
+    
+    return render_template('register.html', title='Register', form=form)
+
