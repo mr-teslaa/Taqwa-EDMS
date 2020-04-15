@@ -12,8 +12,11 @@ from wtforms.validators import DataRequired
 from wtforms.validators import Length
 from wtforms.validators import Email
 from wtforms.validators import EqualTo
+from wtforms.validators import ValidationError
 
-
+#about login
+from main_app.model_users import User
+from flask_login import current_user
 
 
 
@@ -179,3 +182,37 @@ class AdmissionForm(FlaskForm):
 
     #   make a submit field
     submit = SubmitField('Submit')
+
+
+class Loginform(FlaskForm):
+    """class with validators and fields to get a login"""
+    email = StringField('Email',
+    validators = [DataRequired(),Email()])
+    password = PasswordField('password',
+    validators=[DataRequired()])
+    remember = BooleanField('remember me')
+
+    submit = SubmitField('Login')
+
+class RegistrationForm(FlaskForm):
+    
+    username = StringField('Username',
+        validators = [DataRequired(),Length(min=2,max=20)])
+    email = StringField('Email',
+        validators = [DataRequired(),Email()])
+    password = PasswordField('password',
+        validators=[DataRequired(),Length(max=3)])
+    confirm_password = PasswordField('confirm_password',
+        validators=[DataRequired(), EqualTo('password')])
+
+    submit = SubmitField('Sign Up')
+
+    def validate_username(self, username):
+        user = User.query.filter_by(username=username.data).first()
+        if user:
+            raise ValidationError('that username already exists')
+
+    def validate_email(self, email):
+        user = User.query.filter_by(email=email.data).first()
+        if user:
+            raise ValidationError('that email already exists')
