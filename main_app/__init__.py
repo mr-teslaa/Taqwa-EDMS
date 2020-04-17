@@ -29,5 +29,5 @@ login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 
 from main_app import routes
-from main_app.model_users import User
+from main_app.models import User
 migrate = Migrate(app,db)

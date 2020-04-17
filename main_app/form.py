@@ -15,7 +15,7 @@ from wtforms.validators import EqualTo
 from wtforms.validators import ValidationError
 
 #about login
-from main_app.model_users import User
+from main_app.models import User
 from flask_login import current_user
 
 

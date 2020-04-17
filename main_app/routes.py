@@ -1,6 +1,6 @@
 #   importing basic module for flask
 from main_app import app, db, bcrypi
-from main_app.model_users import User
+from main_app.models import User
 from flask import Flask
 from flask import url_for
 from flask import render_template
