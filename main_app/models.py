@@ -10,6 +10,7 @@ class User(db.Model, UserMixin):
 	username = db.Column(db.String(20),unique=True,nullable=False)
 	email = db.Column(db.String(120),unique=True,nullable=False)
 	password = db.Column(db.String(60),nullable=False)
+	image_file = db.Column(db.String(20),nullable=False,default='default.jpg')
 	id_type_user = db.Integer, db.ForeignKey('id_type_user')
 	def __repr__(self):
 		return f"User('{self.username}', '{self.email}', '{self.image_file}')"
@@ -28,14 +29,11 @@ class Notice(db.Model):
 
 class Adress(db.Model):
 	"""docstring for Adress"""
-	id = db.Column(db.Integer,primary_key=True)
+	id_adress = db.Column(db.Integer,primary_key=True)
 	street = db.Column(db.String(20),unique=True,nullable=False)
 	district = db.Column(db.String(20),unique=True,nullable=False)
 	post_office = db.Column(db.String(20),unique=True,nullable=False)
-	user_id = db.Column(db.Integer, db.ForeignKey('user.id'),
-        nullable=False)
-	adress = db.relationship('Adress', lazy='select',
-        backref=db.backref('user', lazy='joined'))
+	user_id = db.Column(db.Integer, db.ForeignKey('user.id'),nullable=False)
 	
 	def __repr__(self):
 		return f"adress('{self.street}', '{self.district}', '{self.post_office}')"
@@ -61,8 +59,9 @@ class Students(db.Model):
 	birth_certificate_no = db.Column(db.Integer,unique=True,nullable=False)
 	date_of_admition = db.Column(db.DateTime(),unique=True,nullable=False)
 
-	
+
 
 class Type_user(db.Model):
 	id_type_user = db.Column(db.Integer,primary_key=True)
 	desc = db.Column(db.String(20),unique=True,nullable=False)
+	name = db.Column(db.String(20),unique=True,nullable=False)

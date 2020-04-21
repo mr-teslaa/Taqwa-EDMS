@@ -13,6 +13,7 @@ from wtforms.validators import Length
 from wtforms.validators import Email
 from wtforms.validators import EqualTo
 from wtforms.validators import ValidationError
+from flask_wtf.file import FileField, FileAllowed
 
 #about login
 from main_app.models import User
@@ -216,3 +217,12 @@ class RegistrationForm(FlaskForm):
         user = User.query.filter_by(email=email.data).first()
         if user:
             raise ValidationError('that email already exists')
+
+class UpdateAccountform(FlaskForm):
+    
+    username = StringField('Username',
+        validators = [DataRequired(),Length(min=2,max=20)])
+    email = StringField('Email',
+        validators = [DataRequired(),Email()])
+    picture = FileField('Update profile Picture', validators=[FileAllowed(['jpg','png'])])
+    submit = SubmitField('Update')
