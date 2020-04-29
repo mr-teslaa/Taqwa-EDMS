@@ -32,6 +32,24 @@
         <div class="about">
             <a href=" {{ url_for('about') }} ">ABOUT US</a>
         </div>
+        
+        {% if current_user.is_authenticated %}
+        <div class="admission">
+            <a  href="{{ url_for('account')}}">ACCOUNT</a>
+        </div>
+        <div class="admission">
+            <a  href="{{ url_for('logout')}}">LOGOUT</a>
+        </div>
+        {% else %}
+        <div class="admission">
+            <a class="nav-item nav-link" href="{{ url_for('login')}}">Login</a>
+        </div>
+        <div class="admission">
+            <a class="nav-item nav-link" href="{{ url_for('register')}}">Register</a>
+        </div>    
+            
+        {% endif %}      
+        
     </div>
     
 </nav>

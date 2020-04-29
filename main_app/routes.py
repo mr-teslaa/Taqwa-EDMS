@@ -1,21 +1,34 @@
 #   importing basic module for flask
 from main_app import app, db, bcrypi
-from main_app.model_users import User
+from main_app.models import User
 from flask import Flask
 from flask import url_for
 from flask import render_template
 from flask import redirect
 from flask import request
-
+from flask import flash
+from PIL import Image
 #   importing wtf module from form.py
-from main_app.form import AdmissionForm, Loginform, RegistrationForm
+from main_app.form import AdmissionForm, Loginform, RegistrationForm, UpdateAccountform
 
 #importing login from flask_login
 from flask_login import login_user, current_user, logout_user, login_required
 
 
+#function to save picture
+def save_picture(form_picture):
+    random_hex = secrets.token_hex(8)
+    _, f_ext = os.path.splitext(form_picture.filename)
+    picture_fn = random_hex + f_ext
+    picture_path = os.path.join(app.root_path, 'static/imgs', picture_fn)
+    output_size = (125,125)
+    i = Image.open(form_picture)
+    i.thumbnail(output_size)
+    i.save(picture_path)
+    return picture_fn
 
-print("routes")
+
+
 #   default route of web app
 @app.route('/')
 @login_required
@@ -119,19 +132,25 @@ def admission():
 def about():
     return render_template('about.html')
 
-@app.route('/login')
+@app.route('/login', methods=['GET','POST'])
 def login():
     form = Loginform()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
         if user and bcrypi.check_password_hash(user.password,form.password.data):
+            print("si entre")
             login_user(user, remember=form.remember.data)
             next_page = request.args.get('next')
             flash(f'success login {form.email.data}!','success')
-            return redirect(next_page) if next_page else redirect(url_for('home'))
+            return redirect(next_page) if next_page else redirect(url_for('index'))
         else:   
             flash(f'failed autentication {form.email.data}!','Danger')
     return render_template('login.html', title='Login',form=form)  
+
+@app.route("/logout")
+def logout():
+    logout_user()
+    return redirect(url_for('login'))
 
 @app.route("/register", methods=['GET','POST'])
 def register():
@@ -147,3 +166,25 @@ def register():
     
     return render_template('register.html', title='Register', form=form)
 
+@app.route("/account", methods=['GET','POST'])
+@login_required
+def account():  
+    form = UpdateAccountform()
+    
+
+    if form.validate_on_submit():
+        if form.picture.data:
+            print("image from form")
+            picture_file = save_picture(form.picture.data)
+            current_user.image_file = picture_file 
+        
+        current_user.username = form.username.data
+        current_user.email = form.email.data
+        db.session.commit()
+        flash('your account has been changed', 'success')
+        return redirect(url_for('account'))
+    elif request.method == 'GET':
+        form.username.data = current_user.username
+        form.email.data = current_user.email    
+    image = url_for('static', filename='imgs/' + current_user.image_file) 
+    return render_template('account.html', title='Account', image_file=image, form=form )
