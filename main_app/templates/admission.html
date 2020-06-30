@@ -15,38 +15,44 @@
 
 
 {% block body %}
+    
+    <!-- <div class="back">
+        <button class="button"> Back </button>
+    </div> -->
+
     <main>
-        <header>
-            <h1 class="school_name">JUNIOR SCHOOL and COLLEGE</h1>
-            <h4 class="school_address">Dummy Text,, New York</h4>
-            <h2 class="title">Admission Form</h2>
-        </header>
 
-        <section>
-            <form action="" method="post">
-                {{ form.hidden_tag() }}
+        <div class="form_container">
+            
+            <header>
+                <h1 class="school_name">IQRA JUNIOR SCHOOL</h1>
+                <h2 class="title">Admission Form - 2020</h2>
+            </header>
 
-                <div class="form_input" id="name">
-                    {{ form.name.label(class="form_label") }}
-                    
-                    {% if form.name.errors %}
-                        {{ form.name( class="form_textbox is-invalid" ) }}
-                        <div class="invalid-feedback">
-                            {% for error in form.name.errors %}
-                                <span>  {{ error }}   </span>
-                            {% endfor %}
-                        </div>
+            <section>
+            
+                <form action="" method="post" class="grid_admission">
+                    {{ form.hidden_tag() }}
 
-                    {% else %}
-                        {{ form.name( 
-                            class="form_textbox",
-                            placeholder="Enter your full name"
-                        ) }}
-                    {% endif %}
-                </div>
-                
-                <div class="row">
-                    
+                    <div class="form_input" id="name">
+                        {{ form.name.label(class="form_label") }}
+                        
+                        {% if form.name.errors %}
+                            {{ form.name( class="form_textbox is-invalid" ) }}
+                            <div class="invalid-feedback">
+                                {% for error in form.name.errors %}
+                                    <span>  {{ error }}   </span>
+                                {% endfor %}
+                            </div>
+
+                        {% else %}
+                            {{ form.name( 
+                                class="form_textbox",
+                                placeholder="Enter your full name"
+                            ) }}
+                        {% endif %}
+                    </div>
+                        
                     <div class="form_input" id="father_name">
                         {{ form.father_name.label(class="form_label") }}
                         
@@ -85,210 +91,174 @@
                         {% endif %}
                     </div>
 
-                </div>
+                    <div class="form_input" id="class">
+                        {{ form.applicable_class.label(class="form_label") }}
 
-                <div class="row">
-
-                    <div class="column" id="present_address">
-
-                        <p class="input_title">
-                            Present Address
-                        </p>
-                        
-                        <div class="form_input" id="care_of">
-                            {{ form.care_of.label(class="form_label") }}
-                            
-                            {% if form.care_of.errors %}
-                                {{ form.care_of( class="form_textbox is-invalid" ) }}
-                                <div class="invalid-feedback">
-                                    {% for error in form.care_of.errors %}
-                                        <span>  {{ error }}   </span>
-                                    {% endfor %}
-                                </div>
-
-                            {% else %}
-                                {{ form.care_of( 
-                                    class="form_textbox",
-                                    placeholder="Care of"
-                                ) }}
-                            {% endif %}
-                        </div>
-
-                        <div class="form_input">
-                            {{ form.village.label(class="form_label") }}
-                            
-                            {% if form.village.errors %}
-                                {{ form.village( class="form_textbox is-invalid" ) }}
-                                <div class="invalid-feedback">
-                                    {% for error in form.village.errors %}
-                                        <span>  {{ error }}   </span>
-                                    {% endfor %}
-                                </div>
-
-                            {% else %}
-                                {{ form.village( 
-                                    class="form_textbox",
-                                    placeholder="Village name"
-                                ) }}
-                            {% endif %}
-                        </div>
-
-                        <div class="form_input">
-                            {{ form.post_office.label(class="form_label") }}
-                            
-                            {% if form.post_office.errors %}
-                                {{ form.post_office( class="form_textbox is-invalid" ) }}
-                                <div class="invalid-feedback">
-                                    {% for error in form.post_office.errors %}
-                                        <span>  {{ error }}   </span>
-                                    {% endfor %}
-                                </div>
-
-                            {% else %}
-                                {{ form.post_office( 
-                                    class="form_textbox",
-                                    placeholder="Post offfice name"
-                                ) }}
-                            {% endif %}
-                        </div>
-
-                        <div class="form_input">
-                            {{ form.upozilla.label(class="form_label") }}
-                            
-                            {% if form.upozilla.errors %}
-                                {{ form.upozilla( class="form_textbox is-invalid" ) }}
-                                <div class="invalid-feedback">
-                                    {% for error in form.upozilla.errors %}
-                                        <span>  {{ error }}   </span>
-                                    {% endfor %}
-                                </div>
-
-                            {% else %}
-                                {{ form.upozilla( 
-                                    class="form_textbox",
-                                    placeholder="Upozilla name"
-                                ) }}
-                            {% endif %}
-                        </div>
-
-                        <div class="form_input">
-                            {{ form.zilla.label(class="form_label") }}
-                            
-                            {% if form.zilla.errors %}
-                                {{ form.zilla( class="form_textbox is-invalid" ) }}
-                                <div class="invalid-feedback">
-                                    {% for error in form.zilla.errors %}
-                                        <span>  {{ error }}   </span>
-                                    {% endfor %}
-                                </div>
-
-                            {% else %}
-                                {{ form.zilla( 
-                                    class="form_textbox", 
-                                    placeholder="Zilla name"
-                                ) }}
-                            {% endif %}
-                        </div>
-
+                        {{ form.applicable_class(class="form_textbox") }}
                     </div>
 
-                    <div class="column" id="parmanent_address">
+                    <div class="form_input" id="phone_number">
+                        {{ form.phone_number.label(class="form_label") }}
 
-                        <p class="input_title">
-                            Parmanent Address
-                        </p>
-                        
-                        <div class="form_input">
-                            {{ form.care_of.label(class="form_label") }}
-                            {{ form.care_of(
-                                class="form_textbox",
-                                placeholder="care of"
-                            ) }}
-                        </div>
-
-                        <div class="form_input">
-                            {{ form.village.label(class="form_label") }}
-                            {{ form.village(
-                                class="form_textbox",
-                                placeholder="name of student's village"
-                            ) }}
-                        </div>
-
-                        <div class="form_input">
-                            {{ form.post_office.label(class="form_label") }}
-                            {{ form.post_office(
-                                class="form_textbox",
-                                placeholder="name of student's post office"
-                            ) }}
-                        </div>
-
-                        <div class="form_input">
-                            {{ form.upozilla.label(class="form_label") }}
-                            {{ form.upozilla(
-                                class="form_textbox",
-                                placeholder="name of student's upozilla"
-                            ) }}
-                        </div>
-
-                        <div class="form_input">
-                            {{ form.zilla.label(class="form_label") }}
-                            {{ form.zilla(
-                                class="form_textbox",
-                                placeholder="name of student's zilla"
-                            ) }}
-                        </div>
-
-                    
-                    
-                    </div>
-
-                </div>
-
-                <div class="form_datetime row">
-
-                    {{ form.birth_date.label(class="form_label") }}
-
-                    <div class="column">
-                        {{ form.birth_date(class="form_select") }}
-                    </div>
-
-                    <div class="column">
-                        {{ form.birth_month(class="form_select") }}
-                    </div>
-
-                    <div class="column">
-                        {{ form.birth_year(class="form_select") }}
-                    </div>
-
-                </div>
-
-                <div class="form_input">
-                    {{ form.birth_cirtificate_no.label(class="form_label") }}
-                    
-                    {% if form.birth_cirtificate_no.errors %}
-                        {{ form.birth_cirtificate_no( class="form_textbox is-invalid" ) }}
-                        <div class="invalid-feedback">
-                            {% for error in form.birth_cirtificate_no.errors %}
-                                <span>  {{ error }}   </span>
-                            {% endfor %}
-                        </div>
-
-                    {% else %}
-                        {{ form.birth_cirtificate_no( 
-                            class="form_textbox", 
-                            placeholder="Birth Cirtificate No"
+                        {{ form.phone_number(
+                            class="form_textbox",
+                            placeholder="Phone Number"
                         ) }}
-                    {% endif %}
-                </div>
+                    </div>
 
+                    <div class="form_input" id="birth_cirtificate">
+                        {{ form.birth_cirtificate_no.label(class="form_label") }}
+                        
+                        {% if form.birth_cirtificate_no.errors %}
+                            {{ form.birth_cirtificate_no( class="form_textbox is-invalid" ) }}
+                            <div class="invalid-feedback">
+                                {% for error in form.birth_cirtificate_no.errors %}
+                                    <span>  {{ error }}   </span>
+                                {% endfor %}
+                            </div>
 
-                <div class="form_input">
-                    {{ form.submit( class="submit_button" ) }}
-                </div>
+                        {% else %}
+                            {{ form.birth_cirtificate_no( 
+                                class="form_textbox", 
+                                placeholder="Birth Cirtificate No"
+                            ) }}
+                        {% endif %}
+                    </div>
 
-            </form>
+                    <div class="form_input" id="birth_date">
+                        {{ form.birth_date.label(class="form_label") }}
 
-        </section>
+                        {{ form.birth_date(
+                            class="form_textbox",
+                            placeholder="DD/MM/YY"
+                        ) }}
+                    </div>
+
+                    <div class="form_input" id="gender">
+                        
+                        <p class="form_label"> Gender </p>
+                    
+                        <span class="checkbox_flex">
+                            <div class="form_checkbox">
+                                {{ form.male(class="check") }}
+                                {{ form.male.label(class="check_option") }}
+                            </div>
+
+                            <div class="form_checkbox">
+                                {{ form.female(class="check") }}
+                                {{ form.female.label(class="check_option") }}
+                            </div>
+                        </span>
+
+                    </div>
+
+                    <p class="input_title" id="address">
+                        Present Address
+                    </p>
+                    
+                    <div class="form_input" id="care_of">
+                        {{ form.care_of.label(class="form_label") }}
+                        
+                        {{ form.care_of(
+                            class="form_textbox",
+                            placeholder="Care of"
+                        ) }}
+                    </div>
+
+                    <div class="form_input" id="village">
+                        {{ form.village.label(class="form_label") }}
+                        
+                        {{ form.village(
+                            class="form_textbox",
+                            placeholder="Village"
+                        ) }}
+                    </div>
+
+                    <div class="form_input" id="post_office">
+                        {{ form.post_office.label(class="form_label") }}
+                        
+                        {{ form.post_office(
+                            class="form_textbox",
+                            placeholder="Post Office"
+                        ) }}
+                    </div>
+
+                    <div class="form_input" id="post_code">
+                        {{ form.post_code.label(class="form_label") }}
+
+                        {{ form.post_code(
+                            class="form_textbox",
+                            placeholder="Post Code"
+                        ) }}
+                    </div>
+
+                    <div class="form_input" id="upozilla">
+                        {{ form.upozilla.label(class="form_label") }}
+                        {{ form.upozilla(
+                            class="form_textbox",
+                            placeholder="Upozilla"
+                        ) }}
+                    </div>
+
+                    <div class="form_input" id="zilla">
+                        {{ form.zilla.label(class="form_label") }}
+                        
+                        {{ form.zilla(
+                            class="form_textbox",
+                            placeholder="Zilla"
+                        ) }}
+                    </div>
+
+                    <div class="form_input" id="region">
+                        {{ form.region.label(class="form_label") }}
+
+                        {{ form.region(
+                            class="form_textbox",
+                            placeholder="Region"
+                        ) }}
+                    </div>
+
+                    <div class="form_input" id="email">
+                        {{ form.email.label(class="form_label") }}
+
+                        {{ form.email(
+                            class="form_textbox",
+                            placeholder="Email Address"
+                        ) }}
+                    </div>
+
+                    <div class="form_input" id="photo">
+                        {{ form.photo.label(class="form_label") }}
+
+                        {{ form.photo( class="form_textbox" ) }}
+                    </div>
+
+                    <div class="form_input" id="signature">
+                        {{ form.signature.label(class="form_label") }}
+
+                        {{ form.signature( class="form_textbox" ) }}
+                    </div>
+
+                    <div id="agreement">
+                        <p>
+                            I agree all the terms and condition and cirtify that all the information I gave above is true. If the authority find any
+                            flase information I will accept any dicision that the authority takes.
+                        </p>
+                    </div>
+
+                    <div class="form_button" id="refresh">
+                        <input type="reset" value="Refresh" class="submit_button refresh"/>
+                    </div>
+
+                    <div class="form_button" id="submit">
+                        {{ form.submit( class="submit_button submit" ) }}
+                    </div>
+
+                </form>
+
+            </section>
+        
+        </div>
         
     </main>
 {% endblock %}

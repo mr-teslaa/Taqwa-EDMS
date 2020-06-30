@@ -120,7 +120,8 @@ body{
 .slider-section{
     height: 100vh;
 
-    background: url('http://limpidthemes.com/Themeforest/Pathshala/Pathshala-HTML/assets/img/slider/slide4.jpg');      /*  slider image in this current directory  */
+    background: url('./slide1.jpg');
+    /* background: url('http://limpidthemes.com/Themeforest/Pathshala/Pathshala-HTML/assets/img/slider/slide4.jpg'); */      /*  slider image in this current directory  */
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
@@ -164,10 +165,11 @@ body{
         }
 
         nav .navbar > div:hover a,
-        nav .navbar > div:focus a{
+        nav .navbar > div:focus a {
             border-top: 2px solid var(--button-blue, #009ddc);
             color: var(--button-blue, #009ddc);
         }
+
 
     /*----- End of Navigation Menu -----*/
 
@@ -556,7 +558,10 @@ body{
 .parents-speech{
     height: 100vh;
     background: linear-gradient(rgba(12, 40, 45, 0.72), rgba(12, 40, 45, 0.72)), 
-                url('https://validatedlearning.co/wp-content/uploads/2019/01/jerry-wang-1223250-unsplash-300x169.jpg');
+                url('./parents.jpg');
+    
+    /* background: linear-gradient(rgba(12, 40, 45, 0.72), rgba(12, 40, 45, 0.72)), 
+                   url('https://validatedlearning.co/wp-content/uploads/2019/01/jerry-wang-1223250-unsplash-300x169.jpg'); */
     background-size: cover;
     background-repeat: no-repeat;
 
@@ -654,7 +659,11 @@ body{
 footer{
     height: 100vh;
     background: linear-gradient( rgba(0, 0, 0, 0.705), rgba(0, 0, 0, 0.705) ),
-                url('http://limpidthemes.com/Themeforest/Pathshala/Pathshala-HTML/assets/img/slider/slide6.jpg');
+                url('./footer.jpg');
+
+
+    /* background: linear-gradient( rgba(0, 0, 0, 0.705), rgba(0, 0, 0, 0.705) ),
+                url('http://limpidthemes.com/Themeforest/Pathshala/Pathshala-HTML/assets/img/slider/slide6.jpg'); */
 
 }
 
@@ -775,7 +784,9 @@ footer{
         display: flex;
         justify-content: space-evenly;
 
-        margin: auto 2%;
+        margin-right: 2%;
+        margin-left: 2%;
+        margin-top: 8rem;
     }
 
     .copyright-container div p{
