@@ -1,0 +1,164 @@
+{% extends 'layout.html' %}
+
+
+
+{% block additional_title %}
+    Admission -
+{% endblock %}
+
+
+
+{% block additional_link %}
+    <link rel="stylesheet" href=" {{ url_for('static', filename='admission/admission.css') }} ">
+{% endblock %}
+
+
+
+{% block body %}
+    
+    <!-- <div class="back">
+        <button class="button"> Back </button>
+    </div> -->
+
+    <main>
+
+        <div class="form_container">
+            
+            <header>
+                <h1 class="school_name">IQRA JUNIOR SCHOOL</h1>
+                <h2 class="title"> Application for Teachers </h2>
+            </header>
+
+            <section>
+            
+                <form action="" method="post" class="grid_teacher_apply">
+                    {{ form.hidden_tag() }}
+
+                    <div class="form_input" id="name">
+                        {{ form.name.label(class="form_label") }}
+                        
+                        {% if form.name.errors %}
+                            {{ form.name( class="form_textbox is-invalid" ) }}
+                            <div class="invalid-feedback">
+                                {% for error in form.name.errors %}
+                                    <span>  {{ error }}   </span>
+                                {% endfor %}
+                            </div>
+
+                        {% else %}
+                            {{ form.name( 
+                                class="form_textbox",
+                                placeholder="Enter your full name"
+                            ) }}
+                        {% endif %}
+                    </div>
+
+                    <div class="form_input" id="username">
+                        {{ form.username.label(class="form_label") }}
+                        
+                        {% if form.username.errors %}
+                            {{ form.username( class="form_textbox is-invalid" ) }}
+                            <div class="invalid-feedback">
+                                {% for error in form.username.errors %}
+                                    <span>  {{ error }}   </span>
+                                {% endfor %}
+                            </div>
+
+                        {% else %}
+                            {{ form.username( 
+                                class="form_textbox",
+                                placeholder="Pickup an username"
+                            ) }}
+                        {% endif %}
+                    </div>
+
+                    <div class="form_input" id="phone_number">
+                        {{ form.phone_number.label(class="form_label") }}
+
+                        {{ form.phone_number(
+                            class="form_textbox",
+                            placeholder="Phone Number"
+                        ) }}
+                    </div>
+
+                    <div class="form_input" id="email">
+                        {{ form.email.label(class="form_label") }}
+
+                        {{ form.email(
+                            class="form_textbox",
+                            placeholder="Email Address"
+                        ) }}
+                    </div>
+
+                    <div class="form_input" id="password">
+                        {{ form.password.label(class="form_label") }}
+                        
+                        {% if form.password.errors %}
+                            {{ form.password( class="form_textbox is-invalid" ) }}
+                            <div class="invalid-feedback">
+                                {% for error in form.password.errors %}
+                                    <span>  {{ error }}   </span>
+                                {% endfor %}
+                            </div>
+
+                        {% else %}
+                            {{ form.password( 
+                                class="form_textbox",
+                                placeholder="Pickup a password"
+                            ) }}
+                        {% endif %}
+                    </div>
+
+                    <div class="form_input" id="confirm_password">
+                        {{ form.confirm_password.label(class="form_label") }}
+                        
+                        {% if form.confirm_password.errors %}
+                            {{ form.confirm_password( class="form_textbox is-invalid" ) }}
+                            <div class="invalid-feedback">
+                                {% for error in form.confirm_password.errors %}
+                                    <span>  {{ error }}   </span>
+                                {% endfor %}
+                            </div>
+
+                        {% else %}
+                            {{ form.confirm_password( 
+                                class="form_textbox",
+                                placeholder="Retype password"
+                            ) }}
+                        {% endif %}
+                    </div>
+
+                    <div class="form_input" id="cv">
+                        {{ form.cv.label(class="form_label") }}
+
+                        {{ form.cv( class="form_textbox" ) }}
+                    </div>
+
+                    <div class="form_input" id="photo">
+                        {{ form.photo.label(class="form_label") }}
+
+                        {{ form.photo( class="form_textbox" ) }}
+                    </div>
+
+                    <div class="form_input" id="signature">
+                        {{ form.signature.label(class="form_label") }}
+
+                        {{ form.signature( class="form_textbox" ) }}
+                    </div>
+
+                    <div class="form_button" id="refresh">
+                        <input type="reset" value="Refresh" class="submit_button refresh"/>
+                    </div>
+
+                    <div class="form_button" id="submit">
+                        {{ form.submit( class="submit_button submit" ) }}
+                    </div>
+
+                </form>
+
+            </section>
+        
+        </div>
+        
+    </main>
+{% endblock %}

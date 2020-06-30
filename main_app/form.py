@@ -6,18 +6,16 @@ from wtforms import SubmitField
 from wtforms import BooleanField
 from wtforms import SelectField
 from wtforms import IntegerField
+from wtforms import FileField
+from wtforms import RadioField
 
 #   wtf validators
 from wtforms.validators import DataRequired
 from wtforms.validators import Length
 from wtforms.validators import Email
 from wtforms.validators import EqualTo
-from wtforms.validators import ValidationError
-from flask_wtf.file import FileField, FileAllowed
 
-#about login
-from main_app.models import User
-from flask_login import current_user
+
 
 
 
@@ -53,6 +51,56 @@ class AdmissionForm(FlaskForm):
         ]
     )
 
+    #   make select field for select admitted class
+    applicable_class = SelectField(
+        'Class you want to apply',
+        choices = [
+            ('n/a', '--- Select Class ---'),
+            ('play', 'PLAY'),
+            ('nursary', 'NURSARY'),
+            ('one', 'ONE'),
+            ('two', 'TWO'),
+            ('three', 'THREE'),
+            ('four', 'FOUR'),
+            ('two', 'FIVE'),
+            ('three', 'SIX'),
+            ('one', 'SEVEN'),
+            ('two', 'EIGHT')
+        ]
+    )
+
+    #   make a field for phone number
+    phone_number = IntegerField(
+        'Phone Number',
+        validators = [
+            DataRequired(),
+            Length(11, 13)
+        ]
+    )
+
+    #   make a datetime field for date of birth
+    #   want to make this a DateTimeField. But do not know actual syntax
+    birth_date = StringField(
+        'Date of Birth',
+        validators = [
+            DataRequired()
+        ]
+    )
+
+    #   make a text field for birth cirtificate id 
+    birth_cirtificate_no  = IntegerField(
+        'Birth Cirtificate No',
+        validators = [
+            DataRequired()
+        ]
+    )
+
+    #   make a radio for male
+    male = BooleanField('Male')
+    
+    #   make a radio for female
+    female = BooleanField('Female')
+
     #   make a field for care of address
     care_of = StringField(
         'Care of',
@@ -60,11 +108,11 @@ class AdmissionForm(FlaskForm):
             DataRequired(),
             Length(min=3, max=80)
         ]
-    )
+    ) 
 
     #   make a field for village 
     village =  StringField(
-        'Village/Town/House No',
+        'Village/Town',
         validators = [
             DataRequired(),
             Length(min=3, max=30)
@@ -77,6 +125,15 @@ class AdmissionForm(FlaskForm):
         validators = [
             DataRequired(),
             Length(min=4, max=30)
+        ]
+    )
+
+    #   make a field for post code
+    post_code = IntegerField(
+        'Post Code',
+        validators = [
+            DataRequired(),
+            Length(min=4, max=4)
         ]
     )
 
@@ -98,8 +155,38 @@ class AdmissionForm(FlaskForm):
         ]
     )
 
+    #   make a filed for region
+    region = StringField(
+        'Region',
+        validators = [
+            DataRequired(),
+            Length(min=3, max=20)
+        ]
+    )
+
+    #   make a field for email
+    email = StringField(
+        'E-mail *(optional)',
+        validators = [
+            DataRequired(),
+            Email()
+        ]
+    )
+
+    #   make a photo upload field
+    photo = FileField(
+        'Photo',
+        validators = [ DataRequired() ]
+    )
+
+    #   make a field for signature
+    signature = FileField(
+        'Signature',
+        validators = [ DataRequired()]
+    )
+
     #   make a select field for date of birth
-    birth_date = SelectField(
+    """ birth_date = SelectField(
         'Date of Birth',
         choices = [
             ('n/a', '--- Select Birth Date ---'),
@@ -120,7 +207,7 @@ class AdmissionForm(FlaskForm):
             ('29', '29'), ('30', '30'),
             ('31', '31')
         ]
-    )
+    ) """
 
     #   make a select field for month
     birth_month = SelectField(
@@ -154,30 +241,11 @@ class AdmissionForm(FlaskForm):
         ]
     )
 
-    #   make a text field for birth cirtificate id 
-    birth_cirtificate_no  = IntegerField(
-        'Birth Cirtificate No',
-        validators = [
-            DataRequired()
-        ]
-    )
-
-    #   make a field for post office
-    select_dropdown = SelectField(
-        'Select your post office',
-        choices = [
-            ('n/a', '--- Select Cities ---'),
-            ('NEW YORK', 'NEW YORK'),
-            ('Lakshmipur', 'Lakshmipur')
-        ]
-    )
-
     #   make checkbox for agree with terms and codition
     checkbox = BooleanField(
-        'I read and agree with terms and condition',
+        'I cirtify that all the information is given above is true. If the authority find any false information I will accept any decission the authority take.',
         validators = [
             DataRequired(),
-
         ]
     )
 
@@ -185,44 +253,235 @@ class AdmissionForm(FlaskForm):
     submit = SubmitField('Submit')
 
 
-class Loginform(FlaskForm):
-    """class with validators and fields to get a login"""
-    email = StringField('Email',
-    validators = [DataRequired(),Email()])
-    password = PasswordField('password',
-    validators=[DataRequired()])
-    remember = BooleanField('remember me')
 
-    submit = SubmitField('Login')
 
-class RegistrationForm(FlaskForm):
-    
-    username = StringField('Username',
-        validators = [DataRequired(),Length(min=2,max=20)])
-    email = StringField('Email',
-        validators = [DataRequired(),Email()])
-    password = PasswordField('password',
-        validators=[DataRequired(),Length(max=3)])
-    confirm_password = PasswordField('confirm_password',
-        validators=[DataRequired(), EqualTo('password')])
 
-    submit = SubmitField('Sign Up')
 
-    def validate_username(self, username):
-        user = User.query.filter_by(username=username.data).first()
-        if user:
-            raise ValidationError('that username already exists')
 
-    def validate_email(self, email):
-        user = User.query.filter_by(email=email.data).first()
-        if user:
-            raise ValidationError('that email already exists')
 
-class UpdateAccountform(FlaskForm):
-    
-    username = StringField('Username',
-        validators = [DataRequired(),Length(min=2,max=20)])
-    email = StringField('Email',
-        validators = [DataRequired(),Email()])
-    picture = FileField('Update profile Picture', validators=[FileAllowed(['jpg','png'])])
-    submit = SubmitField('Update')
+
+
+
+
+
+
+
+
+#   make a Apply Form for Teacher
+class ApplyTeacherForm(FlaskForm):
+
+    #   make name field
+    name = StringField(
+        'Name',
+        validators = [ DataRequired() ]
+    )
+
+    #   make username for teacher
+    username = StringField(
+        'Username',
+        validators = [ DataRequired() ]
+    )
+
+    #   make phone number filed
+    phone_number = IntegerField(
+        'Phone Number',
+        validators = [ DataRequired() ]
+    )
+
+    #   make email field
+    email = StringField(
+        'Email',
+        validators = [
+            DataRequired(),
+            Email()
+        ] 
+    )
+
+    #   make password field
+    password = PasswordField(
+        'Password',
+        validators = [ DataRequired() ]
+    )
+
+    #   make cofirm password
+    confirm_password = PasswordField(
+        'Confirm Password',
+        validators = [
+            DataRequired(),
+            EqualTo(password)
+        ]
+    )
+
+    #   make field for c.v
+    cv = FileField(
+        'Curriculam Vita',
+        validators = [ DataRequired() ]
+    )
+
+    #   make filed for photo
+    photo = FileField(
+        'Photo',
+        validators = [ DataRequired() ]
+    )
+
+    #   make field for signature
+    signature = FileField(
+        'Signature',
+        validators = [ DataRequired() ]
+    ) 
+
+    #   make a submit buton
+    submit = SubmitField( 'Submit' )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#   make a Apply Form for Teacher
+class ApplyParentsForm(FlaskForm):
+
+    #   make name field
+    name = StringField(
+        'Name',
+        validators = [ DataRequired() ]
+    )
+
+    #   make username for teacher
+    username = StringField(
+        'Username',
+        validators = [ DataRequired() ]
+    )
+
+    #   make phone number filed
+    phone_number = IntegerField(
+        'Phone Number',
+        validators = [ DataRequired() ]
+    )
+
+    #   make email field
+    email = StringField(
+        'Email',
+        validators = [
+            DataRequired(),
+            Email()
+        ] 
+    )
+
+    #   make student name field
+    student_name = StringField(
+        'Student Name',
+        validators = [ DataRequired() ]
+    )
+
+    #   make a select field for class
+    student_class = SelectField(
+        'Student Class',
+        choices = [
+            ('n/a', '--- Select Class ---'), ('play', '00 - PLAY'),
+            ('nursary', '00 - NURSARY'), ('one', '01 - ONE'),
+            ('two', '02 -TWO'), ('three', '03 - THREE'),
+            ('four', '04 - FOUR'), ('five', '05 - FIVE'),
+            ('six', '06 - SIX'), ('seven', '07 - SEVEN'),
+            ('eight', '08 - EIGHT'), ('nine', '09 - NINE'),
+            ('ten', '10- TEN')
+        ]
+    )
+
+    #   make a student roll field
+    student_roll = StringField(
+        'Student Roll',
+        validators = [ DataRequired() ]
+    )
+
+    #   make a student id field
+    student_id = IntegerField(
+        'Student ID',
+        validators = [ DataRequired() ]
+    )
+
+    #   make password field
+    password = PasswordField(
+        'Password',
+        validators = [ DataRequired() ]
+    )
+
+    #   make cofirm password
+    confirm_password = PasswordField(
+        'Confirm Password',
+        validators = [
+            DataRequired(),
+            EqualTo(password)
+        ]
+    )
+
+    #   make filed for photo
+    photo = FileField(
+        'Photo',
+        validators = [ DataRequired() ]
+    )
+
+    #   make field for signature
+    signature = FileField(
+        'Signature',
+        validators = [ DataRequired() ]
+    ) 
+
+    #   make a submit buton
+    submit = SubmitField( 'Submit' )
+
+
+
+
+
+
+
+
+
+
+
+# make a Login form
+class LoginForm(FlaskForm):
+
+    #   make a field for username
+    email = StringField(
+        'E-mail',
+        validators = [ 
+            DataRequired(),
+            Email()
+        ]
+    )
+
+    #   make a field for student id
+    studentID = StringField(
+        'Student ID',
+        validators = [ DataRequired() ]
+    )
+
+    #   make a field for password
+    password = PasswordField(
+        'Password',
+        validators = [ DataRequired() ]
+    )
+
+    #   makea a checkbox for remember me
+    remember_me = BooleanField( 'Remember me' )
+
+    #   make a create account button 
+    create_account = SubmitField( 'Create New Account' )
+
+
+    #   make a login buton
+    login = SubmitField( 'Login' )
+

@@ -53,7 +53,26 @@
                             ) }}
                         {% endif %}
                     </div>
-                        
+                    
+                    <div class="form_input" id="email">
+                        {{ form.studentID.label(class="form_label") }}
+                                               
+                        {% if form.studentID.errors %}
+                            {{ form.studentID( class="form_textbox is-invalid" ) }}
+                            <div class="invalid-feedback">
+                                {% for error in form.studentID.errors %}
+                                    <span>  {{ error }}   </span>
+                                {% endfor %}
+                            </div>
+
+                        {% else %}
+                            {{ form.studentID( 
+                                class="form_textbox",
+                                placeholder="Your studentID Address"
+                            ) }}
+                        {% endif %}
+                    </div>
+
                     <div class="form_input" id="password">
                         <div class="flex_forgetpass">
                             {{ form.password.label(class="form_label") }}
@@ -78,8 +97,8 @@
                     </div>
 
                     <div class="form_input">
-                        {{ form.remember_me(class="form_checkbox") }}
-                        {{ form.remember_me.label() }} 
+                        {{ form.remember_me()}}
+                        {{ form.remember_me.label()}}
                     </div>
 
                     <div class="flex_buttons">
@@ -103,7 +122,7 @@
                 <p>OR</p>
                 
                 <p class="parents_login">
-                    Login as <a href="#"> Parents </a>
+                    Login as <a href="#"> Admin or Teacher </a>
                 </p>
 
             </div>

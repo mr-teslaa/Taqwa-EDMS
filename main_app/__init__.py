@@ -9,25 +9,36 @@
 # ========================================================================== #
 
 
+
+
+
+
+
+
+
+
 from flask import Flask
+
+
+# import essential module for database
 from flask_sqlalchemy import SQLAlchemy
-from flask_login import LoginManager
-from flask_bcrypt import Bcrypt
-from flask_migrate import Migrate
 
 
-
-
-#   pass this app through flask
+# pass this application in flask
 app = Flask(__name__)
 
-app.config.from_object('config')
-db = SQLAlchemy(app)
-bcrypi = Bcrypt(app)
-login_manager = LoginManager(app)
-login_manager.login_view = 'login'
+# genarate a secret key
+app.config['SECRET_KEY'] = '248fb9a5bdffa13c0bc136504ebf75c2'
 
-from main_app import routes
-from main_app.models import User
-migrate = Migrate(app,db)
+# connect datbase to website
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:#tesla100%woW@localhost/postgres'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+# pass this application in sql_alchemy
+db = SQLAlchemy(app)
+
+
+# importing routes from routes.py
+from main_app import routes 
+#from main_app.model_users import Student_Basic_Info
 

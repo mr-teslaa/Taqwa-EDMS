@@ -259,7 +259,7 @@ body{
 footer{
     height: 100vh;
     background: linear-gradient( rgba(0, 0, 0, 0.705), rgba(0, 0, 0, 0.705) ),
-                url(../home/footer.jpg);
+                url('https://helenaargona.files.wordpress.com/2018/05/tim-arterbury-126157-unsplash.jpg');
 
     margin-top: 5%;
 }

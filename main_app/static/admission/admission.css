@@ -18,11 +18,25 @@
 :root {
     --deep_blue: #365374;
     --light_blue: #58b792;
+
     --shadow_whiteOverLightblue: 0 3px 6px rgba(0, 0, 0, 0.35); 
     --shadow_low_whiteOverLightblue: 0 1px 4px rgba(0, 0, 0, 0.4); 
-    --form_label_size: 1.7rem;
-    --form_textbox_size: 1rem;
+    --form_textbox_shadow: 0 0 0 0.2rem #007bff40;
+    --form_full_outer_shadow: 0 0 2.5rem 0.2rem #ced4da;    
+    
+
+    --form_label_size: 14px;
+    --form_label_color: #555555;
+
+    --form_textbox_size: 14px;
+    --from_textbox_color: #495057;
+    --form_textbox_border_color: #ced4da;
+    --from_textbox_border_focus: #80bdff;
     --form_textbox_background: #ffffff73;
+    --form_outer_shadow_color: #f2f2f2;
+
+    --button_green: #28a745;
+    --button_blue: #17a2b8;
 }
 
 ::placeholder {
@@ -30,21 +44,44 @@
     text-transform: capitalize; 
 }
 
-main,
-main header {
-    background: var(--light_blue, #58b792);
+html {
+    background: var(--form_outer_shadow_color);
+}
+
+/*--- back button ---*/
+/* .back {
+    margin: 1rem;
+}
+
+.back .button {
+    border: transparent;
+    border-radius: 0.266rem;
+    padding: 0.7rem 3rem;
+    letter-spacing: 1px;
+
+    font-size: 1rem;
+    font-weight: 1000;
+    
     color: #fff;
+    background: var(--deep_blue);
 }
 
-.row {
-    margin-bottom: 5rem;
-    display: flex;
-    justify-content: space-between;
+.back .button:hover,
+.back .button:focus {
+    cursor: pointer;
+    filter: brightness(90%);
+} */
+
+
+/* ==================== main section ==================== */
+
+main {
+    margin: 5% 8%;
+    background: #fff;
+    box-shadow: var(--form_full_outer_shadow);
 }
 
-.row .form_input {
-    flex: 0 0 45%;
-}
+/* ==================== end header  ====================== */
 
 
 /* ==================== header section ==================== */
@@ -55,22 +92,24 @@ header {
 }
 
 header .school_name {
-    font-size: 3rem;
-    text-shadow: var(
+    font-size: 2rem;
+    font-family: kanit;
+    /* text-shadow: var(
         --shadow_whiteOverLightblue, 
         0 3px 6px rgba(0, 0, 0, 0.35) 
-    );
+    ); */
 }
 
 header .school_address {
-    font-size: 1.5rem;
-    text-shadow: var( 
+    font-size: 1rem;
+    /* text-shadow: var( 
         --shadow_low_whiteOverLightblue, 
         0 1px 4px rgba(0, 0, 0, 0.4) 
-    );
+    ); */
 }
 
 header .title {
+    font-family: acme;
     margin-top: 2%;
     margin-bottom: 2%;
     color: var(--deep_blue, #365374);
@@ -81,66 +120,340 @@ header .title {
 
 /* ==================== form section ==================== */
 section {
-    padding: 2% 5%;
+    padding: 2% 5%; 
 }
 
-section .form_input {
+/*----- use grid for design beautiful admission form layout -----*/
+.grid_admission {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    /* grid-auto-rows: 6rem; */
+    grid-column-gap: 20px;
+    grid-template-areas: 
+        "name name name name name name name name name name name name"
+        "father father father father father father mother mother mother mother mother mother"
+        "class class class class class class phone phone phone phone phone phone"
+        "birthCirtificate birthCirtificate birthCirtificate birthCirtificate birthCirtificate birthCirtificate birthCirtificate birthCirtificate birthCirtificate birthCirtificate birthCirtificate birthCirtificate"
+        "dateBirth dateBirth dateBirth dateBirth dateBirth dateBirth gender gender gender gender gender gender"
+        "address address address address address address address address address address address address"
+        "careof careof careof careof careof careof village village village village village village"
+        "postOffice postOffice postOffice postOffice postCode postCode postCode postCode upozilla upozilla upozilla upozilla"
+        "zilla zilla zilla zilla zilla zilla regions regions regions regions regions regions"
+        "email email email email email email email email email email email email"
+        "transport transport transport transport transport transport transport transport transport transport transport transport"
+        "agree agree agree agree agree agree agree agree agree agree agree agree"
+        "photo photo photo photo photo photo signature signature signature signature signature signature"
+        "agreement agreement agreement agreement agreement agreement agreement agreement agreement agreement agreement agreement"
+        "refresh refresh refresh refresh . . . . submit submit submit submit"
+        ;
+}
+
+.form_input {
+    grid-area: name;
+}    
+
+#father_name {
+    grid-area: father;
+}
+
+#mother_name {
+    grid-area: mother;
+}    
+
+#class {
+    grid-area: class;
+}
+
+#phone_number {
+    grid-area: phone;
+}    
+
+#birth_cirtificate {
+    grid-area: birthCirtificate;
+}
+
+#birth_date {
+    grid-area: dateBirth;
+}    
+
+#gender {
+    grid-area: gender;
+}
+
+#address {
+    grid-area: address;
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--light_blue);
+}    
+
+#care_of {
+    grid-area: careof;
+}
+
+#village {
+    grid-area: village;
+}    
+
+#post_office {
+    grid-area: postOffice;
+}
+
+#post_code {
+    grid-area: postCode;
+}    
+
+#upozilla {
+    grid-area: upozilla;
+}
+
+#zilla {
+    grid-area: zilla;
+}    
+
+#region {
+    grid-area: regions;
+}
+
+#email {
+    grid-area: email;
+}    
+
+#photo {
+    grid-area: photo;
+}
+
+#signature {
+    grid-area: signature;
+}
+
+#agreement {
+    grid-area: agreement;
+}
+
+#refresh {
+    grid-area: refresh;
+}
+
+#submit {
+    grid-area: submit;
+}    
+
+/*-- end of grid --*/
+
+
+
+
+
+
+
+
+
+/*----- use grid for teacher apply form -----*/
+
+.grid_teacher_apply {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-column-gap: 20px;
+    grid-template-areas: 
+        "name name name name name name name name name name name name"
+        "username  username  username  username  username  username  phone phone phone phone phone phone"
+        "email email email email email email email email email email email email"
+        "password password password password password password confirm confirm confirm confirm confirm confirm"
+        "cv cv cv cv photo photo photo photo signature signature signature signature"
+        "refresh refresh refresh refresh . . . . submit submit submit submit"    
+    ;
+}
+
+#name {
+    grid-area: name;
+}
+
+#username {
+    grid-area: username;
+}
+
+#phone_number {
+    grid-area: phone;
+}
+
+#email {
+    grid-area: email;
+}
+
+#password {
+    grid-area: password;
+}
+
+#confirm_password {
+    grid-area: confirm;
+}
+
+#cv {
+    grid-area: cv;
+}
+
+#photo {
+    grid-area: photo;
+}
+
+#signature {
+    grid-area: signature;
+}
+
+#refresh {
+    grid-area: refresh;
+}
+
+#submit {
+    grid-area: submit;
+}
+
+/*--- end of grid ---*/
+
+
+
+
+
+
+
+
+
+
+
+
+section .form_input {   
     padding-bottom: 2%;
+    margin-bottom: 0.5rem;
+    margin-right: 4rem;
+}
+
+section .form_button {
+    margin-right: 2.2rem;
 }
 
 section .form_label {
-    font-weight: bold;
+    color: var(--form_label_color);
+
     font-size: var(--form_label_size);
-    text-shadow: var(--shadow_low_whiteOverLightblue);
+    font-weight: 400;
 }
 
 section .form_textbox {
     width: 100%;
-    border: none;
-    font-size: 1rem;
-    text-transform: uppercase;
-    color: var(--deep_blue, #365374);
-    letter-spacing: 1px;
-    background: var(--form_textbox_background);
+    color: var(--from_textbox_color);
     padding: 0.5rem 0.9rem;
+    margin-top: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+
+    border: 1.5px solid var(--form_textbox_border_color);
+    border-radius: 0.25rem;
+
+    font-size: 1rem;
+    font-weight: 500;
+    
     transition: border-color 0.15s ease-in-out, 
-        box-shadow 0.15s ease-in-out;
-    box-shadow: var(--shadow_whiteOverLightblue);
+                box-shadow 0.15s ease-in-out;
 }
+
+section .form_textbox:focus {
+    color: var(--from_textbox_color);
+    background-color: #fff;
+    border-color: var(--from_textbox_border_focus);
+    outline: 0;
+    box-shadow: var(--form_textbox_shadow);
+  }
 
 section .input_title {
     font-size: 2rem;
-    font-family: Arial;
+    font-family: acme;
     font-weight: 700;
-    letter-spacing: 2px;
+    /* letter-spacing: 2px; */
     word-spacing: 1rem;
-    text-shadow: var(--shadow_whiteOverLightblue);
-    color: var(--deep_blue);
+    /* text-shadow: var(--shadow_whiteOverLightblue);
+    color: var(--deep_blue); */
 }
 
-section .form_select {
-    width: 15rem;
-    padding: 0.3rem 0.9rem;
-    font-size: var(--form_textbox_size);
-    background: var(--form_textbox_background);
+
+/*--- form checkbox ---*/
+section .form_checkbox {
+    margin-top: 1rem;
+    margin-left: 0.2rem;
+    margin-right: 8rem;
+}
+
+.checkbox_flex {
+    display: flex;
+    /* justify-content: space-between; */
+}
+
+
+.check_option {
+    color: #000;
+    font-size: 1.2rem;
+}
+
+/*--- end chekbox ---*/
+
+#agreement {
+    text-align: justify;
+}
+
+#agreement p {
+    color: #000;
+    font-size: 1.2rem;
+    padding: 1rem 2rem 2rem 0;
+    line-height: 1.88rem;
+}
+
+.submit_button {
+    width: 100%;
     border: transparent;
-    color: var(--deep_blue);
-    box-shadow: var(--shadow_low_whiteOverLightblue);
+    padding: 0.8rem 5rem;
+    color: #fff;
+    font-weight: 1000;
+    font-size: 1.2rem;
+    border-radius: 0.25rem;
 }
 
-section form .submit {
-    border: transparent;
-    background: var(--deep_blue);
+.refresh {
+    background: var(--button_blue);
+}
+
+.submit {
+    background: var(--button_green);
 }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*----- if form is invalid. -----*/
 .invalid-feedback {
     display: none;
     width: 100%;
     margin-top: 0.25rem;
     font-size: 80%;
     color: #dc3545;
-  }
+}
 
 .was-validated :invalid ~ .invalid-feedback,
 .was-validated :invalid ~ .invalid-tooltip,
@@ -149,21 +462,11 @@ section form .submit {
   display: block;
 }
 
-.form_textbox.is-invalid {
+.form_textbox .is-invalid {
   border-color: #dc3545;
   padding-right: calc(1.5em + 0.75rem);
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' stroke='%23dc3545' viewBox='0 0 12 12'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e");
   background-repeat: no-repeat;
   background-position: right calc(0.375em + 0.1875rem) center;
   background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
-}
-
-
-.submit_button {
-    padding: 1rem 2rem;
-    background-color: var(--deep_blue);
-    color: #fff;
-    font-weight: 1000;
-    font-size: 1rem;
-    border: transparent;
 }
