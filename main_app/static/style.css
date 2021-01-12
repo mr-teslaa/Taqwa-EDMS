@@ -6,10 +6,14 @@
     align-items: center;
 }
 
-form {
-    width: 50rem;
+.form-small {
+    width: 30rem;
 }
 
-.row {
-    background-color: red !important;
+.form-large {
+    width: 60rem;
 }
+
+/* .row {
+    background-color: red !important;
+} */
