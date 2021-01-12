@@ -31,7 +31,7 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = '248fb9a5bdffa13c0bc136504ebf75c2'
 
 # connect datbase to website
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:#tesla100%woW@localhost/postgres'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # pass this application in sql_alchemy

@@ -9,7 +9,7 @@
 
 
 {% block additional_link %}
-    <link rel="stylesheet" href=" {{ url_for('static', filename='admission/admission.css') }} ">
+    <!-- <link rel="stylesheet" href=" {{ url_for('static', filename='admission/admission.css') }} "> -->
 {% endblock %}
 
 
@@ -22,142 +22,209 @@
 
     <main>
 
-        <div class="form_container">
+        <div class="">
             
             <header>
-                <h1 class="school_name">IQRA JUNIOR SCHOOL</h1>
-                <h2 class="title">Admission Form - 2020</h2>
+        
+                <h1 class="h1 text-center"> Admission Form - 2020 </h1>
+        
             </header>
 
-            <section>
+            <section class="custom_form_center">
             
-                <form action="" method="post" class="grid_admission">
+                <form action="" method="post" class="">
                     {{ form.hidden_tag() }}
 
-                    <div class="form_input" id="name">
-                        {{ form.name.label(class="form_label") }}
+                    <!-- full name -->
+                    <div class="row">
+
+                        <div class="col-sm-2">
+        
+                            <div class="form-group">
+                                {{ form.name.label(class="form-control-plaintext") }}
+                            </div>
+        
+                        </div>
+
+                        <div class="col-sm-10">
+                            {% if form.name.errors %}
+                                {{ form.name( class="form-control is-invalid" ) }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.name.errors %}
+                                        <span>  {{ error }}   </span>
+                                    {% endfor %}
+                                </div>
+    
+                            {% else %}
+                                {{ form.name( 
+                                    class="form-control",
+                                    placeholder="Full name"
+                                ) }}
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <!-- father name and mother name -->
+                    <div class="row">
+
+                        <div class="col-sm-2">
+                            {{ form.father_name.label(class="form-control-plaintext") }}
+                        </div>
+
+                        <div class="col-sm-4">
+                            {% if form.father_name.errors %}
+                                {{ form.father_name( class="form-control is-invalid" ) }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.father_name.errors %}
+                                        <span>  {{ error }}   </span>
+                                    {% endfor %}
+                                </div>
+
+                            {% else %}
+                                {{ form.father_name( 
+                                    class="form-control",
+                                    placeholder="Father's name"
+                                ) }}
+                            {% endif %}
+                        </div>
+
+                        <div class="col-sm-2">
+                            {{ form.mother_name.label(class="form-control-plaintext") }}
+                        </div>
+
+                        <div class="col-sm-4">
+                            {% if form.mother_name.errors %}
+                                {{ form.mother_name( class="form-control is-invalid" ) }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.mother_name.errors %}
+                                        <span>  {{ error }}   </span>
+                                    {% endfor %}
+                                </div>
+
+                            {% else %}
+                                {{ form.mother_name( 
+                                    class="form-control",
+                                    placeholder="Mother's name"
+                                ) }}
+                            {% endif %}
+                        </div>
+
+                    </div>
+
+                    <!-- class want to apply and phone number -->
+                    <div class="row">
+
+                        <div class="col-sm-3">
+                            {{ form.applicable_class.label(class="form-control-plaintext") }}
+                        </div>
+
+                        <div class="col-sm-3">
+                            {{ form.applicable_class(class="form-select") }}
+                        </div>
                         
-                        {% if form.name.errors %}
-                            {{ form.name( class="form_textbox is-invalid" ) }}
-                            <div class="invalid-feedback">
-                                {% for error in form.name.errors %}
-                                    <span>  {{ error }}   </span>
-                                {% endfor %}
+                        <div class="col-sm-2">
+                            {{ form.phone_number.label(class="form-control-plaintext") }}
+                        </div>
+                        
+                        <div class="col-sm-4">
+                            {% if form.phone_number.errors %}
+                                {{ form.phone_number( class="form-control is-invalid" ) }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.phone_number.errors %}
+                                        <span>  {{ error }}   </span>
+                                    {% endfor %}
+                                </div>
+
+                            {% else %}
+                               {{ form.phone_number(
+                                    class="form-control",
+                                    placeholder="Phone Number"
+                                ) }} 
+                            {% endif %}  
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-sm-3">
+                            {{ form.birth_cirtificate_no.label(class="form-control-plaintext") }}
+                        </div>
+
+                        <div class="col-sm-4">
+                            {% if form.birth_cirtificate_no.errors %}
+                                {{ form.birth_cirtificate_no( class="form-control is-invalid" ) }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.birth_cirtificate_no.errors %}
+                                        <span>  {{ error }}   </span>
+                                    {% endfor %}
+                                </div>
+
+                            {% else %}
+                                {{ form.birth_cirtificate_no( 
+                                    class="form-control", 
+                                    placeholder="Birth Cirtificate No"
+                                ) }}
+                            {% endif %}
+                        </div>
+                        
+                        <div class="col-sm-2">
+                            {{ form.birth_date.label(class="form-control-plaintext") }}
+                        </div>
+                        
+                        <div class="col-sm-3">
+                            {% if form.birth_date.errors %}
+                                {{ form.birth_date( class="form-control is-invalid" ) }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.birth_date.errors %}
+                                        <span>  {{ error }}   </span>
+                                    {% endfor %}
+                                </div>
+
+                            {% else %}
+                                {{ form.birth_date(
+                                    class="form-control",
+                                    placeholder="DD/MM/YY"
+                                ) }}
+                            {% endif %}
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-sm-2">
+                            <p class="form-label"> Gender </p>
+                        </div>
+
+                        <div class="col-sm-2">
+                            
+                            <div class="form-check">
+                                {{ form.male(class="form-check-input") }}
+                            
+                                {{ form.male.label() }}
+                            </div>
+                            
+                        </div>
+                        
+                        <div class="col-sm-3">
+                            
+                            <div class="form-check">
+                                {{ form.female(class="form-check-input") }}
+
+                                {{ form.female.label() }}
                             </div>
 
-                        {% else %}
-                            {{ form.name( 
-                                class="form_textbox",
-                                placeholder="Enter your full name"
-                            ) }}
-                        {% endif %}
-                    </div>
-                        
-                    <div class="form_input" id="father_name">
-                        {{ form.father_name.label(class="form_label") }}
-                        
-                        {% if form.father_name.errors %}
-                            {{ form.father_name( class="form_textbox is-invalid" ) }}
-                            <div class="invalid-feedback">
-                                {% for error in form.father_name.errors %}
-                                    <span>  {{ error }}   </span>
-                                {% endfor %}
-                            </div>
-
-                        {% else %}
-                            {{ form.father_name( 
-                                class="form_textbox",
-                                placeholder="Enter your father's name"
-                            ) }}
-                        {% endif %}
-                    </div>
-
-                    <div class="form_input" id="mother_name">
-                        {{ form.mother_name.label(class="form_label") }}
-                        
-                        {% if form.mother_name.errors %}
-                            {{ form.mother_name( class="form_textbox is-invalid" ) }}
-                            <div class="invalid-feedback">
-                                {% for error in form.mother_name.errors %}
-                                    <span>  {{ error }}   </span>
-                                {% endfor %}
-                            </div>
-
-                        {% else %}
-                            {{ form.mother_name( 
-                                class="form_textbox",
-                                placeholder="Enter your mother's name"
-                            ) }}
-                        {% endif %}
-                    </div>
-
-                    <div class="form_input" id="class">
-                        {{ form.applicable_class.label(class="form_label") }}
-
-                        {{ form.applicable_class(class="form_textbox") }}
-                    </div>
-
-                    <div class="form_input" id="phone_number">
-                        {{ form.phone_number.label(class="form_label") }}
-
-                        {{ form.phone_number(
-                            class="form_textbox",
-                            placeholder="Phone Number"
-                        ) }}
-                    </div>
-
-                    <div class="form_input" id="birth_cirtificate">
-                        {{ form.birth_cirtificate_no.label(class="form_label") }}
-                        
-                        {% if form.birth_cirtificate_no.errors %}
-                            {{ form.birth_cirtificate_no( class="form_textbox is-invalid" ) }}
-                            <div class="invalid-feedback">
-                                {% for error in form.birth_cirtificate_no.errors %}
-                                    <span>  {{ error }}   </span>
-                                {% endfor %}
-                            </div>
-
-                        {% else %}
-                            {{ form.birth_cirtificate_no( 
-                                class="form_textbox", 
-                                placeholder="Birth Cirtificate No"
-                            ) }}
-                        {% endif %}
-                    </div>
-
-                    <div class="form_input" id="birth_date">
-                        {{ form.birth_date.label(class="form_label") }}
-
-                        {{ form.birth_date(
-                            class="form_textbox",
-                            placeholder="DD/MM/YY"
-                        ) }}
-                    </div>
-
-                    <div class="form_input" id="gender">
-                        
-                        <p class="form_label"> Gender </p>
-                    
-                        <span class="checkbox_flex">
-                            <div class="form_checkbox">
-                                {{ form.male(class="check") }}
-                                {{ form.male.label(class="check_option") }}
-                            </div>
-
-                            <div class="form_checkbox">
-                                {{ form.female(class="check") }}
-                                {{ form.female.label(class="check_option") }}
-                            </div>
-                        </span>
+                        </div>
 
                     </div>
 
-                    <p class="input_title" id="address">
+                    <p class="h4">
                         Present Address
                     </p>
                     
                     <div class="form_input" id="care_of">
-                        {{ form.care_of.label(class="form_label") }}
+                        {{ form.care_of.label(class="form-control-plaintext") }}
                         
                         {{ form.care_of(
                             class="form_textbox",
@@ -165,56 +232,21 @@
                         ) }}
                     </div>
 
-                    <div class="form_input" id="village">
-                        {{ form.village.label(class="form_label") }}
-                        
-                        {{ form.village(
+                    <div class="form_input" id="zip_code">
+                        {{ form.zip_code.label(class="form_label") }}
+
+                        {{ form.zip_code(
                             class="form_textbox",
-                            placeholder="Village"
+                            placeholder="ZIP Code"
                         ) }}
                     </div>
 
-                    <div class="form_input" id="post_office">
-                        {{ form.post_office.label(class="form_label") }}
-                        
-                        {{ form.post_office(
+                    <div class="form_input" id="address">
+                        {{ form.address.label(class="form_label") }}
+
+                        {{ form.address(
                             class="form_textbox",
-                            placeholder="Post Office"
-                        ) }}
-                    </div>
-
-                    <div class="form_input" id="post_code">
-                        {{ form.post_code.label(class="form_label") }}
-
-                        {{ form.post_code(
-                            class="form_textbox",
-                            placeholder="Post Code"
-                        ) }}
-                    </div>
-
-                    <div class="form_input" id="upozilla">
-                        {{ form.upozilla.label(class="form_label") }}
-                        {{ form.upozilla(
-                            class="form_textbox",
-                            placeholder="Upozilla"
-                        ) }}
-                    </div>
-
-                    <div class="form_input" id="zilla">
-                        {{ form.zilla.label(class="form_label") }}
-                        
-                        {{ form.zilla(
-                            class="form_textbox",
-                            placeholder="Zilla"
-                        ) }}
-                    </div>
-
-                    <div class="form_input" id="region">
-                        {{ form.region.label(class="form_label") }}
-
-                        {{ form.region(
-                            class="form_textbox",
-                            placeholder="Region"
+                            placeholder="Address"
                         ) }}
                     </div>
 

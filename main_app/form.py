@@ -8,7 +8,7 @@ from wtforms import SelectField
 from wtforms import IntegerField
 from wtforms import FileField
 from wtforms import RadioField
-
+       
 #   wtf validators
 from wtforms.validators import DataRequired
 from wtforms.validators import Length
@@ -110,26 +110,8 @@ class AdmissionForm(FlaskForm):
         ]
     ) 
 
-    #   make a field for village 
-    village =  StringField(
-        'Village/Town',
-        validators = [
-            DataRequired(),
-            Length(min=3, max=30)
-        ]
-    )
-
-    #   make a field for post office
-    post_office = StringField(
-        'Post Office',
-        validators = [
-            DataRequired(),
-            Length(min=4, max=30)
-        ]
-    )
-
-    #   make a field for post code
-    post_code = IntegerField(
+    #   make a field for zip code
+    zip_code = IntegerField(
         'Post Code',
         validators = [
             DataRequired(),
@@ -137,27 +119,9 @@ class AdmissionForm(FlaskForm):
         ]
     )
 
-    #   make a field for upozilla  
-    upozilla = StringField(
-        'Upozilla',
-        validators = [
-            DataRequired(),
-            Length(min=3, max=30)
-        ]
-    )
-
-    #   make a filed for zilla
-    zilla = StringField(
-        'Zilla',
-        validators = [
-            DataRequired(),
-            Length(min=3, max=20)
-        ]
-    )
-
-    #   make a filed for region
-    region = StringField(
-        'Region',
+    #   make a filed for address
+    address = StringField(
+        'Address',
         validators = [
             DataRequired(),
             Length(min=3, max=20)
@@ -168,8 +132,8 @@ class AdmissionForm(FlaskForm):
     email = StringField(
         'E-mail *(optional)',
         validators = [
-            DataRequired(),
-            Email()
+            Email(),
+            DataRequired()
         ]
     )
 
@@ -463,12 +427,6 @@ class LoginForm(FlaskForm):
         ]
     )
 
-    #   make a field for student id
-    studentID = StringField(
-        'Student ID',
-        validators = [ DataRequired() ]
-    )
-
     #   make a field for password
     password = PasswordField(
         'Password',
@@ -478,10 +436,40 @@ class LoginForm(FlaskForm):
     #   makea a checkbox for remember me
     remember_me = BooleanField( 'Remember me' )
 
-    #   make a create account button 
-    create_account = SubmitField( 'Create New Account' )
-
-
     #   make a login buton
-    login = SubmitField( 'Login' )
+    login_button = SubmitField( 'Login' )
 
+
+
+
+
+
+
+# make a login form for parents
+class LoginFormParents(FlaskForm):
+
+    # make a field for email
+    email = StringField(
+      'Email address',
+      validators = [
+          Email(),
+          DataRequired()  
+      ]  
+    )
+
+    # make a field for student id
+    student_id = StringField(
+        'Student ID',
+        validators = [
+            DataRequired(),
+            Length(7, 7)
+        ]
+    )
+
+    # make a field for password
+    password = PasswordField(
+        'Password',
+        validators = [ DataRequired() ]    
+    )
+
+    login_button = SubmitField( 'Login' )

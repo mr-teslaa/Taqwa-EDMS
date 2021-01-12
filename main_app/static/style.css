@@ -1,0 +1,15 @@
+.custom_form_center {
+    height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+form {
+    width: 50rem;
+}
+
+.row {
+    background-color: red !important;
+}

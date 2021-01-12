@@ -9,7 +9,7 @@
 
 
 {% block additional_link %}
-    <link rel="stylesheet" href=" {{ url_for('static', filename='login/login.css') }} ">
+    <!-- <link rel="stylesheet" href=" {{ url_for('static', filename='login/login.css') }} "> -->
 {% endblock %}
 
 
@@ -20,115 +20,88 @@
         <button class="button"> Back </button>
     </div> -->
 
-    <main>
+    <main class="custom_form_center">
 
-        <div class="form_container">
-            
-            <header>
-                <h1 class="school_name">IQRA JUNIOR SCHOOL</h1>
-            </header>
-
-            <section>
+        <section>        
         
-                <h2 class="title">Login</h2>
+            <h1 class="text-center mb-5"> Login as Parents </h2>
 
-                <form action="" method="post" class="grid_login">
-                    {{ form.hidden_tag() }}
+            <form action="" method="post" class="">
+                {{ form.hidden_tag() }}
 
-                    <div class="form_input" id="email">
-                        {{ form.email.label(class="form_label") }}
-                        
-                        {% if form.email.errors %}
-                            {{ form.email( class="form_textbox is-invalid" ) }}
-                            <div class="invalid-feedback">
-                                {% for error in form.email.errors %}
-                                    <span>  {{ error }}   </span>
-                                {% endfor %}
-                            </div>
+                <!-- email field -->
+                <div class="mb-3">
 
-                        {% else %}
-                            {{ form.email( 
-                                class="form_textbox",
-                                placeholder="Your Email Address"
-                            ) }}
-                        {% endif %}
-                    </div>
-                    
-                    <div class="form_input" id="email">
-                        {{ form.studentID.label(class="form_label") }}
-                                               
-                        {% if form.studentID.errors %}
-                            {{ form.studentID( class="form_textbox is-invalid" ) }}
-                            <div class="invalid-feedback">
-                                {% for error in form.studentID.errors %}
-                                    <span>  {{ error }}   </span>
-                                {% endfor %}
-                            </div>
+                    {{ form.email.label(class="form-label") }}
 
-                        {% else %}
-                            {{ form.studentID( 
-                                class="form_textbox",
-                                placeholder="Your studentID Address"
-                            ) }}
-                        {% endif %}
-                    </div>
-
-                    <div class="form_input" id="password">
-                        <div class="flex_forgetpass">
-                            {{ form.password.label(class="form_label") }}
-                            <span class="forget_pass">
-                                <a href="#">Forget Password?</a>
-                            </span>
-                        </div>
-                        {% if form.password.errors %}
-                            {{ form.password( class="form_textbox is-invalid" ) }}
-                            <div class="invalid-feedback">
-                                {% for error in form.password.errors %}
-                                    <span>  {{ error }}   </span>
-                                {% endfor %}
-                            </div>
-
-                        {% else %}
-                            {{ form.password( 
-                                class="form_textbox",
-                                placeholder="Your Password"
-                            ) }}
-                        {% endif %}
-                    </div>
-
-                    <div class="form_input">
-                        {{ form.remember_me()}}
-                        {{ form.remember_me.label()}}
-                    </div>
-
-                    <div class="flex_buttons">
-
-                        <div class="form_button" id="create_account">
-                            {{ form.create_account( class="submit_button create" ) }}
-                        </div>
-
-                        <div class="form_button" id="login">
-                            {{ form.login( class="submit_button login" ) }}
+                    {% if form.email.errors %}
+                        {{ form.email( class="form-control is-invalid" ) }}
+                        <div class="invalid-feedback">
+                            {% for error in form.email.errors %}
+                                <span>  {{ error }}   </span>
+                            {% endfor %}
                         </div>
                     
-                    </div>
+                    {% else %} 
+                        {{ form.email(
+                            class="form-control"
+                        ) }}
 
-                </form>
+                    {% endif %}
 
-            </section>
+                </div>
 
-            <div class="addtional_login">
-                
-                <p>OR</p>
-                
-                <p class="parents_login">
-                    Login as <a href="#"> Admin or Teacher </a>
-                </p>
+                <!-- student id field -->
+                <div class="mb-3">
 
-            </div>
+                    {{ form.student_id.label(class="form-label") }}
 
+                    {% if form.student_id.errors %}
+                        {{ form.student_id( class="form-control is-invalid" ) }}
+                        <div class="invalid-feedback">
+                            {% for error in form.student_id.errors %}
+                                <span>  {{ error }}   </span>
+                            {% endfor %}
+                        </div>
+                    
+                    {% else %} 
+                        {{ form.student_id(
+                            class="form-control"
+                        ) }}
+
+                    {% endif %}
+
+                </div>
+
+                <!-- password filed -->
+                <div class="mb-3">
+
+                    {{ form.password.label(class="form-label") }}
+
+                    {% if form.password.errors %}
+                        {{ form.password( class="form-control is-invalid" ) }}
+                        <div class="invalid-feedback">
+                            {% for error in form.password.errors %}
+                                <span>  {{ error }}   </span>
+                            {% endfor %}
+                        </div>
+                    
+                    {% else %} 
+                        {{ form.password(
+                            class="form-control"
+                        ) }}
+
+                    {% endif %}
+
+                </div>
+
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    {{ form.login_button( class="btn btn-lg btn-primary" ) }}
+                </div>
+                    
+            </form>
             
-        </div>
+        </section>
         
     </main>
 {% endblock %}
