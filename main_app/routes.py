@@ -24,6 +24,11 @@ from main_app.form import LoginFormParents
 def index():
     return render_template('index.html')
 
+#   dashboard route
+@app.route('/dashboard')
+def dashboard():
+    return render_template('dashboard.html')
+
 #   admission route
 @app.route('/admission', methods=['POST', 'GET'])
 def admission():

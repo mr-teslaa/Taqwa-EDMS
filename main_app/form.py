@@ -24,9 +24,19 @@ from wtforms.validators import EqualTo
 
 #   make a class for wtforms 
 class AdmissionForm(FlaskForm):
-    #   make a field for name
-    name = StringField(
-        'Full Name',
+
+    #   make a field for first name
+    firstname = StringField(
+        'First name',
+        validators = [
+            DataRequired(),
+            Length(min=3, max=50)
+        ]
+    )
+
+    #   make a field for last name
+    lastname = StringField(
+        'Last name',
         validators = [
             DataRequired(),
             Length(min=3, max=50)
@@ -101,6 +111,12 @@ class AdmissionForm(FlaskForm):
     #   make a radio for female
     female = BooleanField('Female')
 
+    #   make a radio for trasportation yes
+    yes = BooleanField('Yes') 
+    
+    #   make a radio for trasportation no
+    no = BooleanField('no') 
+
     #   make a field for care of address
     care_of = StringField(
         'Care of',
@@ -130,7 +146,7 @@ class AdmissionForm(FlaskForm):
 
     #   make a field for email
     email = StringField(
-        'E-mail *(optional)',
+        'E-mail',
         validators = [
             Email(),
             DataRequired()

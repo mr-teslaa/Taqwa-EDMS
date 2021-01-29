@@ -20,13 +20,13 @@
         <button class="button"> Back </button>
     </div> -->
 
-    <main>
+    <main class="bg_gray">
 
         <div class="">
             
             <header>
         
-                <h1 class="h1 text-center"> Admission Form - 2020 </h1>
+                <h1 class="h1 text-center p-5"> Admission Form - 2020 </h1>
         
             </header>
 
@@ -35,43 +35,57 @@
                 <form action="" method="post" class="form-large">
                     {{ form.hidden_tag() }}
 
-                    <!-- full name -->
+                
                     <div class="row">
 
-                        <div class="col-sm-2">
-        
-                            <div class="form-group">
-                                {{ form.name.label(class="form-control-plaintext") }}
-                            </div>
-        
-                        </div>
-
-                        <div class="col-sm-10">
-                            {% if form.name.errors %}
-                                {{ form.name( class="form-control is-invalid" ) }}
+                        <!-- father name -->
+                        <div class="col-sm-6">
+                            {{ form.firstname.label(class="form-label") }}
+                            
+                            {% if form.firstname.errors %}
+                                {{ form.firstname( class="form-control is-invalid" ) }}
                                 <div class="invalid-feedback">
-                                    {% for error in form.name.errors %}
+                                    {% for error in form.firstname.errors %}
                                         <span>  {{ error }}   </span>
                                     {% endfor %}
                                 </div>
     
                             {% else %}
-                                {{ form.name( 
+                                {{ form.firstname( 
                                     class="form-control",
-                                    placeholder="Full name"
+                                    placeholder="First name"
+                                ) }}
+                            {% endif %}
+                        </div>
+                        
+                        <!-- last name -->
+                        <div class="col-sm-6">
+                            {{ form.lastname.label(class="form-label") }}
+                            
+                            {% if form.lastname.errors %}
+                                {{ form.lastname( class="form-control is-invalid" ) }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.lastname.errors %}
+                                        <span>  {{ error }}   </span>
+                                    {% endfor %}
+                                </div>
+    
+                            {% else %}
+                                {{ form.lastname( 
+                                    class="form-control",
+                                    placeholder="Lastname"
                                 ) }}
                             {% endif %}
                         </div>
                     </div>
 
-                    <!-- father name and mother name -->
-                    <div class="row">
 
-                        <div class="col-sm-2">
-                            {{ form.father_name.label(class="form-control-plaintext") }}
-                        </div>
+                    <div class="row mt-2">
 
-                        <div class="col-sm-4">
+                        <!-- father name -->
+                        <div class="col-sm-6">
+                            {{ form.father_name.label(class="form-label") }}
+                
                             {% if form.father_name.errors %}
                                 {{ form.father_name( class="form-control is-invalid" ) }}
                                 <div class="invalid-feedback">
@@ -88,11 +102,10 @@
                             {% endif %}
                         </div>
 
-                        <div class="col-sm-2">
-                            {{ form.mother_name.label(class="form-control-plaintext") }}
-                        </div>
-
-                        <div class="col-sm-4">
+                        <!-- mother name -->
+                        <div class="col-sm-6">
+                            {{ form.mother_name.label(class="form-label") }}
+                        
                             {% if form.mother_name.errors %}
                                 {{ form.mother_name( class="form-control is-invalid" ) }}
                                 <div class="invalid-feedback">
@@ -111,22 +124,19 @@
 
                     </div>
 
-                    <!-- class want to apply and phone number -->
-                    <div class="row">
+                    
+                    <div class="row mt-2">
 
-                        <div class="col-sm-3">
-                            {{ form.applicable_class.label(class="form-control-plaintext") }}
-                        </div>
-
-                        <div class="col-sm-3">
+                        <!-- select class -->
+                        <div class="col-sm-4">
+                            {{ form.applicable_class.label(class="form-label") }}                    
                             {{ form.applicable_class(class="form-select") }}
                         </div>
                         
-                        <div class="col-sm-2">
-                            {{ form.phone_number.label(class="form-control-plaintext") }}
-                        </div>
-                        
+                        <!-- phone number -->
                         <div class="col-sm-4">
+                            {{ form.phone_number.label(class="form-label") }}
+                        
                             {% if form.phone_number.errors %}
                                 {{ form.phone_number( class="form-control is-invalid" ) }}
                                 <div class="invalid-feedback">
@@ -143,15 +153,17 @@
                             {% endif %}  
                         </div>
 
+                        
+
                     </div>
 
-                    <div class="row">
+            
+                    <div class="row mt-2">
 
-                        <div class="col-sm-3">
-                            {{ form.birth_cirtificate_no.label(class="form-control-plaintext") }}
-                        </div>
-
-                        <div class="col-sm-4">
+                        <!-- birth cirtificate no -->
+                        <div class="col-sm-6">
+                            {{ form.birth_cirtificate_no.label(class="form-label") }}
+                    
                             {% if form.birth_cirtificate_no.errors %}
                                 {{ form.birth_cirtificate_no( class="form-control is-invalid" ) }}
                                 <div class="invalid-feedback">
@@ -168,11 +180,10 @@
                             {% endif %}
                         </div>
                         
-                        <div class="col-sm-2">
-                            {{ form.birth_date.label(class="form-control-plaintext") }}
-                        </div>
+                        <!-- brith of date -->
+                        <div class="col-sm-6">
+                            {{ form.birth_date.label(class="form-label") }}
                         
-                        <div class="col-sm-3">
                             {% if form.birth_date.errors %}
                                 {{ form.birth_date( class="form-control is-invalid" ) }}
                                 <div class="invalid-feedback">
@@ -191,40 +202,115 @@
 
                     </div>
 
-                    <div class="row">
-
-                        <div class="col-sm-2">
-                            <p class="form-label"> Gender </p>
-                        </div>
-
-                        <div class="col-sm-2">
-                            
-                            <div class="form-check">
-                                {{ form.male(class="form-check-input") }}
-                            
-                                {{ form.male.label() }}
-                            </div>
-                            
-                        </div>
+                    
+                    <div class="row mt-2">
                         
-                        <div class="col-sm-3">
+                        <!-- address -->
+                        <div class="col-sm-6">
+                            {{ form.address.label(class="form-label") }}
+    
+                            {{ form.address(
+                                class="form-control",
+                                placeholder="Address"
+                            ) }}
+                        </div>
+
+                        <!-- gender -->
+                        <div class="col-sm-6">
+                
+                            <p class="form-label"> Gender </p>
                             
-                            <div class="form-check">
-                                {{ form.female(class="form-check-input") }}
-
-                                {{ form.female.label() }}
+                            <div class="d-flex align-items-center nobg">                        
+                                <div class="form-check form-control">
+                                    {{ form.male(class="form-check-input") }}
+                                    {{ form.male.label(class="form-label") }}
+                                </div>
+    
+                                <div class="form-check form-control">
+                                    {{ form.female(class="form-check-input") }}
+                                    {{ form.female.label(class="form-label") }}    
+                                </div>
                             </div>
+                            
+                        </div>
 
+                    </div>
+                    
+                    
+                    <div class="row mt-2">
+                        
+                        <!-- email -->
+                        <div class="col-sm-6">
+                            {{ form.email.label(class="form-label") }}
+
+                            {{ form.email(
+                                class="form-control",
+                                placeholder="Email Address"
+                            ) }}
+                        </div>
+
+                        <!-- transportation service -->
+                        <div class="col-sm-6">
+                
+                            <p class="form-label"> Request for transportation service </p>
+                            
+                            <div class="d-flex align-items-center nobg">                        
+                                <div class="form-check form-control">
+                                    {{ form.yes(class="form-check-input") }}
+                                    {{ form.yes.label(class="form-label") }}
+                                </div>
+    
+                                <div class="form-check form-control">
+                                    {{ form.no(class="form-check-input") }}
+                                    {{ form.no.label(class="form-label") }}    
+                                </div>
+                            </div>
+                            
                         </div>
 
                     </div>
 
-                    <p class="h4">
+
+                    <div class="row">
+                        <!-- photo -->
+                        <div class="col-sm-6">
+                            {{ form.photo.label(class="form-label") }}
+                            {{ form.photo( class="form-control" ) }}
+                        </div>
+    
+                        <!-- signature -->
+                        <div class="col-sm-6">
+                            {{ form.signature.label(class="form-label") }}
+                            {{ form.signature( class="form-control" ) }}
+                        </div>
+                    </div>
+
+                    <div class="row">
+
+                        <div class="form-label">
+                            
+                        </div>
+
+                        <p class="disable">
+                            I agree all the terms and condition and cirtify that all the information I gave above is true. If the authority find any
+                            flase information I will accept any dicision that the authority takes.
+                        </p>
+                    </div>
+
+                    <div class="d-flex justify-content-end mt-4">
+                        {{ form.submit(class="btn btn-lg btn-primary") }}
+                    </div>
+
+
+
+
+                    <!-- presend address title -->
+                    <p class="h4 mt-4 mb-2">
                         Present Address
                     </p>
                     
                     <div class="form_input" id="care_of">
-                        {{ form.care_of.label(class="form-control-plaintext") }}
+                        {{ form.care_of.label(class="form-label") }}
                         
                         {{ form.care_of(
                             class="form_textbox",
@@ -241,14 +327,7 @@
                         ) }}
                     </div>
 
-                    <div class="form_input" id="address">
-                        {{ form.address.label(class="form_label") }}
-
-                        {{ form.address(
-                            class="form_textbox",
-                            placeholder="Address"
-                        ) }}
-                    </div>
+                    
 
                     <div class="form_input" id="email">
                         {{ form.email.label(class="form_label") }}
@@ -259,17 +338,7 @@
                         ) }}
                     </div>
 
-                    <div class="form_input" id="photo">
-                        {{ form.photo.label(class="form_label") }}
-
-                        {{ form.photo( class="form_textbox" ) }}
-                    </div>
-
-                    <div class="form_input" id="signature">
-                        {{ form.signature.label(class="form_label") }}
-
-                        {{ form.signature( class="form_textbox" ) }}
-                    </div>
+                    
 
                     <div id="agreement">
                         <p>

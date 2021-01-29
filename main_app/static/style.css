@@ -1,3 +1,7 @@
+.bg_gray {
+    background: #f8f9fa !important;
+}
+/* move the form in center both horizontal and vertical */
 .custom_form_center {
     height: 100vh;
 
@@ -6,12 +10,30 @@
     align-items: center;
 }
 
+/* resize the small form  */
 .form-small {
     width: 30rem;
 }
 
+/* resize the much bigger form */
 .form-large {
     width: 60rem;
+}
+
+/* give hover effect of nav button */
+a.nav-link:hover {
+    color: #fff !important;
+}
+
+/* change color of active button */
+a.active-nav-link {
+    color: #fff;
+}
+
+/* remove white background in check box */
+.nobg .form-control {
+    background-color: transparent !important;
+    border: none;
 }
 
 /* .row {

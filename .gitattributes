@@ -1,5 +1,5 @@
 * text=auto
 
-*.jpeg binary
-*.jpg binary
+*.jpeg binary   
 *.png binary
+*.jpg binary
