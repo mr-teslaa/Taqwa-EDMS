@@ -10,6 +10,14 @@
     align-items: center;
 }
 
+.custom_form_center_100vh {
+    height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 /* resize the small form  */
 .form-small {
     width: 30rem;
