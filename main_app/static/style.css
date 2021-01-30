@@ -3,7 +3,7 @@
 }
 /* move the form in center both horizontal and vertical */
 .custom_form_center {
-    height: 100vh;
+    height: 150vh;
 
     display: flex;
     justify-content: center;
