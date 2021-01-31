@@ -3,7 +3,7 @@
 
 
 {% block additional_title %}
-    Admission -
+    Teacher Apply -
 {% endblock %}
 
 
@@ -15,30 +15,27 @@
 
 
 {% block body %}
+
+    <main class="vh100 bg_gray pt-5 pb-5">
     
-    <!-- <div class="back">
-        <button class="button"> Back </button>
-    </div> -->
+        <h2 class="h1 text-center mb-5"> Application for Teachers </h2>
 
-    <main>
 
-        <div class="form_container">
-            
-            <header>
-                <h1 class="school_name"> JUNIOR SCHOOL AND COLLEGE </h1>
-                <h2 class="title"> Application for Teachers </h2>
-            </header>
+        <section class="d-flex justify-content-center">
+        
 
-            <section>
-            
-                <form action="" method="post" class="form-large">
-                    {{ form.hidden_tag() }}
+            <form action="" method="post" class="form-large">
+                {{ form.hidden_tag() }}
 
-                    <div class="form_input" id="name">
-                        {{ form.name.label(class="form_label") }}
-                        
+
+                <div class="row">
+
+                    <!-- name -->
+                    <div class="col-sm-6">
+                        {{ form.name.label(class="form-label") }}
+
                         {% if form.name.errors %}
-                            {{ form.name( class="form_textbox is-invalid" ) }}
+                            {{ form.name( class="form-control is-invalid" ) }}
                             <div class="invalid-feedback">
                                 {% for error in form.name.errors %}
                                     <span>  {{ error }}   </span>
@@ -46,18 +43,19 @@
                             </div>
 
                         {% else %}
-                            {{ form.name( 
-                                class="form_textbox",
-                                placeholder="Enter your full name"
+                            {{ form.name(
+                                class="form-control",
+                                placeholder="Name"
                             ) }}
                         {% endif %}
                     </div>
 
-                    <div class="form_input" id="username">
-                        {{ form.username.label(class="form_label") }}
-                        
+                    <!-- username -->
+                    <div class="col-sm-6">
+                        {{ form.username.label(class="form-label") }}
+
                         {% if form.username.errors %}
-                            {{ form.username( class="form_textbox is-invalid" ) }}
+                            {{ form.username( class="form-control is-invalid" ) }}
                             <div class="invalid-feedback">
                                 {% for error in form.username.errors %}
                                     <span>  {{ error }}   </span>
@@ -65,36 +63,68 @@
                             </div>
 
                         {% else %}
-                            {{ form.username( 
-                                class="form_textbox",
-                                placeholder="Pickup an username"
+                            {{ form.username(
+                                class="form-control",
+                                placeholder="Pickup an Username"
+                            ) }}
+                        {% endif %}
+                    </div>
+                </div>
+
+
+                <div class="row mt-2">
+
+                    <!-- phone number -->
+                    <div class="col-sm-6">
+                        {{ form.phone_number.label(class="form-label") }}
+
+                        {% if form.phone_number.errors %}
+                            {{ form.phone_number( class="form-control is-invalid" ) }}
+                            <div class="invalid-feedback">
+                                {% for error in form.phone_number.errors %}
+                                    <span>  {{ error }}   </span>
+                                {% endfor %}
+                            </div>
+
+                        {% else %}
+                            {{ form.phone_number(
+                                class="form-control",
+                                placeholder="Fathername"
                             ) }}
                         {% endif %}
                     </div>
 
-                    <div class="form_input" id="phone_number">
-                        {{ form.phone_number.label(class="form_label") }}
+                    <!-- email address -->
+                    <div class="col-sm-6">
+                        {{ form.email.label(class="form-label") }}
 
-                        {{ form.phone_number(
-                            class="form_textbox",
-                            placeholder="Phone Number"
-                        ) }}
+                        {% if form.email.errors %}
+                            {{ form.email( class="form-control is-invalid" ) }}
+                            <div class="invalid-feedback">
+                                {% for error in form.email.errors %}
+                                    <span>  {{ error }}   </span>
+                                {% endfor %}
+                            </div>
+
+                        {% else %}
+                            {{ form.email(
+                                class="form-control",
+                                placeholder="E-mail"
+                            ) }}
+                        {% endif %}
                     </div>
 
-                    <div class="form_input" id="email">
-                        {{ form.email.label(class="form_label") }}
+                </div>
 
-                        {{ form.email(
-                            class="form_textbox",
-                            placeholder="Email Address"
-                        ) }}
-                    </div>
 
-                    <div class="form_input" id="password">
-                        {{ form.password.label(class="form_label") }}
+                <div class="row mt-2">
+
+                    <!-- password -->
+                    <div class="col-sm-6">
+                        {{ form.password.label(class="form-label") }}
                         
                         {% if form.password.errors %}
-                            {{ form.password( class="form_textbox is-invalid" ) }}
+                            {{ form.password( class="form-control is-invalid" ) }}
                             <div class="invalid-feedback">
                                 {% for error in form.password.errors %}
                                     <span>  {{ error }}   </span>
@@ -103,17 +133,18 @@
 
                         {% else %}
                             {{ form.password( 
-                                class="form_textbox",
+                                class="form-control",
                                 placeholder="Pickup a password"
                             ) }}
                         {% endif %}
                     </div>
 
-                    <div class="form_input" id="confirm_password">
-                        {{ form.confirm_password.label(class="form_label") }}
+                    <!-- confirm password -->
+                    <div class="col-sm-6">
+                        {{ form.confirm_password.label(class="form-label") }}
                         
                         {% if form.confirm_password.errors %}
-                            {{ form.confirm_password( class="form_textbox is-invalid" ) }}
+                            {{ form.confirm_password( class="form-control is-invalid" ) }}
                             <div class="invalid-feedback">
                                 {% for error in form.confirm_password.errors %}
                                     <span>  {{ error }}   </span>
@@ -122,43 +153,48 @@
 
                         {% else %}
                             {{ form.confirm_password( 
-                                class="form_textbox",
+                                class="form-control",
                                 placeholder="Retype password"
                             ) }}
                         {% endif %}
                     </div>
 
-                    <div class="form_input" id="cv">
-                        {{ form.cv.label(class="form_label") }}
+                </div>
 
-                        {{ form.cv( class="form_textbox" ) }}
+
+                <div class="row mt-2">
+
+                    <!-- email -->
+                    <div class="col-sm-4">
+                        {{ form.cv.label(class="form-label") }}
+
+                        {{ form.cv( class="form-control" ) }}
                     </div>
 
-                    <div class="form_input" id="photo">
-                        {{ form.photo.label(class="form_label") }}
-
-                        {{ form.photo( class="form_textbox" ) }}
+                    <!-- photo -->
+                    <div class="col-sm-4">
+                        {{ form.photo.label(class="form-label") }}
+                        {{ form.photo( class="form-control" ) }}
                     </div>
 
-                    <div class="form_input" id="signature">
-                        {{ form.signature.label(class="form_label") }}
+                    <div class="col-sm-4">
+                        {{ form.signature.label(class="form-label") }}
 
-                        {{ form.signature( class="form_textbox" ) }}
+                        {{ form.signature( class="form-control" ) }}
                     </div>
 
-                    <div class="form_button" id="refresh">
-                        <input type="reset" value="Refresh" class="submit_button refresh"/>
-                    </div>
+                </div>
 
-                    <div class="form_button" id="submit">
-                        {{ form.submit( class="submit_button submit" ) }}
-                    </div>
+                <div class="d-flex justify-content-end mt-4 mb-3">
+                    {{ form.submit(class="btn btn-lg btn-primary") }}
+                </div>
 
-                </form>
+            </form>
 
-            </section>
+        </section>
         
         </div>
         
     </main>
+
 {% endblock %}

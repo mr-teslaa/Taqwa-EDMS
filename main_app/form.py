@@ -408,7 +408,7 @@ class ApplyParentsForm(FlaskForm):
 
     #   make filed for photo
     photo = FileField(
-        'Photo',
+        'Parent\'s Photo',
         validators = [ DataRequired() ]
     )
 

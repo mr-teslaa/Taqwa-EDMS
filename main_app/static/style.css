@@ -1,6 +1,11 @@
 .bg_gray {
     background: #f8f9fa !important;
 }
+
+.vh100 {
+    height: 100vh;
+}
+
 /* move the form in center both horizontal and vertical */
 .custom_form_center {
     height: 150vh;

@@ -5,11 +5,8 @@
 #       Create by some intelligent programmer
 #       Full CRUD facility
 #   
-#       Github: https://github.com/hacker-tesla/Junior_School_and_College
+#       Github: https://github.com/mr-teslaa/Junior_School_and_College
 # ========================================================================== #
-
-
-
 
 
 
@@ -40,5 +37,3 @@ db = SQLAlchemy(app)
 
 # importing routes from routes.py
 from main_app import routes 
-#from main_app.model_users import Student_Basic_Info
-
