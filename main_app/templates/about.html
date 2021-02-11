@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% extends 'layout.html' %}
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        {% block additional_title %}
+        About Us ||
+        {% endblock %}
+    </title>
+</head>
+<body>
+    {% block body %}
+    <center>
+        <p>So hello everybody we are a group of people who sought to create this app to help students and teachers
+            <br/>
+            Initially it was just a idea but then people kept coming together and so we thought of making our idea real
+            <br/>
+            So the website you see is the result of an idea and hardwork mixed together.
+            <br/>
+            Thanks to Hossain Foysal also known by his discord alias mr-tesla for maintaining this project
+        </p>
+    </center>
+    {% endblock %}
+</body>
+</html>
