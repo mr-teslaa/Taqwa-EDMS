@@ -4,7 +4,7 @@
 
 {% block help_developer %}
 <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ >
-# This Section help you to find specific section. 
+# This Section help you to find specific section.
 
 	0: head
 		0.0: styles
@@ -19,32 +19,49 @@
 {% block body %}
 
 <main class="bg_gray">
-    <div class="container">
 
-        <div class="list-group">
-            <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
-            home
-            </a>
-            
-            <a href="#" class="list-group-item list-group-item-action">
-                Dapibus ac facilisis in
-            </a>
-            
-            <a href="#" class="list-group-item list-group-item-action">
-                Morbi leo risus
-            </a>
-            
-            <a href="#" class="list-group-item list-group-item-action">
-                Porta ac consectetur ac
-    
-            </a>
-            
-            <a href="#" class="list-group-item list-group-item-action disabled" tabindex="-1" aria-disabled="true">
-                Vestibulum at eros
-            </a>
+    <nav class="navbar navbar-expand-sm bg-light d-flex">
+
+        <a href="#" class="navbar-brand"> Dashboard </a>
+
+        <ul class="navbar-nav">
+            <li class="nav-link"> Logout </li>
+        </ul>
+
+    </nav>
+
+    <div class="row">
+        <div class="col-md-3">
+
+            <div class="container">
+                <div class="list-group">
+                    <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
+                    home
+                    </a>
+
+                    <a href="#" class="list-group-item list-group-item-action">
+                        Dapibus ac facilisis in
+                    </a>
+
+                    <a href="#" class="list-group-item list-group-item-action">
+                        Morbi leo risus
+                    </a>
+
+                    <a href="#" class="list-group-item list-group-item-action">
+                        Porta ac consectetur ac
+
+                    </a>
+                </div>
+            </div>
+
         </div>
-    
+
+        <div class="col-md-9">
+            <h1> DASHBOARD </h1>
+        </dv>
+
     </div>
+
 </main>
 
 {% endblock %}

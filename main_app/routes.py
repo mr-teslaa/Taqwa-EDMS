@@ -17,7 +17,10 @@ from main_app.form import LoginFormParents
 
 # import database models from models.py
 
-
+# --------testing login---------------
+@app.route('/reg')
+def reg():
+    return render_template('reg.html')
 
 #   default route of web app
 @app.route('/')

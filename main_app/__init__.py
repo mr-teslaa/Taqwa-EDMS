@@ -1,10 +1,10 @@
 # ========================================================================== #
 #                           Junior School and College
 #                    A School Management System with FLASK
-#   
+#
 #       Create by some intelligent programmer
 #       Full CRUD facility
-#   
+#
 #       Github: https://github.com/mr-teslaa/Junior_School_and_College
 # ========================================================================== #
 
@@ -19,7 +19,7 @@ from flask import Flask
 
 # import essential module for database
 from flask_sqlalchemy import SQLAlchemy
-
+from flask_bcrypt import Bcrypt
 
 # pass this application in flask
 app = Flask(__name__)
@@ -34,6 +34,9 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # pass this application in sql_alchemy
 db = SQLAlchemy(app)
 
+# pass the applicatino in bcrypt
+bcrypt = Bcrypt(app)
+
 
 # importing routes from routes.py
-from main_app import routes 
+from main_app import routes
