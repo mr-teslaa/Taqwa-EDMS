@@ -1,0 +1,107 @@
+{% extends 'layout.html' %}
+
+
+
+{% block additional_title %}
+    Login Parents -
+{% endblock %}
+
+
+
+{% block additional_link %}
+    <!-- <link rel="stylesheet" href=" {{ url_for('static', filename='login/login.css') }} "> -->
+{% endblock %}
+
+
+
+{% block body %}
+    
+    <!-- <div class="back">
+        <button class="button"> Back </button>
+    </div> -->
+
+    <main class="custom_form_center_100vh bg_gray">
+
+        <section>        
+        
+            <h1 class="text-center mb-5"> Login as Parents </h2>
+
+            <form action="" method="post" class="form-small">
+                {{ form.hidden_tag() }}
+
+                <!-- email field -->
+                <div class="mb-3">
+
+                    {{ form.email.label(class="form-label") }}
+
+                    {% if form.email.errors %}
+                        {{ form.email( class="form-control is-invalid" ) }}
+                        <div class="invalid-feedback">
+                            {% for error in form.email.errors %}
+                                <span>  {{ error }}   </span>
+                            {% endfor %}
+                        </div>
+                    
+                    {% else %} 
+                        {{ form.email(
+                            class="form-control"
+                        ) }}
+
+                    {% endif %}
+
+                </div>
+
+                <!-- student id field -->
+                <div class="mb-3">
+
+                    {{ form.student_id.label(class="form-label") }}
+
+                    {% if form.student_id.errors %}
+                        {{ form.student_id( class="form-control is-invalid" ) }}
+                        <div class="invalid-feedback">
+                            {% for error in form.student_id.errors %}
+                                <span>  {{ error }}   </span>
+                            {% endfor %}
+                        </div>
+                    
+                    {% else %} 
+                        {{ form.student_id(
+                            class="form-control"
+                        ) }}
+
+                    {% endif %}
+
+                </div>
+
+                <!-- password filed -->
+                <div class="mb-3">
+
+                    {{ form.password.label(class="form-label") }}
+
+                    {% if form.password.errors %}
+                        {{ form.password( class="form-control is-invalid" ) }}
+                        <div class="invalid-feedback">
+                            {% for error in form.password.errors %}
+                                <span>  {{ error }}   </span>
+                            {% endfor %}
+                        </div>
+                    
+                    {% else %} 
+                        {{ form.password(
+                            class="form-control"
+                        ) }}
+
+                    {% endif %}
+
+                </div>
+
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    {{ form.login_button( class="btn btn-lg btn-primary" ) }}
+                </div>
+                    
+            </form>
+            
+        </section>
+        
+    </main>
+{% endblock %}

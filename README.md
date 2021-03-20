@@ -23,3 +23,11 @@ $ export FLASK_ENV=development
 $ flask run
 ```
 
+### NEW ###
+create .env file with keys.
+create .flaskenv file with FLASK_ENV, FLASK_APP as shown above. Alse FLASK_DEBUG=...
+
+To setup a new database run:
+$ flask create_tables
+
+This creates all tables in database site.db (conform db-url) with 3 Users records

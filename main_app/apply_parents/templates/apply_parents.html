@@ -1,0 +1,193 @@
+{% extends 'layout.html' %}
+
+
+
+{% block additional_title %}
+    Create Account Parents -
+{% endblock %}
+
+
+
+{% block additional_link %}
+    <!-- <link rel="stylesheet" href=" {{ url_for('static', filename='admission/admission.css') }} "> -->
+{% endblock %}
+
+
+
+{% block body %}
+
+    <main class="vh100 bg_gray pt-5 pb-5">
+    
+        <h2 class="h1 text-center mb-5"> Crate Account for Parents </h2>
+
+
+        <section class="d-flex justify-content-center">
+        
+
+            <form action="" method="post" class="form-large">
+                {{ form.hidden_tag() }}
+
+
+                <div class="row">
+
+                    <!-- name -->
+                    <div class="col-sm-6">
+                        {{ form.name.label(class="form-label") }}
+
+                        {% if form.name.errors %}
+                            {{ form.name( class="form-control is-invalid" ) }}
+                            <div class="invalid-feedback">
+                                {% for error in form.name.errors %}
+                                    <span>  {{ error }}   </span>
+                                {% endfor %}
+                            </div>
+
+                        {% else %}
+                            {{ form.name(
+                                class="form-control",
+                                placeholder="Name"
+                            ) }}
+                        {% endif %}
+                    </div>
+
+                    <!-- username -->
+                    <div class="col-sm-6">
+                        {{ form.username.label(class="form-label") }}
+
+                        {% if form.username.errors %}
+                            {{ form.username( class="form-control is-invalid" ) }}
+                            <div class="invalid-feedback">
+                                {% for error in form.username.errors %}
+                                    <span>  {{ error }}   </span>
+                                {% endfor %}
+                            </div>
+
+                        {% else %}
+                            {{ form.username(
+                                class="form-control",
+                                placeholder="Username"
+                            ) }}
+                        {% endif %}
+                    </div>
+                </div>
+
+
+                <div class="row mt-2">
+
+                    <!-- phone number -->
+                    <div class="col-sm-6">
+                        {{ form.phone_number.label(class="form-label") }}
+
+                        {% if form.phone_number.errors %}
+                            {{ form.phone_number( class="form-control is-invalid" ) }}
+                            <div class="invalid-feedback">
+                                {% for error in form.phone_number.errors %}
+                                    <span>  {{ error }}   </span>
+                                {% endfor %}
+                            </div>
+
+                        {% else %}
+                            {{ form.phone_number(
+                                class="form-control",
+                                placeholder="Fathername"
+                            ) }}
+                        {% endif %}
+                    </div>
+
+                    <!-- email address -->
+                    <div class="col-sm-6">
+                        {{ form.email.label(class="form-label") }}
+
+                        {% if form.email.errors %}
+                            {{ form.email( class="form-control is-invalid" ) }}
+                            <div class="invalid-feedback">
+                                {% for error in form.email.errors %}
+                                    <span>  {{ error }}   </span>
+                                {% endfor %}
+                            </div>
+
+                        {% else %}
+                            {{ form.email(
+                                class="form-control",
+                                placeholder="E-mail"
+                            ) }}
+                        {% endif %}
+                    </div>
+
+                </div>
+
+
+                <div class="row mt-2">
+
+                    <!-- student name -->
+                    <div class="col-sm-6">
+                        {{ form.student_name.label(class="form-label") }}
+                        
+                        {% if form.student_name.errors %}
+                        {{ form.student_name( class="form-control is-invalid" ) }}
+                        <div class="invalid-feedback">
+                            {% for error in form.student_name.errors %}
+                                <span>  {{ error }}   </span>
+                            {% endfor %}
+                        </div>
+
+                        {% else %}
+                            {{ form.student_name( 
+                                class="form-control",
+                                placeholder="Your children's name"
+                            ) }}
+                        {% endif %}
+                    </div>
+
+                    <!-- student class -->
+                    <div class="col-sm-6">
+                        {{ form.student_class.label(class="form-label") }}
+
+                        {% if form.student_class.errors %}
+                            {{ form.student_class( class="form-select is-invalid" ) }}
+                            <div class="invalid-feedback">
+                                {% for error in form.student_class.errors %}
+                                    <span>  {{ error }}   </span>
+                                {% endfor %}
+                            </div>
+
+                        {% else %}
+                            {{ form.student_class( class="form-select" ) }}
+                        {% endif %}
+                    </div>
+
+                </div>
+
+
+                <div class="row mt-2">
+
+                    <!-- email -->
+                    <div class="col-sm-6">
+                        {{ form.student_roll.label(class="form-label") }}
+
+                        {{ form.student_roll(
+                            class="form-control",
+                            placeholder="Student roll"
+                        ) }}
+                    </div>
+
+                    <!-- photo -->
+                    <div class="col-sm-6">
+                        {{ form.photo.label(class="form-label") }}
+                        {{ form.photo( class="form-control" ) }}
+                    </div>
+
+                </div>
+
+                <div class="d-flex justify-content-end mt-4 mb-3">
+                    {{ form.submit(class="btn btn-lg btn-primary") }}
+                </div>
+
+            </form>
+
+        </section>
+        
+        </div>
+        
+    </main>
+{% endblock %}
