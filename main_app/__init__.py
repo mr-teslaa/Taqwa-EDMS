@@ -8,35 +8,36 @@
 #       Github: https://github.com/mr-teslaa/Junior_School_and_College
 # ========================================================================== #
 
-
-
-
-
-
-
 from flask import Flask
 
+def create_app(config_file="config.py"):
 
-# import essential module for database
-from flask_sqlalchemy import SQLAlchemy
-from flask_bcrypt import Bcrypt
+    app = Flask(__name__)
+    app.config.from_pyfile(config_file)
 
-# pass this application in flask
-app = Flask(__name__)
+    with app.app_context():
+        from .models import db
+        db.init_app(app)
+        print(f"DB: {db.engine}")
 
-# genarate a secret key
-app.config['SECRET_KEY'] = '248fb9a5bdffa13c0bc136504ebf75c2'
+        from .commands import create_tables
+        app.cli.add_command(create_tables)
 
-# connect datbase to website
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+        # from . import algemeen
+        from .login         import login
+        from .login_parents import login_parents
+        from .admission     import admission
+        from .apply_parents import apply_parents
+        from .apply_teacher import apply_teacher
 
-# pass this application in sql_alchemy
-db = SQLAlchemy(app)
+        from .              import routes
 
-# pass the applicatino in bcrypt
-bcrypt = Bcrypt(app)
+        app.register_blueprint(login.login_bp)
+        app.register_blueprint(login_parents.login_parents_bp)
+        app.register_blueprint(admission.admission_bp)
+        app.register_blueprint(apply_parents.apply_parents_bp)
+        app.register_blueprint(apply_teacher.apply_teacher_bp)
 
+        # print(f"APP: {app.url_map}")
 
-# importing routes from routes.py
-from main_app import routes
+    return app
