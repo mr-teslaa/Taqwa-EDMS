@@ -11,14 +11,14 @@ $ git clone https://github.com/mr-teslaa/Junior_School_and_College
 
 ### Windows
 ``` bash
-> set FLASK_APP=app.py
+> set FLASK_APP=run.py
 > set FLASK_ENV=development
 > flask run
 ```
 
 ### Mac and Linux
 ``` shell
-$ export FLASK_APP=app.py
+$ export FLASK_APP=run.py
 $ export FLASK_ENV=development
 $ flask run
 ```
