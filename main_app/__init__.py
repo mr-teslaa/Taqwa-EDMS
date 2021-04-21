@@ -1,43 +1,36 @@
-# ========================================================================== #
-#                           Junior School and College
-#                    A School Management System with FLASK
-#
-#       Create by some intelligent programmer
-#       Full CRUD facility
-#
-#       Github: https://github.com/mr-teslaa/Junior_School_and_College
-# ========================================================================== #
-
 from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
+from flask_bcrypt import Bcrypt
+from flask_login import LoginManager
+from flask_mail import Mail
+from main_app.config import Config
 
-def create_app(config_file="config.py"):
 
+db = SQLAlchemy()
+bcrypt = Bcrypt()
+login_manager = LoginManager()
+
+#   define which route is mendatory if we try to access any unauthorize page.
+#   in this case we are trying to access account page but before we access that page we must have to login first.
+login_manager.login_view = 'users.login' # 'login' is the route name
+
+#   beautify the flash message in login page which is authenticate by flask_login
+login_manager.login_message_category = 'info' # 'info' is the bootstrap class name what will beautify our alert box
+mail = Mail()
+
+
+def create_app(config_class=Config):
     app = Flask(__name__)
-    app.config.from_pyfile(config_file)
+    app.config.from_object(Config)
 
-    with app.app_context():
-        from .models import db
-        db.init_app(app)
-        print(f"DB: {db.engine}")
+    db.init_app(app)
+    bcrypt.init_app(app)
+    login_manager.init_app(app)
+    mail.init_app(app)
 
-        from .commands import create_tables
-        app.cli.add_command(create_tables)
-
-        # from . import algemeen
-        from .login         import login
-        from .login_parents import login_parents
-        from .admission     import admission
-        from .apply_parents import apply_parents
-        from .apply_teacher import apply_teacher
-
-        from .              import routes
-
-        app.register_blueprint(login.login_bp)
-        app.register_blueprint(login_parents.login_parents_bp)
-        app.register_blueprint(admission.admission_bp)
-        app.register_blueprint(apply_parents.apply_parents_bp)
-        app.register_blueprint(apply_teacher.apply_teacher_bp)
-
-        # print(f"APP: {app.url_map}")
+    from main_app.users.routes import users
+    from main_app.main.routes import main
+    app.register_blueprint(users)
+    app.register_blueprint(main)
 
     return app

@@ -13,16 +13,15 @@
 {% endblock %}
 
 
-
 {% block body %}
 
     <main class="vh100 bg_gray pt-5 pb-5">
-    
+
         <h2 class="h1 text-center mb-5"> Crate Account for Parents </h2>
 
 
         <section class="d-flex justify-content-center">
-        
+
 
             <form action="" method="post" class="form-large">
                 {{ form.hidden_tag() }}
@@ -116,69 +115,6 @@
 
                 </div>
 
-
-                <div class="row mt-2">
-
-                    <!-- student name -->
-                    <div class="col-sm-6">
-                        {{ form.student_name.label(class="form-label") }}
-                        
-                        {% if form.student_name.errors %}
-                        {{ form.student_name( class="form-control is-invalid" ) }}
-                        <div class="invalid-feedback">
-                            {% for error in form.student_name.errors %}
-                                <span>  {{ error }}   </span>
-                            {% endfor %}
-                        </div>
-
-                        {% else %}
-                            {{ form.student_name( 
-                                class="form-control",
-                                placeholder="Your children's name"
-                            ) }}
-                        {% endif %}
-                    </div>
-
-                    <!-- student class -->
-                    <div class="col-sm-6">
-                        {{ form.student_class.label(class="form-label") }}
-
-                        {% if form.student_class.errors %}
-                            {{ form.student_class( class="form-select is-invalid" ) }}
-                            <div class="invalid-feedback">
-                                {% for error in form.student_class.errors %}
-                                    <span>  {{ error }}   </span>
-                                {% endfor %}
-                            </div>
-
-                        {% else %}
-                            {{ form.student_class( class="form-select" ) }}
-                        {% endif %}
-                    </div>
-
-                </div>
-
-
-                <div class="row mt-2">
-
-                    <!-- email -->
-                    <div class="col-sm-6">
-                        {{ form.student_roll.label(class="form-label") }}
-
-                        {{ form.student_roll(
-                            class="form-control",
-                            placeholder="Student roll"
-                        ) }}
-                    </div>
-
-                    <!-- photo -->
-                    <div class="col-sm-6">
-                        {{ form.photo.label(class="form-label") }}
-                        {{ form.photo( class="form-control" ) }}
-                    </div>
-
-                </div>
-
                 <div class="d-flex justify-content-end mt-4 mb-3">
                     {{ form.submit(class="btn btn-lg btn-primary") }}
                 </div>
@@ -186,8 +122,8 @@
             </form>
 
         </section>
-        
+
         </div>
-        
+
     </main>
 {% endblock %}
