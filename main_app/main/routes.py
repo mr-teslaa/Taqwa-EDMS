@@ -8,9 +8,9 @@ main = Blueprint('main', __name__)
 #   default route
 @main.route('/')
 def index():
-    return render_tempate('index.html')
+    return render_template('index.html')
 
 #   about route
 @main.route('/about')
 def about():
-    return render_temmplate('about.html', title='About Us')
+    return render_template('about.html', title='About Us')

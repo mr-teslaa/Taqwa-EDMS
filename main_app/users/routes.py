@@ -15,25 +15,34 @@ from main_app.models import User
 from main_app.models import Notice
 
 from main_app.users.forms import AdmissionForm
+from main_app.users.forms import LoginForm
+from main_app.users.forms import LoginFormParents
 from main_app.users.forms import ApplyParentsForm
+from main_app.users.forms import ApplyTeacherForm
 
 
 #   initializing blueprint
-users = Blueprint('users', __name__)]
+users = Blueprint('users', __name__)
 
 
 #   admission route
 @users.route('/admission', methods=['GET', 'POST'])
 def admission():
     form = AdmissionForm()
-    return render_tempate('admission.html', title='Admission', form=form)
+    return render_template('admission.html', title='Admission', form=form)
 
 
 #   apply for a parents accout route
 @users.route('/parents/apply', methods=['GET', 'POST'])
 def apply_parents():
     form = ApplyParentsForm()
-    return render_tempate('apply_parents.html', title='Admission', form=form)
+    return render_template('apply_parents.html', title='Parents Application', form=form)
+
+#   apply for a parents accout route
+@users.route('/teacher/apply', methods=['GET', 'POST'])
+def apply_teacher():
+    form = ApplyTeacherForm()
+    return render_template('apply_teacher.html', title='Teacher Application', form=form)
 
 #   dashborad route
 @users.route('/dashboard')
