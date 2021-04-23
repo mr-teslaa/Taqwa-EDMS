@@ -1,6 +1,9 @@
 #   importing basic flask module
 from flask import render_template
+from flask import redirect
+from flask import url_for
 from flask import Blueprint
+from flask import request
 
 #   importing module from flask login
 from flask_login import login_user
@@ -19,6 +22,7 @@ from main_app.users.forms import LoginForm
 from main_app.users.forms import LoginFormParents
 from main_app.users.forms import ApplyParentsForm
 from main_app.users.forms import ApplyTeacherForm
+from main_app.users.forms import DemoRegForm
 
 
 #   initializing blueprint
@@ -46,14 +50,31 @@ def apply_teacher():
 
 #   dashborad route
 @users.route('/dashboard')
-@login_required
 def dashboard():
-    return render_template('dashboared.html', title='Dasboard')
+    return render_template('dashboard.html', title='Dasboard')
+
+
+@users.route('/demo/register', methods=['GET', 'POST'])
+def demo_register():
+    form = DemoRegForm()
+    if form.validate_on_submit():
+        hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+        user = User(username=form.username.data, email=form.email.data, password=hashed_password)
+        db.session.add(user)
+        db.session.commit()
+        return redirect(url_for('users.login'))
+    return render_template('demo_register.html', title='Demo Register', form=form)
 
 
 @users.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data).first()
+        if user and bcrypt.check_password_hash(user.password, form.password.data):
+            login_user(user, remember=form.remember_me.data)
+            next_page = request.args.get('next')
+            return redirect(next_page) if next_page else redirect(url_for('users.dashboard'))
     return render_template('login.html', title='Login', form=form)
 
 

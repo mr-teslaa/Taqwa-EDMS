@@ -23,15 +23,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="Emon Hossain">
-
-    <title>
-
-        {% block additional_title %}
-        {% endblock %}
-
-        Junior School and College
-
-    </title>
+    {% if title %}
+        <title> {{ title }} - Junior School and College </title>
+    {% else %}
+        <title> Junior School and College </title>
+    {% endif %}
 
     <!-- link section -->
 

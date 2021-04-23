@@ -465,3 +465,37 @@ class LoginFormParents(FlaskForm):
 
     login_button = SubmitField( 'Login' )
 
+
+
+class DemoRegForm(FlaskForm):
+    #   make username for teacher
+    username = StringField(
+        'Username',
+        validators = [ DataRequired() ]
+    )
+
+    # make a field for email
+    email = StringField(
+      'Email address',
+      validators = [
+          Email(),
+          DataRequired()
+      ]
+    )
+
+    # make a field for password
+    password = PasswordField(
+        'Password',
+        validators = [ DataRequired() ]
+    )
+
+    #   make cofirm password
+    confirm_password = PasswordField(
+        'Confirm Password',
+        validators = [
+            DataRequired(),
+            EqualTo('password')
+        ]
+    )
+
+    reg_button = SubmitField( 'Register' )
