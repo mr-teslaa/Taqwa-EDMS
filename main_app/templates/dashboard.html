@@ -18,53 +18,232 @@
 
 {% block body %}
 
-<main>
-  <header>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="#"> Junior School and College </a>
-            <button class="btn btn-outline-light" type="submit"> Logout </button>
+  <div class="wrapper">
+
+      <!-- Sidebar  -->
+      <nav id="sidebar">
+
+        <div class="sidebar-header">
+            <h3>Dashboard</h3>
         </div>
-    </nav>
-  </header>
 
-  <section>
+        <ul class="list-unstyled components">
+            <p>Dashboard</p>
+            <li class="active">
+                <a aria-expanded="false">
+                    <i class="fa fa-home" aria-hidden="true"></i>
+                    Home
+                </a>
+            </li>
 
-    <div class="d-flex flex-column p-3 text-white bg-dark" style="width: 200px">
-      <ul class="nav nav-pills flex-column mb-auto">
-        <li class="nav-item">
-          <a href="#" class="nav-link"> Home </a>
-        </li>
-        <li>
-          <a href="#" class="nav-link text-white"> Teacher </a>
-          <li class="text-white">one</li>
-          <li class="active">one</li>
-          <li>one</li>
-        </li>
-        <li>
-          <a href="#" class="nav-link text-white"> Student </a>
-        </li>
-        <li>
-          <a href="#" class="nav-link text-white"> Reports </a>
-        </li>
-      </ul>
-      <hr>
-      <div class="dropdown">
-        <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-          <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle me-2">
-          <strong>mdo</strong>
-        </a>
-        <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
-          <li><a class="dropdown-item" href="#">New project...</a></li>
-          <li><a class="dropdown-item" href="#">Settings</a></li>
-          <li><a class="dropdown-item" href="#">Profile</a></li>
-          <li><hr class="dropdown-divider"></li>
-          <li><a class="dropdown-item" href="#">Sign out</a></li>
+            <li>
+                <a
+                  href="#teacherSubmenu"
+                  data-toggle="collapse"
+                  aria-expanded="false"
+                  class="dropdown-toggle"
+                >
+                    <i class="fa fa-user" aria-hidden="true"></i>
+                    Teacher
+                </a>
+
+                <ul class="collapse list-unstyled" id="teacherSubmenu">
+                    <li>
+                        <a href="#">view all</a>
+                    </li>
+                    <li>
+                        <a href="#">add</a>
+                    </li>
+                    <li>
+                        <a href="#">delete</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a
+                  href="#pageSubmenu"
+                  data-toggle="collapse"
+                  aria-expanded="false"
+                  class="dropdown-toggle"
+                >
+                    <i class="fa fa-graduation-cap" aria-hidden="true"></i>
+                    Students
+                </a>
+
+                <ul class="collapse list-unstyled" id="pageSubmenu">
+                    <li>
+                        <a href="#">view all</a>
+                    </li>
+                    <li>
+                        <a href="#">add</a>
+                    </li>
+                    <li>
+                        <a href="#">delete</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a
+                  href="#reportSubmenu"
+                  data-toggle="collapse"
+                  aria-expanded="false"
+                  class="dropdown-toggle"
+                >
+                    <i class="fa fa-bug" aria-hidden="true"></i>
+                    Report
+                </a>
+
+                <ul class="collapse list-unstyled" id="reportSubmenu">
+                    <li>
+                        <a href="#">view all</a>
+                    </li>
+                    <li>
+                        <a href="#">add</a>
+                    </li>
+                    <li>
+                        <a href="#">delete</a>
+                    </li>
+                </ul>
+
+            </li>
         </ul>
+      </nav>
+
+      <script>
+        const search = function (){
+            console.log("Data has been enetered");
+            const searchdata = document.getElementById('search-box').value;
+            //console.log(searchdata,searchdata.length);
+            if (searchdata.length > 15) {
+                document.getElementById('search-icon').style="display:none;"
+            } else {
+                document.getElementById('search-icon').style="display:block;"
+            }
+        }
+      </script>
+      <!-- Page Content  -->
+      <div id="content">
+        <nav class="navbar navbar-expand-lg navbar-light bg-white">
+          <div class="container-fluid" id="header">
+            <input
+              oninput="javascript:search()"
+              type="text"
+              name=""
+              placeholder=""
+              id="search-box"
+              class="container-fluid"
+            />
+            <div class="class" id="search-icon">
+              <a class="search-btn" href="#"
+                ><i class="fa fa-search" aria-hidden="true"></i
+              ></a>
+            </div>
+            <button type="button" id="sidebarCollapse" class="btn btn-info">
+              <i class="fas fa-align-left"></i>
+              <span></span>
+            </button>
+            <button
+              class="btn btn-dark d-inline-block d-lg-none ml-auto"
+              class="anything"
+              type="button"
+              data-toggle="collapse"
+              data-target="#navbarSupportedContent"
+              aria-controls="navbarSupportedContent"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <i class="fas fa-align-justify"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="nav navbar-nav ml-auto">
+                <li class="nav-item">
+                  <a class="nav-link" id="log" href="#"
+                    >Log Out <i class="fa fa-arrow-right" aria-hidden="true"></i
+                  ></a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+
+        <div class="card-deck" id="stats">
+          <div class="row-md-10">
+            <div class="card text-center">
+              <div class="card-body">
+                <h5 class="card-title">Students</h5>
+                <p class="card-text" id="number">900</p>
+              </div>
+            </div>
+          </div>
+          <div class="row-md-10">
+            <div class="card text-center">
+              <div class="card-body">
+                <h5 class="card-title">Reports</h5>
+                <p class="card-text" id="number">90</p>
+              </div>
+            </div>
+          </div>
+          <div class="row-md-10">
+            <div class="card text-center">
+              <div class="card-body">
+                <h5 class="card-title">Teacher</h5>
+                <p class="card-text" id="number">1500</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br /><br />
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Students</th>
+              <th scope="col">Reports</th>
+              <th scope="col">Teachers</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="up">
+                900 <i class="fa fa-arrow-up" aria-hidden="true"></i>
+              </td>
+              <td class="up">
+                90 <i class="fa fa-arrow-up" aria-hidden="true"></i>
+              </td>
+              <td class="down">
+                1500 <i class="fa fa-arrow-down" aria-hidden="true"></i>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
 
-  </section>
-</main>
+    <!-- jQuery CDN - Slim version (=without AJAX) -->
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
+    <!-- Popper.JS -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
+      integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
+      crossorigin="anonymous"
+    ></script>
+    <!-- Bootstrap JS -->
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
+      integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
+      crossorigin="anonymous"
+    ></script>
+
+    <script type="text/javascript">
+      $(document).ready(function () {
+          $('#sidebarCollapse').on('click', function () {
+              $('#sidebar').toggleClass('active');
+          });
+      });
+    </script>
+
 
 {% endblock %}
