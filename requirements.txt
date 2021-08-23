@@ -23,7 +23,6 @@ six==1.16.0
 SQLAlchemy==1.4.15
 Werkzeug==2.0.0
 WTForms==2.3.3
-=======
 alembic==1.4.3
 appdirs==1.4.4
 astroid==2.5.2
