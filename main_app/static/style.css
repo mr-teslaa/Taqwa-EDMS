@@ -1,5 +1,4 @@
 @import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
-
 .bg_gray {
     background: #f8f9fa !important;
 }
@@ -9,9 +8,9 @@
 }
 
 /* move the form in center both horizontal and vertical */
+
 .custom_form_center {
     height: 150vh;
-
     display: flex;
     justify-content: center;
     align-items: center;
@@ -19,39 +18,44 @@
 
 .custom_form_center_100vh {
     height: 100vh;
-
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
 /* resize the small form  */
+
 .form-small {
     width: 30rem;
 }
 
 /* resize the much bigger form */
+
 .form-large {
     width: 60rem;
 }
 
 /* give hover effect of nav button */
+
 a.nav-link:hover {
     color: #fff !important;
 }
 
 /* change color of active button */
+
 a.active-nav-link {
     color: #fff;
 }
 
 /* remove white background in check box */
+
 .nobg .form-control {
     background-color: transparent !important;
     border: none;
 }
 
 /* dashboard */
+
 body {
     font-family: 'Poppins', sans-serif;
     background: #ffffff;
@@ -82,30 +86,13 @@ h5 {
     align-items: center;
     justify-content: center;
 }
+
 #header {
     border-radius: 10px;
 }
 
 
 
-.class {
-    position: relative;
-    right: -69%;
-    border: 1px;
-    margin-right: 0px;
-}
-
-#search-box {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    height: 40px;
-    border-radius: 30px;
-    border: 1px solid black;
-    padding: 10px;
-    width: 50%;
-}
 
 #number {
     font-family: "Poppins";
@@ -132,7 +119,7 @@ h5 {
     background-color: rgb(255, 255, 255);
     font-size: 25px;
     font-weight: 100;
-    box-shadow: 10px 10px 10px grey;
+    /* box-shadow: 10px 10px 10px grey; */
     text-align: center;
     border-radius: 10px;
 }
@@ -170,9 +157,7 @@ p {
     color: #999;
 }
 
-a,
-a:hover,
-a:focus {
+a, a:hover, a:focus {
     color: inherit;
     text-decoration: none;
     transition: all 0.3s;
@@ -248,8 +233,7 @@ a:focus {
     background: #15365F;
 }
 
-#sidebar ul li.active>a,
-a[aria-expanded="true"] {
+#sidebar ul li.active>a, a[aria-expanded="true"] {
     color: #fff;
     background: #15365F;
 }
@@ -289,8 +273,7 @@ a.download {
     color: #7386D5;
 }
 
-a.article,
-a.article:hover {
+a.article, a.article:hover {
     background: #6d7fcc !important;
     color: #fff !important;
 }
@@ -320,13 +303,67 @@ a.article:hover {
     #sidebarCollapse span {
         display: none;
     }
+    .search-area.container-fluid {
+        margin-top: 15px;
+    }
 }
 
 @media (max-width:768px) {
-    #stats{
+    #stats {
         flex-direction: column;
     }
     #stats .row-md-10 .card {
         margin-bottom: 6px;
     }
 }
+
+/* f shrabon start */
+
+/* modified search area */
+
+.search-area.container-fluid {
+    position: relative;
+}
+
+div#search-icon {
+    position: absolute;
+    top: 50%;
+    right: 26px;
+    transform: translateY(-50%);
+}
+
+/* modification on dashboard UI */
+
+button#sidebarCollapse i {
+    color: #fff;
+}
+
+a#log {
+    color: #15365f;
+}
+
+#stats {
+    justify-content: space-evenly;
+}
+
+/* modification on dashboard sidebar */
+
+#sidebar ul.components {
+    padding-left: 8px;
+}
+
+#sidebar ul.components li a:hover{
+    background: #fff;
+    color: #15365F;
+    cursor: pointer;
+    display: block;
+}
+
+.btn-info, .btn-info:hover,.btn-info.active,.btn-check:focus+.btn-info, .btn-info:focus {
+    background: #15365F;
+    color:#ffffff;
+}
+
+
+
+/* f shrabon end */
