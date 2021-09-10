@@ -1,29 +1,14 @@
 #   importing basic flask module
-from flask import render_template
-from flask import redirect
-from flask import url_for
-from flask import Blueprint
-from flask import request
-
+from flask import Blueprint, redirect, render_template, request, url_for
 #   importing module from flask login
-from flask_login import login_user
-from flask_login import current_user
-from flask_login import logout_user
-from flask_login import login_required
-
+from flask_login import current_user, login_required, login_user, logout_user
 #   importing database uri
+from main_app import bcrypt  # password hash generator
 from main_app import db
-from main_app import bcrypt    #password hash generator
-from main_app.models import User
-from main_app.models import Notice
-
-from main_app.users.forms import AdmissionForm
-from main_app.users.forms import LoginForm
-from main_app.users.forms import LoginFormParents
-from main_app.users.forms import ApplyParentsForm
-from main_app.users.forms import ApplyTeacherForm
-from main_app.users.forms import DemoRegForm
-
+from main_app.models import Notice, User
+from main_app.users.forms import (AdmissionForm, ApplyParentsForm,
+                                  ApplyTeacherForm, DemoRegForm, LoginForm,
+                                  LoginFormParents)
 
 #   initializing blueprint
 users = Blueprint('users', __name__)
@@ -52,6 +37,17 @@ def apply_teacher():
 @users.route('/dashboard')
 def dashboard():
     return render_template('dashboard.html', title='Dasboard')
+
+    
+#   student dashboard route (added by f shrabon)
+@users.route('/student')
+def student():
+    return render_template('student_dashboard.html', title='Student Dashboard')
+
+#   admin dashboard  route (added by f shrabon)
+@users.route('/admin')
+def admin():
+    return render_template('admin_dashboard.html', title='Admin Dashboard')
 
 
 @users.route('/demo/register', methods=['GET', 'POST'])
