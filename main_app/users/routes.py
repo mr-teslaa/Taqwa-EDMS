@@ -10,6 +10,7 @@ from flask_login import login_user
 from flask_login import current_user
 from flask_login import logout_user
 from flask_login import login_required
+import flask_login
 
 #   importing database uri
 from main_app import db
@@ -82,3 +83,10 @@ def login():
 def login_parents():
     form = LoginFormParents()
     return render_template('login_parents.html', title='Login', form=form)
+
+
+@login_required
+@users.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for('main.index'))
