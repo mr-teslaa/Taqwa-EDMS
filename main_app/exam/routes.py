@@ -4,10 +4,10 @@ from flask import url_for
 from flask import flash
 from flask import redirect
 
-from forms import AddMarksForm
-from forms import SearchExamForm
+from main_app.exam.forms import AddMarksForm
+from main_app.exam.forms import SearchExamForm
 
-from main_app.models import db
+from main_app import db
 from main_app.models import Marks50
 from main_app.models import Marks
 
@@ -29,7 +29,7 @@ def addmarks():
         db.session.commit()
         flash('Marks successfully added for {form.name.data}', 'success')
         return redirect(url_for('exam.addmarks'))
-    return render_template('addmarks.html', form=form)
+    return render_template('exam/addmarks.html', form=form)
 
 
 # show marks for class 6

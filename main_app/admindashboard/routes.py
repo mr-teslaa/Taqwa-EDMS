@@ -7,8 +7,8 @@ from flask import redirect
 import bcrypt
 from main_app import db
 
-from admindashboard.forms import RegistrationForm
-from admindashboard.forms import SearchExamForm
+from main_app.admindashboard.forms import RegistrationForm
+from main_app.admindashboard.forms import SearchExamForm
 
 from main_app.models import Marks50
 from main_app.models import User

@@ -4,7 +4,7 @@ from flask import Blueprint, redirect, render_template, request, url_for
 from flask_login import current_user, login_required, login_user, logout_user
 #   importing database uri
 import bcrypt  # password hash generator
-from main_app.models import db
+from main_app import db
 from main_app.models import Notice
 from main_app.models import User
 from main_app.users.forms import (AdmissionForm, ApplyParentsForm,

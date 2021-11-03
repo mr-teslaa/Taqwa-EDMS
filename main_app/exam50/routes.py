@@ -4,9 +4,9 @@ from flask import url_for
 from flask import flash
 from flask import redirect
 
-from exam50.forms import AddMarksForm50
+from main_app.exam50.forms import AddMarksForm50
 
-from main_app.models import db
+from main_app import db
 from main_app.models import Marks50
 from main_app.models import Marks
 
@@ -46,4 +46,4 @@ def addmarks50():
     print(f'GPA: {form.gpa.data}')
     print(f'Grade: {form.grade.data}')
     print(f'Total: {form.total.data}')
-    return render_template('addmarks50.html', form=form)
+    return render_template('exam/addmarks50.html', form=form)
