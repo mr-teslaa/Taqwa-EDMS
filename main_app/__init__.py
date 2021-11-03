@@ -36,7 +36,7 @@ def create_app(config_class=Config):
     app.register_blueprint(main)
 
     from main_app.admindashboard import admindashboard
-    app.register_blueprint(admission)
+    app.register_blueprint(admindashboard)
 
     from main_app.exam import exam
     app.register_blueprint(exam)

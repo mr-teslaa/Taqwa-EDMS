@@ -7,9 +7,9 @@ from flask import redirect
 from forms import AddMarksForm
 from forms import SearchExamForm
 
-from models import db
-from models import Marks50
-from models import Marks
+from main_app.models import db
+from main_app.models import Marks50
+from main_app.models import Marks
 
 from flask_login import login_user
 from flask_login import current_user
