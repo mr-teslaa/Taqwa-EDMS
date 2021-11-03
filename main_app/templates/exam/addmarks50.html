@@ -1,0 +1,366 @@
+{% extends 'layout.html' %} {% block link %}
+<link rel="stylesheet" href="{{ url_for('static', filename='/root.js') }}" />
+{% endblock %} {% block title %} Dashboard {% endblock %} {% block body %}
+<div
+    class="
+        container
+        d-flex
+        justify-content-between
+        align-items-center
+        pt-5
+        pb-5
+    "
+>
+    <h2 class="sidebar-title">Dashboard / Add Marks</h2>
+
+    <a href="{{ url_for('admindashboard.dashboard') }}" class="text-end btn btn-info">
+        <i class="bx bx-chevron-left-circle"></i>
+        Go Dashboard
+    </a>
+</div>
+
+<div class="container col-md-10 table-container">
+    <form method="POST" action="">
+        {{ form.hidden_tag() }}
+
+        <!-- row 0 -->
+        <div class="row">
+            <div class="form-group pb-3 col-sm-3">
+                {{ form.examname.label(class="form-control-label") }} 
+                
+                {% if form.examname.errors %} 
+                {{ form.examname(class="form-control is-invalid nospace") }}
+                <div class="invalid-feedback">
+                    {% for error in form.examname.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %} 
+                    {{ form.examname(class="form-control nospace") }} 
+                {% endif %}
+            </div>
+
+            <div class="form-group pb-3 col-sm-3 offset-sm-3">
+                {{ form.examyear.label(class="form-control-label") }} 
+                
+                {% if form.examyear.errors %} 
+                {{ form.examyear(class="form-control is-invalid text-uppercase") }}
+                <div class="invalid-feedback">
+                    {% for error in form.examyear.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %} 
+                {{ form.examyear(class="form-control text-uppercase") }} 
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- row 1 -->
+        <div class="row">
+            <div class="form-group pb-3 col-sm-3">
+                {{ form.roll_id.label(class="form-control-label") }} 
+                
+                {% if form.roll_id.errors %} 
+                {{ form.roll_id(class="form-control is-invalid nospace") }}
+                <div class="invalid-feedback">
+                    {% for error in form.roll_id.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %} 
+                    {{ form.roll_id(class="form-control nospace") }} 
+                {% endif %}
+            </div>
+
+            <div class="form-group pb-3 col-sm-3 offset-sm-3">
+                {{ form.classname.label(class="form-control-label") }} 
+                
+                {% if form.classname.errors %} 
+                {{ form.classname(class="form-control is-invalid text-uppercase") }}
+                <div class="invalid-feedback">
+                    {% for error in form.classname.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %} 
+                {{ form.classname(class="form-control text-uppercase") }} 
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- row 2 -->
+        <div class="row">
+            <div class="form-group pb-3 col-sm-9">
+                {{ form.name.label(class="form-control-label") }} 
+                {% if form.name.errors %} 
+                {{ form.name(class="form-control is-invalid text-capitalize") }}
+                <div class="invalid-feedback">
+                    {% for error in form.name.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %} 
+                {{ form.name(class="form-control text-capitalize") }}
+                {% endif %}
+            </div>
+        </div>
+
+
+        <!-- row 3 -->
+        <div class="row">
+            <div class="form-group pb-3 col-sm-3">
+                {{ form.bengali.label(class="form-control-label") }} 
+                
+                {% if form.bengali.errors %} 
+                {{ form.bengali(class="form-control is-invalid nospace countmark", id="ban") }}
+                <div class="invalid-feedback">
+                    {% for error in form.bengali.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %} 
+                    {{ form.bengali(class="form-control nospace countmark", id="ban") }} 
+                {% endif %}
+            </div>
+
+            <div class="form-group pb-3 col-sm-3">
+                {{ form.english.label(class="form-control-label") }} 
+
+                {% if form.english.errors %} 
+                {{ form.english(class="form-control is-invalid nospace countmark") }}
+                <div class="invalid-feedback">
+                    {% for error in form.english.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %} 
+                {{ form.english(class="form-control nospace countmark", id="eng") }} 
+                {% endif %}
+            </div>
+
+            <div class="form-group pb-3 col-sm-3">
+                {{ form.mathematics.label(class="form-control-label") }} 
+            
+                {% if form.mathematics.errors %} 
+                {{ form.mathematics(class="form-control is-invalid nospace countmark") }}
+                <div class="invalid-feedback">
+                    {% for error in form.mathematics.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %} 
+                {{ form.mathematics(class="form-control nospace countmark", id="math") }} 
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- row 4 -->
+        <div class="row">
+
+            <div class="form-group pb-3 col-sm-3">
+                {{ form.science.label(class="form-control-label") }} 
+                
+                {% if form.science.errors %} 
+                {{ form.science(class="form-control is-invalid nospace countmark") }}
+                <div class="invalid-feedback">
+                    {% for error in form.science.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %} 
+                {{ form.science(class="form-control nospace countmark", id="sci") }} 
+                {% endif %}
+            </div>
+
+            <div class="form-group pb-3 col-sm-3">
+                {{ form.bandg.label(class="form-control-label") }} 
+                
+                {% if form.bandg.errors %} 
+                {{ form.bandg(class="form-control is-invalid nospace countmark") }}
+                <div class="invalid-feedback">
+                    {% for error in form.bandg.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %} 
+                {{ form.bandg(class="form-control nospace countmark",id="bandg") }} 
+                {% endif %}
+            </div>
+
+            <div class="form-group pb-3 col-sm-3">
+                {{ form.religion.label(class="form-control-label") }} 
+                
+                {% if form.religion.errors %} 
+                {{ form.religion(class="form-control is-invalid nospace countmark") }}
+                <div class="invalid-feedback">
+                    {% for error in form.religion.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %} 
+                {{ form.religion(class="form-control nospace countmark", id="rel") }} 
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- <div class="pb-3 col-sm-3 flex-right-down offset-sm-6">
+                <button
+                    class="btn btn-info" 
+                    id="calculate"
+                    style="float: right;"    
+                >
+                    Calculate
+                </button>
+            </div> -->
+            <div class="pb-3 col-sm-3">
+                <div class="total" style="float: right;">
+                    <div class="pb-3 pt-3">
+                        {{ form.gpa.label(class="form-control-label") }} 
+                        {{ form.gpa(class="form-control", id="gpa") }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="pb-3 col-sm-3">
+                <div class="total" style="float: right;">
+                    <div class="pb-3 pt-3">
+                        {{ form.grade.label(class="form-control-label") }}
+                        {{ form.grade(class="form-control", id="grade") }}
+                    </div>
+
+                    <a href="#" class="btn btn-lg btn-info btn-end" id="calculate">
+                        Calculate
+                    </a>
+                </div>
+            </div>
+
+            <div class="pb-3 col-sm-3">
+                <div class="total" style="float: right;">
+                    <div class="pb-3 pt-3">
+                        {{ form.total.label(class="form-control-label") }} 
+                        {{ form.total(class="form-control", id="total") }}
+                        <!-- {{ form.total(class="form-control", id="total", disabled="", readonly="") }} -->
+                    </div>
+
+                    {{ form.submit(class="btn btn-lg btn-info btn-end") }}
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>
+
+<!-- calculating total marks -->
+<script>
+    let fail = false;
+
+    // getting all the subject's element
+    const ban = document.getElementById("ban"),
+        eng = document.getElementById("eng"),
+        math = document.getElementById("math"),
+        sci = document.getElementById("sci"),
+        bandg = document.getElementById("bandg"),
+        rel = document.getElementById("rel"),
+        total = document.getElementById("total"),
+        gpa = document.getElementById("gpa"),
+        grade = document.getElementById("grade");
+
+    const calculate = document.querySelector('#calculate');
+
+    // calculate the gpa
+    const calcGPA = (number) => {
+        if (number >= 40 && number <= 50) {
+            return 5.00;
+        } else if (number >= 36 && number <= 39) {
+            return 4.00;
+        } else if (number >= 30 && number <= 35) {
+            return 3.5;
+        } else if (number >= 25 && number <= 29) {
+            return 3.00;
+        } else if (number >= 20 && number <= 24) {
+            return 2.00;
+        } else if (number >= 17 && number <= 19) {
+            return 1.00;
+        } else {
+            fail = true;
+            console.log('Sorry dude! you are fail');
+            return 0;
+        }
+    }
+
+    // calculate the grade
+    const calcGRADE = (grades) => {
+        if (grades == 5 ) {
+            return 'A+';
+        } else if (grades >= 4 && grades < 5) {
+            return 'A';
+        } else if (grades >= 3.5 && grades < 4) {
+            return 'A-';
+        } else if (grades >= 3 && grades < 3.5) {
+            return 'B';
+        } else if (grades >= 2 && grades < 3) {
+            return 'C';
+        } else if (grades >= 1 && grades < 2) {
+            return 'D';
+        } else {
+            return 'F';
+        }
+    }
+
+    const totalmarks = () => {
+
+        // getting the value of all subjects when the CALCULATE button pressed
+        const banValue = parseFloat(ban.value),
+            engValue = parseFloat(eng.value),
+            mathValue = parseFloat(math.value),
+            sciValue = parseFloat(sci.value),
+            bandgValue = parseFloat(bandg.value),
+            relValue = parseFloat(rel.value);
+        
+        // check the GPA of individual subject
+        const banGPA = calcGPA(banValue),
+            engGPA = calcGPA(engValue),
+            mathGPA = calcGPA(mathValue),
+            sciGPA = calcGPA(sciValue),
+            bandgGPA = calcGPA(bandgValue),
+            relGPA = calcGPA(relValue);
+
+    
+        // find the average gpa
+        let avgGPA = (banGPA + engGPA + mathGPA + sciGPA + bandgGPA + relGPA)/6;
+        // find the grade
+        let finalGRADE = calcGRADE(avgGPA);
+     
+        if (fail === true) {
+            avgGPA = 0;
+            finalGRADE = 'F';
+        }
+
+        console.log('Bangla GPA: '+banGPA);
+        console.log('English GPA: '+engGPA);
+        console.log('Math GPA: '+mathGPA);
+        console.log('Science GPA: '+sciGPA);
+        console.log('Bangladesh and Global Studies GPA: '+bandgGPA);
+        console.log('Religion GPA: '+relGPA);
+
+        console.log(avgGPA);
+
+        const sumofmarks = banValue + engValue + mathValue + sciValue + bandgValue + relValue;
+
+        // assign the value to TOTAL MARKS
+        total.value = sumofmarks;
+
+        // assign the AVERAGE GPA
+        gpa.value = avgGPA;
+
+        // assign the grade
+        grade.value = finalGRADE;
+    }
+
+    calculate.addEventListener('click', totalmarks);
+
+    // rel.addEventListener("keyup", (totalvalue) => {});
+</script>
+{% endblock %}

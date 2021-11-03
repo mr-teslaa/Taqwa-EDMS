@@ -1,0 +1,33 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    Add subject wise marks 
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1> Add subject wise marks </h1>
+
+        <form method="POST" action="">
+            {{ form.hidden_tag() }}
+
+            <!-- row 0 -->
+            <div class="row">
+                <div class="form-group pb-3 col-sm-3">
+                    {{ form.name.label(class="form-control-label") }} 
+                    
+                    {% if form.name.errors %} 
+                    {{ form.name(class="form-control is-invalid nospace") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.name.errors %}
+                        <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                    {% else %} 
+                        {{ form.name(class="form-control nospace") }} 
+                    {% endif %}
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}

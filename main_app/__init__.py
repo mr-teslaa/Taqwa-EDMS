@@ -4,6 +4,7 @@ from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 from flask_mail import Mail
 from main_app.config import Config
+from main_app.users.routes import admission
 
 
 db = SQLAlchemy()
@@ -29,8 +30,18 @@ def create_app(config_class=Config):
     mail.init_app(app)
 
     from main_app.users.routes import users
-    from main_app.main.routes import main
     app.register_blueprint(users)
+
+    from main_app.main.routes import main
     app.register_blueprint(main)
 
-    return app
+    from main_app.admindashboard import admindashboard
+    app.register_blueprint(admission)
+
+    from main_app.exam import exam
+    app.register_blueprint(exam)
+
+    from main_app.admindashboard import exam50
+    app.register_blueprint(exam50)
+
+    return app 
