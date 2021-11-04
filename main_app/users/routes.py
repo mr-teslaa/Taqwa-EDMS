@@ -4,6 +4,10 @@ from flask import redirect
 from flask import url_for
 from flask import Blueprint
 from flask import request
+from flask.helpers import flash
+
+#importing module from sqlachemy
+from sqlalchemy import func
 
 #   importing module from flask login
 from flask_login import login_user
@@ -46,13 +50,13 @@ def admission():
                         phone = form.phone_number.data, birth_cirtificate = form.birth_cirtificate_no.data,
                         date_of_birth = form.birth_date.data, address = form.address.data,
                         male = form.male.data, female = form.female.data ,mail = form.email.data,
-                        transportation = form.yes.data, classroom_id = classroom.id)
-                        
-        parent = Parent(student_roll = student.student_roll)
-
-        db.session.add_all([student, parent])
+                        transportation = form.yes.data, classroom_id = classroom.id)           
+        db.session.add(student)
         db.session.commit()
 
+        parent = Parent(student_roll = student.student_roll)
+        db.session.add(parent)
+        db.session.commit()
         return redirect(url_for('users.admission'))
 
     return render_template('admission.html', title='Admission', form=form)
@@ -62,6 +66,32 @@ def admission():
 @users.route('/parents/apply', methods=['GET', 'POST'])
 def apply_parents():
     form = ApplyParentsForm()
+
+    if form.validate_on_submit():
+        
+        firstname, lastname = form.student_name_lastname.data.split(' ')
+        classroom = Classroom.query.filter_by(class_name = form.student_class.data.upper()).first()
+        student = Student.query.filter_by(first_name = firstname, last_name = lastname,
+        student_roll = form.student_roll.data, classroom_id = classroom.id).first()
+
+        if student:
+            parent = Parent.query.filter_by(student_roll = form.student_roll.data).first()
+            parent.name = form.name.data
+            parent.phone = form.phone_number.data
+            parent.mail = form.email.data
+    
+            hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+            parent.password = hashed_password
+            
+            db.session.commit()
+            flash('User successfully created.')
+
+        else:
+            flash('Student does not exist, please check values.')
+
+        return redirect(url_for('users.apply_parents'))
+
+
     return render_template('apply_parents.html', title='Parents Application', form=form)
 
 #   apply for a parents accout route

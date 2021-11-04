@@ -254,12 +254,6 @@ class ApplyParentsForm(FlaskForm):
         validators = [ DataRequired() ]
     )
 
-    #   make username for teacher
-    username = StringField(
-        'Username',
-        validators = [ DataRequired() ]
-    )
-
     #   make phone number filed
     phone_number = IntegerField(
         'Phone Number',
@@ -276,8 +270,8 @@ class ApplyParentsForm(FlaskForm):
     )
 
     #   make student name field
-    student_name = StringField(
-        'Student Name',
+    student_name_lastname = StringField(
+        'Your children\'s name and lastname',
         validators = [ DataRequired() ]
     )
 
@@ -296,29 +290,33 @@ class ApplyParentsForm(FlaskForm):
     )
 
     #   make a student roll field
-    student_roll = StringField(
+    student_roll = IntegerField(
         'Student Roll',
         validators = [ DataRequired() ]
     )
 
+    '''
     #   make a student id field
     student_id = IntegerField(
         'Student ID',
         validators = [ DataRequired() ]
     )
+    '''
 
     #   make password field
     password = PasswordField(
         'Password',
-        validators = [ DataRequired() ]
+        validators = [ 
+            DataRequired(),
+            EqualTo('confirm_password', message = 'Passwords must be match')   
+        ]
     )
 
     #   make cofirm password
     confirm_password = PasswordField(
         'Confirm Password',
         validators = [
-            DataRequired(),
-            EqualTo(password)
+            DataRequired()
         ]
     )
 
