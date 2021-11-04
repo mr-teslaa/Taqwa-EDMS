@@ -27,7 +27,6 @@ def create_app(config_class=Config):
     bcrypt.init_app(app)
     login_manager.init_app(app)
     mail.init_app(app)
-
     from main_app.users.routes import users
     from main_app.main.routes import main
     app.register_blueprint(users)
