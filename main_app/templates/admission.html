@@ -31,10 +31,7 @@
                             </div>
 
                         {% else %}
-                            {{ form.unique_id(
-                                class="form-control",
-                                placeholder="Unique ID"
-                            ) }}
+                            {{ form.unique_id(class="form-control", placeholder="Unique ID") }}
                         {% endif %}
                     </div>
 
@@ -51,10 +48,7 @@
                             </div>
 
                         {% else %}
-                            {{ form.roll_id(
-                                class="form-control",
-                                placeholder="Unique ID"
-                            ) }}
+                            {{ form.roll_id(class="form-control", placeholder="Roll ID") }}
                         {% endif %}
                     </div>
                 </div>
@@ -74,10 +68,7 @@
                             </div>
 
                         {% else %}
-                            {{ form.firstname(
-                                class="form-control",
-                                placeholder="First name"
-                            ) }}
+                            {{ form.firstname(class="form-control", placeholder="First name") }}
                         {% endif %}
                     </div>
 
@@ -94,10 +85,7 @@
                             </div>
 
                         {% else %}
-                            {{ form.lastname(
-                                class="form-control",
-                                placeholder="Lastname"
-                            ) }}
+                            {{ form.lastname(class="form-control", placeholder="Lastname") }}
                         {% endif %}
                     </div>
                 </div>
@@ -118,10 +106,7 @@
                             </div>
 
                         {% else %}
-                            {{ form.father_name(
-                                class="form-control",
-                                placeholder="Father's name"
-                            ) }}
+                            {{ form.father_name(class="form-control", placeholder="Father's name") }}
                         {% endif %}
                     </div>
 
@@ -138,10 +123,7 @@
                             </div>
 
                         {% else %}
-                            {{ form.mother_name(
-                                class="form-control",
-                                placeholder="Mother's name"
-                            ) }}
+                            {{ form.mother_name(class="form-control", placeholder="Mother's name") }}
                         {% endif %}
                     </div>
 
@@ -169,15 +151,9 @@
                             </div>
 
                         {% else %}
-                            {{ form.phone_number(
-                                class="form-control",
-                                placeholder="Phone Number"
-                            ) }}
+                            {{ form.phone_number(class="form-control", placeholder="Phone Number") }}
                         {% endif %}
                     </div>
-
-
-
                 </div>
 
 
@@ -196,10 +172,7 @@
                             </div>
 
                         {% else %}
-                            {{ form.birth_cirtificate_no(
-                                class="form-control",
-                                placeholder="Birth Cirtificate No"
-                            ) }}
+                            {{ form.birth_cirtificate_no(class="form-control", placeholder="Birth Cirtificate No") }}
                         {% endif %}
                     </div>
 
@@ -216,10 +189,7 @@
                             </div>
 
                         {% else %}
-                            {{ form.birth_date(
-                                class="form-control",
-                                placeholder="DD/MM/YY"
-                            ) }}
+                            {{ form.birth_date(class="form-control", placeholder="DD/MM/YY") }}
                         {% endif %}
                     </div>
 
@@ -241,10 +211,7 @@
                             </div>
 
                         {% else %}
-                            {{ form.address(
-                                class="form-control",
-                                placeholder="Address"
-                            ) }}
+                            {{ form.address(class="form-control", placeholder="Address") }}
                         {% endif %}
                     </div>
 
@@ -261,9 +228,7 @@
                             </div>
 
                         {% else %}
-                            {{ form.gender(
-                                class="form-control"
-                            ) }}
+                            {{ form.gender(class="form-control") }}
                         {% endif %}
                     </div>
 
@@ -284,10 +249,7 @@
                             </div>
 
                         {% else %}
-                            {{ form.care_of(
-                                class="form-control",
-                                placeholder="Address"
-                            ) }}
+                            {{ form.care_of(class="form-control", placeholder="Address") }}
                         {% endif %}
                     </div>
 
@@ -304,9 +266,7 @@
                             </div>
 
                         {% else %}
-                            {{ form.zip_code(
-                                class="form-control"
-                            ) }}
+                            {{ form.zip_code(class="form-control") }}
                         {% endif %}
                     </div>
 
@@ -327,10 +287,7 @@
                             </div>
 
                         {% else %}
-                            {{ form.email(
-                                class="form-control",
-                                placeholder="Email"
-                            ) }}
+                            {{ form.email(class="form-control", placeholder="Email") }}
                         {% endif %}
                     </div>
 
@@ -347,9 +304,7 @@
                             </div>
 
                         {% else %}
-                            {{ form.transportation_status(
-                                class="form-control"
-                            ) }}
+                            {{ form.transportation_status(class="form-control") }}
                         {% endif %}
                     </div>
 
@@ -366,14 +321,12 @@
                             {{ form.image_file( class="form-control is-invalid" ) }}
                             <div class="invalid-feedback">
                                 {% for error in form.image_file.errors %}
-                                    <span>  {{ error }}   </span>
+                                    <span class="text-danger">  {{ error }}   </span>
                                 {% endfor %}
                             </div>
 
                         {% else %}
-                            {{ form.image_file(
-                                class="form-control"
-                            ) }}
+                            {{ form.image_file(class="form-control") }}
                         {% endif %}
                     </div>
 
@@ -385,14 +338,12 @@
                             {{ form.signature( class="form-control is-invalid" ) }}
                             <div class="invalid-feedback">
                                 {% for error in form.signature.errors %}
-                                    <span>  {{ error }}   </span>
+                                    <span class="text-danger">  {{ error }}   </span>
                                 {% endfor %}
                             </div>
 
                         {% else %}
-                            {{ form.signature(
-                                class="form-control"
-                            ) }}
+                            {{ form.signature(class="form-control") }}
                         {% endif %}
                     </div>
                 </div>

@@ -6,8 +6,10 @@ from wtforms import SubmitField
 from wtforms import SelectField
 from wtforms import BooleanField
 from wtforms import IntegerField
-from wtforms import FileField
 from wtforms.fields.core import RadioField
+
+from flask_wtf.file import FileField
+from flask_wtf.file import FileAllowed
 
 #   wtf validators
 from wtforms.validators import DataRequired
@@ -20,12 +22,12 @@ from wtforms.validators import EqualTo
 
 class AdmissionForm(FlaskForm):
 
-    unique_id = IntegerField(
+    unique_id = StringField(
         'Unique ID',
         validators = [DataRequired()]
     )
 
-    roll_id = IntegerField(
+    roll_id = StringField(
         'Roll ID',
         validators = [DataRequired()]
     )
@@ -159,13 +161,17 @@ class AdmissionForm(FlaskForm):
     #   make a photo upload field
     image_file = FileField(
         'Photo',
-        validators = [ DataRequired() ]
+        validators = [
+            FileAllowed(['jpeg', 'jpg', 'png'])
+        ]
     )
 
     #   make a field for signature
     signature = FileField(
         'Signature',
-        validators = [ DataRequired()]
+        validators = [
+            FileAllowed(['jpeg', 'jpg', 'png'])
+        ]
     )
 
     #   make a select field for date of birth
@@ -221,14 +227,6 @@ class AdmissionForm(FlaskForm):
             ('2015', '2015'), ('2016', '2016'),
             ('2017', '2017'), ('2018', '2018'),
             ('2019', '2019'), ('2020', '2020'),
-        ]
-    )
-
-    #   make checkbox for agree with terms and codition
-    checkbox = BooleanField(
-        'I cirtify that all the information is given above is true. If the authority find any false information I will accept any decission the authority take.',
-        validators = [
-            DataRequired(),
         ]
     )
 
