@@ -1,0 +1,171 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    Dashboard
+{% endblock %}
+
+{% block body %}
+    <div class="container d-flex justify-content-between align-items-center pt-5 pb-5">
+        <h2 class="sidebar-title"> Dashboard </h2>
+
+        <a href="{{ url_for('exam50.addmarks50') }}" class="text-end btn btn-info">
+            <i class='bx bx-plus'></i>
+            Add
+        </a>
+    </div>
+
+
+    <div class="container col-md-10 table-container">
+
+        <form method="POST" action="">
+            {{ form.hidden_tag() }}
+
+            <!-- row 0 -->
+            <div class="d-flex flex-start mb-3">
+                <div class="form-group me-3">
+                    {% if form.examname.errors %} 
+                    {{ form.examname(class="form-control is-invalid nospace") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.examname.errors %}
+                        <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                    {% else %} 
+                        {{ form.examname(class="form-control nospace") }} 
+                    {% endif %}
+                </div>
+
+                <div class="">
+                    {{ form.submit(class="btn btn-primary") }}
+                </div>
+            </div>
+        </form>
+        
+        <div class="d-flex mb-3 text-center">
+            <div class="card col-md-2 me-3 p-3 text-center">
+                <h5 class="card-title"> Total Students </h5>
+                <h1 class="card-details">112</h1>
+            </div>
+
+            <div class="card col-md-2 me-3 p-3 text-center">
+                <h5 class="card-title"> Total Fails </h5>
+                <h1 class="card-details"> 34 </h1>
+            </div>
+        </div>
+
+        <h3 class="text-primary"> Class Statistics (Total) </h3> <hr />
+
+        <div class="row mb-3">
+            <a class="card col-md-2 p-3 me-3 text-center" 
+                href="{{ url_for('exam.viewmarks', classname='play') }}"
+            >
+                <h5 class="card-title text-uppercase"> play </h5>
+                <h1 class="card-details"> 10 </h1>
+            </a>
+
+            <a class="card col-md-2 p-3 me-3 text-center"
+                href="{{ url_for('exam.viewmarks', classname='nursary') }}"
+            >
+                <h5 class="card-title text-uppercase"> nursary </h5>
+                <h1 class="card-details"> 20 </h1>
+            </a>
+
+            <a class="card col-md-2 p-3 me-3 text-center"
+                href="{{ url_for('exam.viewmarks', classname='one') }}"
+            >
+                <h5 class="card-title text-uppercase"> one </h5>
+                <h1 class="card-details"> 18 </h1>
+            </a>
+
+            <a class="card col-md-2 p-3 me-3 text-center"
+                href="{{ url_for('exam.viewmarks', classname='two') }}"
+            >
+                <h5 class="card-title text-uppercase"> two </h5>
+                <h1 class="card-details"> 21 </h1>
+            </a>
+
+            <a class="card col-md-2 p-3 me-3 text-center"
+                href="{{ url_for('exam.viewmarks', classname='three') }}"
+            >
+                <h5 class="card-title text-uppercase"> three </h5>
+                <h1 class="card-details"> 21 </h1>
+            </a>
+        </div>
+
+        <div class="row mb-3">
+            <a class="card col-md-2 p-3 me-3 text-center"
+                href="{{ url_for('exam.viewmarks', classname='four') }}"
+            >
+                <h5 class="card-title text-uppercase"> four </h5>
+                <h1 class="card-details"> 11 </h1>
+            </a>
+
+            <a class="card col-md-2 p-3 me-3 text-center"
+                href="{{ url_for('exam.viewmarks', classname='five') }}"
+            >
+                <h5 class="card-title text-uppercase"> five </h5>
+                <h1 class="card-details"> 14 </h1>
+            </a>
+
+            <a class="card col-md-2 p-3 me-3 text-center"
+                href="{{ url_for('exam.viewmarks', classname='six') }}"
+            >
+                <h5 class="card-title text-uppercase"> six </h5>
+                <h1 class="card-details"> 27 </h1>
+            </a>
+
+            <a class="card col-md-2 p-3 me-3 text-center"
+                href="{{ url_for('exam.viewmarks', classname='seven') }}"
+            >
+                <h5 class="card-title text-uppercase"> seven </h5>
+                <h1 class="card-details"> 40 </h1>
+            </a>
+
+            <a class="card col-md-2 p-3 me-3 text-center"
+                href="{{ url_for('exam.viewmarks', classname='eight') }}"
+            >
+                <h5 class="card-title text-uppercase"> eight </h5>
+                <h1 class="card-details"> 30 </h1>
+            </a>
+        </div>
+
+        <!-- show all student -->
+        <!-- <table class="table table-bordered table-striped table-hover">
+            <thead>
+                <tr>
+                    <th class="col"> Roll / ID </th>
+                    <th class="col"> Student Name </th>
+                    <th class="col"> Class </th>
+                    <th class="col"> Bengali </th>
+                    <th class="col"> English </th>
+                    <th class="col"> Mathematics </th>
+                    <th class="col"> Science </th>
+                    <th class="col"> B & G </th>
+                    <th class="col"> Religion </th>
+                    <th class="col"> GPA </th>
+                    <th class="col"> Grade </th>
+                    <th class="col"> Total Marks </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for mark in marks %}
+                <tr>
+                    <th> {{ mark.roll_id }} </th>
+                    <td> {{ mark.name }} </td>
+                    <td> {{ mark.classname }} </td>
+                    <td> {{ mark.bengali }} </td>
+                    <td> {{ mark.english }} </td>
+                    <td> {{ mark.mathematics }} </td>
+                    <td> {{ mark.science }} </td>
+                    <td> {{ mark.bandg }} </td>
+                    <td> {{ mark.religion }} </td>
+                    <td> {{ mark.gpa }} </td>
+                    <td> {{ mark.grade }} </td>
+                    <td> {{ mark.total }} </td>
+                </tr>
+                {% endfor %}
+
+            </tbody>
+        </table> -->
+    </div>
+{% endblock %}

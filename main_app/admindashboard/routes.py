@@ -28,7 +28,7 @@ def dashboard():
     form.examname.data = '3rd'
     marks = Marks50.query.all()
     three = Marks50.query.filter_by(classname='three').all()
-    return render_template('dashboard.html', marks=marks, form=form, three=three)
+    return render_template('admindashboard/dashboard.html', marks=marks, form=form, three=three)
 
 @admindashboard.route('/register', methods=['GET', 'POST'])
 @admindashboard.route('/register/', methods=['GET', 'POST'])
@@ -42,6 +42,13 @@ def register():
         flash('Your account has been created! You are now able to log in', 'success')
         return redirect(url_for('users.login'))
     return render_template('register.html', form=form)
+
+
+# add student
+@admindashboard.route('/add/student', methods=['GET', 'POST'])
+@admindashboard.route('/add/student/', methods=['GET', 'POST'])
+
+
 
 # delete student individual marks
 @admindashboard.route('/delete/<string:classname>/<string:roll_id>/delete', methods=['GET', 'POST'])

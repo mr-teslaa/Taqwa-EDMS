@@ -1,0 +1,175 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    Student View
+{% endblock %}
+
+{% block body %}
+    <div class="container mt-3">
+        <div class="d-flex justify-content-between">
+            <div>
+                <h2> Student Individual Marksheet</h2>
+            </div>
+
+            <div>
+                <a href="{{ url_for('admindashboard.deletestudent', classname=student.classname, roll_id=student.roll_id) }}" class="btn btn-danger"> 
+                    Delete 
+                </a>
+    
+                <a href="{{ url_for('admindashboard.dashboard') }}" class="btn btn-primary"> 
+                    Print 
+                </a>
+
+                <a href="{{ url_for('admindashboard.dashboard') }}" class="btn btn-primary"> 
+                    Go to Dashboard 
+                </a>
+            </div>
+
+        </div>
+        <hr />
+        
+        <div class="row">
+            <h4 class="col-md-6">Roll/ID: {{ student.roll_id }}</h4>
+            <h4 class="col-md-4">Class: {{ student.classname }}</h4>
+        </div>
+
+        <div class="row mt-3 mb-3">
+            <h4 class="col-md-6"> Name: {{ student.name }} </h4>
+        </div>
+        <table class="table table-striped table-bordered table-hover" style="width: 80%; margin: auto;">
+            <thead>
+                <th class="col"> Subject Name </th>
+                <th class="col"> Marks </th>
+                <th class="col"> Grade </th>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td> Bengali </td>
+                    <td id="ban"> {{ student.bengali }} </td>
+                    <td id="banResult"> Grade </td>
+                </tr>
+                <tr>
+                    <td> English </td>
+                    <td id="eng"> {{ student.english }} </td>
+                    <td id="engResult">    </td>
+                </tr>
+                <tr>
+                    <td> Mathematics </td>
+                    <td id="math"> {{ student.mathematics }} </td>
+                    <td id="mathResult">  </td>
+                </tr>
+                <tr>
+                    <td> Science </td>
+                    <td id="sci"> {{ student.science }} </td>
+                    <td id="sciResult"></td>
+                </tr>
+                <tr>
+                    <td> Bangladesh and Global Studies </td>
+                    <td id="bandg"> {{ student.bandg }} </td>
+                    <td id="bandgResult"></td>
+                </tr>
+                <tr>
+                    <td> Religion </td>
+                    <td id="rel"> {{ student.religion }} </td>
+                    <td id="relResult"></td>
+                </tr>
+                <tr style="font-size: 1.2rem;">
+                    <th> Total </th>
+                    <th> {{ student.total }} </th>
+                    <th> {{ student.grade }} ( {{ student.gpa }} ) </th>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- calculating total marks -->
+    <script>
+
+        // getting all the subject's element
+        const ban = document.getElementById("ban"),
+            eng = document.getElementById("eng"),
+            math = document.getElementById("math"),
+            sci = document.getElementById("sci"),
+            bandg = document.getElementById("bandg"),
+            rel = document.getElementById("rel");
+
+
+        // calculate the gpa
+        const calcGPA = (number) => {
+            if (number >= 40 && number <= 50) {
+                return 5.00;
+            } else if (number >= 36 && number <= 39) {
+                return 4.00;
+            } else if (number >= 30 && number <= 35) {
+                return 3.5;
+            } else if (number >= 25 && number <= 29) {
+                return 3.00;
+            } else if (number >= 20 && number <= 24) {
+                return 2.00;
+            } else if (number >= 17 && number <= 19) {
+                return 1.00;
+            } else {
+                return 0;
+            }
+        }
+
+        // calculate the grade
+        const calcGRADE = (grades) => {
+            if (grades == 5 ) {
+                return 'A+';
+            } else if (grades >= 4 && grades < 5) {
+                return 'A';
+            } else if (grades >= 3.5 && grades < 4) {
+                return 'A-';
+            } else if (grades >= 3 && grades < 3.5) {
+                return 'B';
+            } else if (grades >= 2 && grades < 3) {
+                return 'C';
+            } else if (grades >= 1 && grades < 2) {
+                return 'D';
+            } else {
+                return 'F';
+            }
+        }
+
+        const totalmarks = () => {
+
+            // getting the value of all subjects when the CALCULATE button pressed
+            const banValue = ban.innerHTML,
+                engValue = eng.innerHTML,
+                mathValue = math.innerHTML,
+                sciValue = sci.innerHTML,
+                bandgValue = bandg.innerHTML,
+                relValue = rel.innerHTML;
+
+            // check the GPA of individual subject
+            const banGPA = calcGPA(banValue),
+                engGPA = calcGPA(engValue),
+                mathGPA = calcGPA(mathValue),
+                sciGPA = calcGPA(sciValue),
+                bandgGPA = calcGPA(bandgValue),
+                relGPA = calcGPA(relValue);
+
+            console.log('Bangla GPA: '+banGPA);
+            console.log('English GPA: '+engGPA);
+            console.log('Math GPA: '+mathGPA);
+            console.log('Science GPA: '+sciGPA);
+            console.log('Bangladesh and Global Studies GPA: '+bandgGPA);
+            console.log('Religion GPA: '+relGPA);
+
+            document.querySelector('#banResult').innerHTML = banGPA;
+            document.querySelector('#engResult').innerHTML = engGPA;
+            document.querySelector('#mathResult').innerHTML = mathGPA;
+            document.querySelector('#sciResult').innerHTML = sciGPA;
+            document.querySelector('#bandgResult').innerHTML = bandgGPA;
+            document.querySelector('#relResult').innerHTML = relGPA;
+
+
+        }
+
+        document.addEventListener('DOMContentLoaded', totalmarks);
+
+        // rel.addEventListener("keyup", (totalvalue) => {});
+    </script>
+{% endblock %}

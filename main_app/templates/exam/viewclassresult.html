@@ -1,0 +1,66 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    view result
+{% endblock %}
+
+{% block body %}
+    <div class="d-flex justify-content-around mt-3 mb-3">
+        <div>
+            <h2 class="text-uppercase"> View - class {{ viewclass.classname }} </h2>
+        </div>
+
+        <div>
+            <a 
+                href="{{ url_for('admindashboard.dashboard') }}"
+                class="btn btn-primary"    
+            > 
+                Go to Dashboard 
+            </a>
+        </div>
+    </div>
+
+    <div class="container col-md-10">
+        <table class="table table-striped table-bordered table-hover" style="border-bottom: 4px solid #dee2e6">
+            <thead>
+                <tr>
+                    <th class="col"> Roll / ID </th>
+                    <th class="col"> Student Name </th>
+                    <th class="col"> Class </th>
+                    <th class="col"> Bengali </th>
+                    <th class="col"> English </th>
+                    <th class="col"> Mathematics </th>
+                    <th class="col"> Science </th>
+                    <th class="col"> B & G </th>
+                    <th class="col"> Religion </th>
+                    <th class="col"> GPA </th>
+                    <th class="col"> Grade </th>
+                    <th class="col"> Total Marks </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for mark in viewmarks %}
+                <tr>
+                    <th> {{ mark.roll_id }} </th>
+                    <td>
+                        <a href="{{ url_for('exam.viewstudent', classname=mark.classname, roll_id=mark.roll_id) }}"> 
+                        {{ mark.name }} 
+                        </a>
+                    </td>
+                    <td> {{ mark.classname }} </td>
+                    <td> {{ mark.bengali }} </td>
+                    <td> {{ mark.english }} </td>
+                    <td> {{ mark.mathematics }} </td>
+                    <td> {{ mark.science }} </td>
+                    <td> {{ mark.bandg }} </td>
+                    <td> {{ mark.religion }} </td>
+                    <td> {{ mark.gpa }} </td>
+                    <td> {{ mark.grade }} </td>
+                    <td> {{ mark.total }} </td>
+                </tr>
+                {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

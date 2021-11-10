@@ -14,11 +14,52 @@
 
         <section class="d-flex justify-content-center">
 
-            <form action="" method="post" class="form-large">
+            <form action="" method="POST" class="form-large" enctype="multipart/form-data">
                 {{ form.hidden_tag() }}
 
-
                 <div class="row">
+                    <!-- unique id -->
+                    <div class="col-sm-6">
+                        {{ form.unique_id.label(class="form-label") }}
+
+                        {% if form.unique_id.errors %}
+                            {{ form.unique_id( class="form-control is-invalid" ) }}
+                            <div class="invalid-feedback">
+                                {% for error in form.unique_id.errors %}
+                                    <span>  {{ error }}   </span>
+                                {% endfor %}
+                            </div>
+
+                        {% else %}
+                            {{ form.unique_id(
+                                class="form-control",
+                                placeholder="Unique ID"
+                            ) }}
+                        {% endif %}
+                    </div>
+
+                    <!-- roll id -->
+                    <div class="col-sm-6">
+                        {{ form.roll_id.label(class="form-label") }}
+
+                        {% if form.roll_id.errors %}
+                            {{ form.roll_id( class="form-control is-invalid" ) }}
+                            <div class="invalid-feedback">
+                                {% for error in form.roll_id.errors %}
+                                    <span>  {{ error }}   </span>
+                                {% endfor %}
+                            </div>
+
+                        {% else %}
+                            {{ form.roll_id(
+                                class="form-control",
+                                placeholder="Unique ID"
+                            ) }}
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="row pt-2">
 
                     <!-- father name -->
                     <div class="col-sm-6">
@@ -191,33 +232,85 @@
                     <div class="col-sm-6">
                         {{ form.address.label(class="form-label") }}
 
-                        {{ form.address(
-                            class="form-control",
-                            placeholder="Address"
-                        ) }}
+                        {% if form.address.errors %}
+                            {{ form.address( class="form-control is-invalid" ) }}
+                            <div class="invalid-feedback">
+                                {% for error in form.address.errors %}
+                                    <span>  {{ error }}   </span>
+                                {% endfor %}
+                            </div>
+
+                        {% else %}
+                            {{ form.address(
+                                class="form-control",
+                                placeholder="Address"
+                            ) }}
+                        {% endif %}
                     </div>
 
                     <!-- gender -->
                     <div class="col-sm-6">
+                        {{ form.gender.label(class="form-label") }}
 
-                        <p class="form-label"> Gender </p>
-
-                        <div class="d-flex align-items-center nobg">
-                            <div class="form-check form-control">
-                                {{ form.male(class="form-check-input") }}
-                                {{ form.male.label(class="form-label") }}
+                        {% if form.gender.errors %}
+                            {{ form.gender( class="form-control is-invalid" ) }}
+                            <div class="invalid-feedback">
+                                {% for error in form.gender.errors %}
+                                    <span>  {{ error }}   </span>
+                                {% endfor %}
                             </div>
 
-                            <div class="form-check form-control">
-                                {{ form.female(class="form-check-input") }}
-                                {{ form.female.label(class="form-label") }}
-                            </div>
-                        </div>
-
+                        {% else %}
+                            {{ form.gender(
+                                class="form-control"
+                            ) }}
+                        {% endif %}
                     </div>
 
                 </div>
 
+                <div class="row mt-2">
+
+                    <!-- care of -->
+                    <div class="col-sm-6">
+                        {{ form.care_of.label(class="form-label") }}
+
+                        {% if form.care_of.errors %}
+                            {{ form.care_of( class="form-control is-invalid" ) }}
+                            <div class="invalid-feedback">
+                                {% for error in form.care_of.errors %}
+                                    <span>  {{ error }}   </span>
+                                {% endfor %}
+                            </div>
+
+                        {% else %}
+                            {{ form.care_of(
+                                class="form-control",
+                                placeholder="Address"
+                            ) }}
+                        {% endif %}
+                    </div>
+
+                    <!-- zip code -->
+                    <div class="col-sm-6">
+                        {{ form.zip_code.label(class="form-label") }}
+
+                        {% if form.zip_code.errors %}
+                            {{ form.zip_code( class="form-control is-invalid" ) }}
+                            <div class="invalid-feedback">
+                                {% for error in form.zip_code.errors %}
+                                    <span>  {{ error }}   </span>
+                                {% endfor %}
+                            </div>
+
+                        {% else %}
+                            {{ form.zip_code(
+                                class="form-control"
+                            ) }}
+                        {% endif %}
+                    </div>
+
+                </div>
 
                 <div class="row mt-2">
 
@@ -225,46 +318,82 @@
                     <div class="col-sm-6">
                         {{ form.email.label(class="form-label") }}
 
-                        {{ form.email(
-                            class="form-control",
-                            placeholder="Email Address"
-                        ) }}
+                        {% if form.email.errors %}
+                            {{ form.email( class="form-control is-invalid" ) }}
+                            <div class="invalid-feedback">
+                                {% for error in form.email.errors %}
+                                    <span>  {{ error }}   </span>
+                                {% endfor %}
+                            </div>
+
+                        {% else %}
+                            {{ form.email(
+                                class="form-control",
+                                placeholder="Email"
+                            ) }}
+                        {% endif %}
                     </div>
 
                     <!-- transportation service -->
                     <div class="col-sm-6">
+                        {{ form.transportation_status.label(class="form-label") }}
 
-                        <p class="form-label"> Request for transportation service </p>
-
-                        <div class="d-flex align-items-center nobg">
-                            <div class="form-check form-control">
-                                {{ form.yes(class="form-check-input") }}
-                                {{ form.yes.label(class="form-label") }}
+                        {% if form.transportation_status.errors %}
+                            {{ form.transportation_status( class="form-control is-invalid" ) }}
+                            <div class="invalid-feedback">
+                                {% for error in form.transportation_status.errors %}
+                                    <span>  {{ error }}   </span>
+                                {% endfor %}
                             </div>
 
-                            <div class="form-check form-control">
-                                {{ form.no(class="form-check-input") }}
-                                {{ form.no.label(class="form-label") }}
-                            </div>
-                        </div>
-
+                        {% else %}
+                            {{ form.transportation_status(
+                                class="form-control"
+                            ) }}
+                        {% endif %}
                     </div>
 
                 </div>
 
 
                 <div class="row mt-2">
-
+            
                     <!-- photo -->
                     <div class="col-sm-6">
-                        {{ form.photo.label(class="form-label") }}
-                        {{ form.photo( class="form-control" ) }}
+                        {{ form.image_file.label(class="form-label") }}
+
+                        {% if form.image_file.errors %}
+                            {{ form.image_file( class="form-control is-invalid" ) }}
+                            <div class="invalid-feedback">
+                                {% for error in form.image_file.errors %}
+                                    <span>  {{ error }}   </span>
+                                {% endfor %}
+                            </div>
+
+                        {% else %}
+                            {{ form.image_file(
+                                class="form-control"
+                            ) }}
+                        {% endif %}
                     </div>
 
                     <!-- signature -->
                     <div class="col-sm-6">
                         {{ form.signature.label(class="form-label") }}
-                        {{ form.signature( class="form-control" ) }}
+
+                        {% if form.signature.errors %}
+                            {{ form.signature( class="form-control is-invalid" ) }}
+                            <div class="invalid-feedback">
+                                {% for error in form.signature.errors %}
+                                    <span>  {{ error }}   </span>
+                                {% endfor %}
+                            </div>
+
+                        {% else %}
+                            {{ form.signature(
+                                class="form-control"
+                            ) }}
+                        {% endif %}
                     </div>
                 </div>
 

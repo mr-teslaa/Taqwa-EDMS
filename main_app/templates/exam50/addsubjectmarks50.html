@@ -1,0 +1,25 @@
+{% extends 'layout.html' %} {% block title %} Add subject wise marks {% endblock
+%} {% block body %}
+<div class="container">
+    <h1>Add subject wise marks</h1>
+
+    <form method="POST" action="">
+        {{ form.hidden_tag() }}
+
+        <!-- row 0 -->
+        <div class="row">
+            {% for student in students %}
+            <div class="input-group pb-3">
+                <span class="input-group-text"> {{ student.name }} </span>
+                <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Enter Mark"
+                    name="{{ student.unique_id }}-marks"
+                />
+            </div>
+            {% endfor %}
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -1,3 +1,4 @@
+from enum import unique
 from flask_wtf import FlaskForm
 from wtforms import StringField
 from wtforms import PasswordField
@@ -6,6 +7,7 @@ from wtforms import SelectField
 from wtforms import BooleanField
 from wtforms import IntegerField
 from wtforms import FileField
+from wtforms.fields.core import RadioField
 
 #   wtf validators
 from wtforms.validators import DataRequired
@@ -18,40 +20,38 @@ from wtforms.validators import EqualTo
 
 class AdmissionForm(FlaskForm):
 
+    unique_id = IntegerField(
+        'Unique ID',
+        validators = [DataRequired()]
+    )
+
+    roll_id = IntegerField(
+        'Roll ID',
+        validators = [DataRequired()]
+    )
+
     #   make a field for first name
     firstname = StringField(
         'First name',
-        validators = [
-            DataRequired(),
-            Length(min=3, max=50)
-        ]
+        validators = [ DataRequired() ]
     )
 
     #   make a field for last name
     lastname = StringField(
         'Last name',
-        validators = [
-            DataRequired(),
-            Length(min=3, max=50)
-        ]
+        validators = [ DataRequired() ]
     )
 
     #   make field for father's name
     father_name = StringField(
         'Father\'s Name',
-        validators = [
-            DataRequired(),
-            Length(min=3, max=50)
-        ]
+        validators = [ DataRequired() ]
     )
 
     #   make a field for mother's name
     mother_name = StringField(
         'Mother\'s Name',
-        validators = [
-            DataRequired(),
-            Length(min=3, max=50)
-        ]
+        validators = [ DataRequired() ]
     )
 
     #   make select field for select admitted class
@@ -76,8 +76,7 @@ class AdmissionForm(FlaskForm):
     phone_number = IntegerField(
         'Phone Number',
         validators = [
-            DataRequired(),
-            Length(11, 13)
+            DataRequired()
         ]
     )
 
@@ -98,43 +97,42 @@ class AdmissionForm(FlaskForm):
         ]
     )
 
-    #   make a radio for male
-    male = BooleanField('Male')
+    #   gender selection
+    gender = SelectField(
+        'Gender',
+        choices = [
+            ('n/a', '--- Select Gender ---'),
+            ('male', 'MALE'),
+            ('female', 'FEMALE')
+        ]
+    )
 
-    #   make a radio for female
-    female = BooleanField('Female')
-
-    #   make a radio for trasportation yes
-    yes = BooleanField('Yes')
-
-    #   make a radio for trasportation no
-    no = BooleanField('no')
+    # transportation selection
+    transportation_status = SelectField(
+        'Transportation Status',
+        choices = [
+            ('n/a', '--- Select Transportation Status ---'),
+            ('yes', 'YES'),
+            ('no', 'NO')
+        ]
+    )
 
     #   make a field for care of address
     care_of = StringField(
         'Care of',
-        validators = [
-            DataRequired(),
-            Length(min=3, max=80)
-        ]
+        validators = [ DataRequired() ]
     )
 
     #   make a field for zip code
     zip_code = IntegerField(
         'Post Code',
-        validators = [
-            DataRequired(),
-            Length(min=4, max=4)
-        ]
+        validators = [ DataRequired() ]
     )
 
     #   make a filed for address
     address = StringField(
         'Address',
-        validators = [
-            DataRequired(),
-            Length(min=3, max=20)
-        ]
+        validators = [ DataRequired() ]
     )
 
     #   make a field for email
@@ -146,8 +144,20 @@ class AdmissionForm(FlaskForm):
         ]
     )
 
+    # care of
+    care_of = StringField(
+        'Care Of',
+        validators = [ DataRequired() ]
+    )
+
+    # zip code
+    zip_code = StringField(
+        'Zip Code',
+        validators = [ DataRequired() ]
+    )
+
     #   make a photo upload field
-    photo = FileField(
+    image_file = FileField(
         'Photo',
         validators = [ DataRequired() ]
     )

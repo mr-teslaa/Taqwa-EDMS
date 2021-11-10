@@ -68,6 +68,7 @@ class StudentsInfo(db.Model):
     current_class = db.Column(db.String(20),nullable=False)
     phone_number = db.Column(db.String(11), nullable=False)
     birth_cirtificate_no = db.Column(db.String(20), unique=True, nullable=False)
+    birth_date = db.Column(db.String(50), nullable=False)
     gender = db.Column(db.String(20), nullable=False)
     care_of = db.Column(db.String(300))
     zip_code = db.Column(db.String(10), nullable=False)
@@ -80,7 +81,7 @@ class StudentsInfo(db.Model):
     
 
     def __repr__(self):
-        return f"User('{self.uniqueID}', '{self.firstname}', '{self.lastname}', '{self.father_name}', '{self.mother_name}', '{self.current_class}', '{self.phone_number}', '{self.birth_cirtificate_no}', '{self.gender}', '{self.care_of}', '{self.zip_code}', '{self.address}', '{self.email}', '{self.image_file}', '{self.signature}', '{self.transportation_status}', '{self.graduation_status}')"
+        return f"User('{self.uniqueID}', '{self.firstname}', '{self.lastname}', '{self.father_name}', '{self.mother_name}', '{self.current_class}', '{self.phone_number}', '{self.birth_cirtificate_no}', '{self.birth_date}', '{self.gender}', '{self.care_of}', '{self.zip_code}', '{self.address}', '{self.email}', '{self.image_file}', '{self.signature}', '{self.transportation_status}', '{self.graduation_status}')"
 
 
 # table for total 100 marks

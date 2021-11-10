@@ -3,11 +3,14 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 from flask_mail import Mail
+from flask_migrate import Migrate
+from flask_migrate import upgrade
 from main_app.config import Config
 
 db = SQLAlchemy()
 bcrypt = Bcrypt()
 login_manager = LoginManager()
+migrate = Migrate()
 
 #   define which route is mendatory if we try to access any unauthorize page.
 #   in this case we are trying to access account page but before we access that page we must have to login first.
@@ -26,6 +29,7 @@ def create_app(config_class=Config):
     bcrypt.init_app(app)
     login_manager.init_app(app)
     mail.init_app(app)
+    migrate.init_app(app, db)
 
     from main_app.users.routes import users
     app.register_blueprint(users)
