@@ -27,9 +27,14 @@ def create_app(config_class=Config):
     bcrypt.init_app(app)
     login_manager.init_app(app)
     mail.init_app(app)
-    from main_app.users.routes import users
+    from main_app.student.routes import student
+    from main_app.parent.routes import parent
+    from main_app.teacher.routes import teacher
     from main_app.main.routes import main
-    app.register_blueprint(users)
+    app.register_blueprint(student)
+    app.register_blueprint(parent)
+    app.register_blueprint(teacher)
     app.register_blueprint(main)
+
 
     return app

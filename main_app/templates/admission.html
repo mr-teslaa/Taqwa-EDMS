@@ -14,7 +14,7 @@
 
         <section class="d-flex justify-content-center">
 
-            <form action="/admission" method="POST" class="form-large" enctype="multipart/form-data">
+            <form action="" method="POST" class="form-large" enctype="multipart/form-data">
                 {{ form.csrf_token() }}
                 {{ form.name }}
                 
@@ -263,6 +263,55 @@
                     </div>
 
                 </div>
+
+                <!-- Password Field -->
+                <div class = "row mt-2">
+
+                    <div class = "col-sm-6">
+
+                        {{ form.password.label(class="form-label") }}
+
+                        {% if form.password.errors %}
+                            {{ form.password( class = "form-control is-invalid" ) }}
+                             <div class="invalid-feedback">
+                                {% for error in form.password.errors %}
+                                        <span>  {{ error }}   </span>
+                                {% endfor %}
+                            </div>
+
+                        {% else %}
+                            {{ form.password(
+                                class="form-control",
+                                placeholder="Password"
+                        ) }}
+                        {% endif %}
+
+                    </div>
+
+                    <!-- Confirm Password Field -->
+                    <div class = "col-sm-6">
+
+                        {{ form.confirm_password.label(class="form-label") }}
+
+                        {% if form.confirm_password.errors %}
+                            {{ form.confirm_password( class = "form-control is-invalid" ) }}
+                             <div class="invalid-feedback">
+                                {% for error in form.confirm_password.errors %}
+                                        <span>  {{ error }}   </span>
+                                {% endfor %}
+                            </div>
+
+                        {% else %}
+                            {{ form.confirm_password(
+                                class="form-control",
+                                placeholder="Confirm Password"
+                        ) }}
+                        {% endif %}
+
+
+                    </div>
+                </div>
+
 
 
                 <div class="row mt-2">
