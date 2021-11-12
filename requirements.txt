@@ -21,3 +21,10 @@ six==1.16.0
 SQLAlchemy==1.4.23
 Werkzeug==2.0.1
 WTForms==2.3.3
+
+Flask-Migrate == 2.5.3
+Flask-Script == 2.0.6
+Flask-Cors==3.0.9
+psycopg2-binary>=2.8
+flask-login == 0.5.0
+Pillow ==  8.3.1

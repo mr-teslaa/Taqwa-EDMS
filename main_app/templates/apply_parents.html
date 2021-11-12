@@ -18,7 +18,7 @@
 
     <main class="vh100 bg_gray pt-5 pb-5">
     
-        <h2 class="h1 text-center mb-5"> Crate Account for Parents </h2>
+        <h2 class="h1 text-center mb-5"> Create Account for Parents </h2>
 
 
         <section class="d-flex justify-content-center">
@@ -28,7 +28,7 @@
                 {{ form.hidden_tag() }}
 
 
-                <div class="row">
+                <div class="row mt-2">
 
                     <!-- name -->
                     <div class="col-sm-6">
@@ -50,30 +50,6 @@
                         {% endif %}
                     </div>
 
-                    <!-- username -->
-                    <div class="col-sm-6">
-                        {{ form.username.label(class="form-label") }}
-
-                        {% if form.username.errors %}
-                            {{ form.username( class="form-control is-invalid" ) }}
-                            <div class="invalid-feedback">
-                                {% for error in form.username.errors %}
-                                    <span>  {{ error }}   </span>
-                                {% endfor %}
-                            </div>
-
-                        {% else %}
-                            {{ form.username(
-                                class="form-control",
-                                placeholder="Username"
-                            ) }}
-                        {% endif %}
-                    </div>
-                </div>
-
-
-                <div class="row mt-2">
-
                     <!-- phone number -->
                     <div class="col-sm-6">
                         {{ form.phone_number.label(class="form-label") }}
@@ -89,10 +65,15 @@
                         {% else %}
                             {{ form.phone_number(
                                 class="form-control",
-                                placeholder="Fathername"
+                                placeholder="Phone Number"
                             ) }}
                         {% endif %}
                     </div>
+
+                </div>
+                    
+                
+                <div class="row mt-2">
 
                     <!-- email address -->
                     <div class="col-sm-6">
@@ -114,30 +95,29 @@
                         {% endif %}
                     </div>
 
-                </div>
-
-
-                <div class="row mt-2">
-
                     <!-- student name -->
                     <div class="col-sm-6">
-                        {{ form.student_name.label(class="form-label") }}
+                        {{ form.student_name_lastname.label(class="form-label") }}
                         
-                        {% if form.student_name.errors %}
-                        {{ form.student_name( class="form-control is-invalid" ) }}
+                        {% if form.student_name_lastname.errors %}
+                        {{ form.student_name_lastname( class="form-control is-invalid" ) }}
                         <div class="invalid-feedback">
-                            {% for error in form.student_name.errors %}
+                            {% for error in form.student_name_lastname.errors %}
                                 <span>  {{ error }}   </span>
                             {% endfor %}
                         </div>
 
                         {% else %}
-                            {{ form.student_name( 
+                            {{ form.student_name_lastname( 
                                 class="form-control",
-                                placeholder="Your children's name"
+                                placeholder="Your children's name and lastname"
                             ) }}
                         {% endif %}
                     </div>
+                </div>
+
+
+                <div class="row mt-2">
 
                     <!-- student class -->
                     <div class="col-sm-6">
@@ -156,25 +136,116 @@
                         {% endif %}
                     </div>
 
+                    <!-- student roll -->
+                    <div class="col-sm-6">
+                        {{ form.student_roll.label(class="form-label") }}
+
+                        {% if form.student_roll.errors %}
+                            {{ form.student_roll( class="form-control is-invalid" ) }}
+                            <div class="invalid-feedback">
+                                {% for error in form.student_roll.errors %}
+                                    <span>  {{ error }}   </span>
+                                {% endfor %}
+                            </div>
+
+                        {% else %}
+                            {{ form.student_roll(
+                                class="form-control",
+                                placeholder="Student roll"
+                            ) }}
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+
+                <div class = "row mt-2">
+
+                    <!-- password -->
+                    <div class = "col-sm-6">
+                        {{ form.password.label(class = "form-label") }}
+                
+                        {% if form.password.errors %}
+                            {{ form.password( class="form-control is-invalid" ) }}
+                            <div class="invalid-feedback">
+                                {% for error in form.password.errors %}
+                                    <span>  {{ error }}   </span>
+                                {% endfor %}
+                            </div>
+
+                        {% else %}
+                            {{ form.password(
+                                class="form-control",
+                                placeholder="Password"
+                            ) }}
+                        {% endif %}
+                        
+                    </div>
+
+                    <!-- confirm password -->
+                    <div class = "col-sm-6">
+                        {{ form.confirm_password.label(class = "form-label") }}
+                
+                        {% if form.confirm_password.errors %}
+                            {{ form.confirm_password( class="form-control is-invalid" ) }}
+                            <div class="invalid-feedback">
+                                {% for error in form.confirm_password.errors %}
+                                    <span>  {{ error }}   </span>
+                                {% endfor %}
+                            </div>
+
+                        {% else %}
+                            {{ form.confirm_password(
+                                class="form-control",
+                                placeholder="Confirm password"
+                            ) }}
+                        {% endif %}
+                    </div>
+
                 </div>
 
 
                 <div class="row mt-2">
 
-                    <!-- email -->
-                    <div class="col-sm-6">
-                        {{ form.student_roll.label(class="form-label") }}
-
-                        {{ form.student_roll(
-                            class="form-control",
-                            placeholder="Student roll"
-                        ) }}
-                    </div>
-
                     <!-- photo -->
                     <div class="col-sm-6">
                         {{ form.photo.label(class="form-label") }}
-                        {{ form.photo( class="form-control" ) }}
+                        
+                        {% if form.photo.errors %}
+                            {{ form.photo( class="form-control is-invalid" ) }}
+                            <div class="invalid-feedback">
+                                {% for error in form.photo.errors %}
+                                    <span>  {{ error }}   </span>
+                                {% endfor %}
+                            </div>
+
+                        {% else %}
+                            {{ form.photo(
+                                class="form-control"
+                            ) }}
+                        {% endif %}
+
+                    </div>
+
+                    <!-- signature -->
+                    <div class="col-sm-6">
+                        {{ form.signature.label(class="form-label") }}
+
+                        {% if form.signature.errors %}
+                            {{ form.signature( class="form-control is-invalid" ) }}
+                            <div class="invalid-feedback">
+                                {% for error in form.signature.errors %}
+                                    <span>  {{ error }}   </span>
+                                {% endfor %}
+                            </div>
+
+                        {% else %}
+                            {{ form.signature(
+                                class="form-control"
+                            ) }}
+                        {% endif %}
+
                     </div>
 
                 </div>

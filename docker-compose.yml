@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+
+  backend:
+    container_name: JuniorSchoolAppBackend
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 8000:5000
+    volumes:
+      - .:/app
+    depends_on:
+      - pgdb
+
+  pgdb:
+    image: postgres
+    container_name: JuniorSchoolAppDatabase
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: JuniorSchoolApp
+    volumes:
+      - pgdata:/var/lib/postgresql/data/
+    ports:
+      - 5432:5432
+  
+volumes:
+  pgdata:

@@ -54,18 +54,18 @@
                 <!-- student id field -->
                 <div class="mb-3">
 
-                    {{ form.student_id.label(class="form-label") }}
+                    {{ form.student_roll.label(class="form-label") }}
 
-                    {% if form.student_id.errors %}
-                        {{ form.student_id( class="form-control is-invalid" ) }}
+                    {% if form.student_roll.errors %}
+                        {{ form.student_roll( class="form-control is-invalid" ) }}
                         <div class="invalid-feedback">
-                            {% for error in form.student_id.errors %}
+                            {% for error in form.student_roll.errors %}
                                 <span>  {{ error }}   </span>
                             {% endfor %}
                         </div>
                     
                     {% else %} 
-                        {{ form.student_id(
+                        {{ form.student_roll(
                             class="form-control"
                         ) }}
 
