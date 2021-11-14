@@ -2,6 +2,7 @@
 from datetime import datetime
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from flask import current_app
+from sqlalchemy.orm import defaultload
 
 #   importing dataase
 from main_app import db
@@ -59,7 +60,8 @@ class Notice(db.Model):
 # table for student's info
 class StudentsInfo(db.Model):
     __tablename__ = 'students_info'
-    unique_id = db.Column(db.String(20), unique=True, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
+    unique_id = db.Column(db.String(20), unique=True)
     roll_id = db.Column(db.Integer, nullable=False)
     firstname = db.Column(db.String(200))
     lastname = db.Column(db.String(200))
@@ -74,14 +76,13 @@ class StudentsInfo(db.Model):
     zip_code = db.Column(db.String(10))
     address = db.Column(db.String(500))
     email = db.Column(db.String(100))
-    image_file = db.Column(db.String(20), default='default.jpg')
-    signature = db.Column(db.String(20))
+    image_file = db.Column(db.String(50), default='default.jpg')
+    signature = db.Column(db.String(50), default='default.jpg')
     transportation_status = db.Column(db.String(5), default='no')
-    graduation_status = db.Column(db.String(100), default='no')
     
 
     def __repr__(self):
-        return f"User('{self.uniqueID}', '{self.firstname}', '{self.lastname}', '{self.father_name}', '{self.mother_name}', '{self.current_class}', '{self.phone_number}', '{self.birth_cirtificate_no}', '{self.birth_date}', '{self.gender}', '{self.care_of}', '{self.zip_code}', '{self.address}', '{self.email}', '{self.image_file}', '{self.signature}', '{self.transportation_status}', '{self.graduation_status}')"
+        return f"User('{self.uniqueID}', '{self.firstname}', '{self.lastname}', '{self.father_name}', '{self.mother_name}', '{self.current_class}', '{self.phone_number}', '{self.birth_cirtificate_no}', '{self.birth_date}', '{self.gender}', '{self.care_of}', '{self.zip_code}', '{self.address}', '{self.email}', '{self.image_file}', '{self.signature}', '{self.transportation_status}'"
 
 
 # table for total 100 marks

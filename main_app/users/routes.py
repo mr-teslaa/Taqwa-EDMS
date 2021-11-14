@@ -1,3 +1,7 @@
+import os
+import secrets
+from PIL import Image
+
 #   importing basic flask module
 from flask import Blueprint
 from flask import redirect
@@ -5,6 +9,7 @@ from flask import render_template
 from flask import request
 from flask import url_for
 from flask import flash
+from flask import current_app
 
 #   importing module from flask login
 from flask_login import current_user
@@ -26,11 +31,38 @@ from main_app.users.forms import DemoRegForm
 from main_app.users.forms import LoginFormParents
 
 # PIL (Phillow) for saving pictures
-from main_app.users.utils import save_picture
+# from main_app.users.utils import save_picture
 
 #   initializing blueprint
 users = Blueprint('users', __name__)
 
+
+def save_picture(form_picture):
+    random_hex = secrets.token_hex(8)
+    _, f_ext = os.path.splitext(form_picture.filename)
+    picture_fn = random_hex + f_ext
+    picture_path = os.path.join(current_app.root_path, 'static/profile_pics', picture_fn)
+
+    output_size = (125, 125)
+    i = Image.open(form_picture)
+    i.thumbnail(output_size)
+    i.save(picture_path)
+
+    return picture_fn
+
+
+def save_signature(form_picture):
+    random_hex = secrets.token_hex(8)
+    _, f_ext = os.path.splitext(form_picture.filename)
+    picture_fn = random_hex + f_ext
+    picture_path = os.path.join(current_app.root_path, 'static/signature', picture_fn)
+
+    output_size = (150, 300)
+    i = Image.open(form_picture)
+    i.thumbnail(output_size)
+    i.save(picture_path)
+
+    return picture_fn
 
 #   admission route
 @users.route('/admission', methods=['GET', 'POST'])
@@ -64,6 +96,7 @@ def admission():
         print(f'image file: {form.image_file.data}')
         print(f'signature: {form.signature.data}')
         flash(f'Success')
+        return redirect(url_for('dashboard'))
     else:
         print('===================== Failed =====================')
         print(f'unique id: {form.unique_id.data}')
@@ -86,6 +119,7 @@ def admission():
         print(f'zip: {form.zip_code.data}')
         print(f'image file: {form.image_file.data}')
         print(f'signature: {form.signature.data}')
+        flash(f'sorry, dude')
     print('/////// FINSIH /////////')
     return render_template('admission.html', title='Admission', form=form)
 

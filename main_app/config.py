@@ -2,7 +2,7 @@ import os
 
 class Config:
     SECRET_KEY='248fb9a5bdffa13c0bc136504ebf75c2'
-    SQLALCHEMY_DATABASE_URI='sqlite:///site.db'
+    SQLALCHEMY_DATABASE_URI='mysql://root:@127.0.0.1/juniorschool'
 #    SQLALCHEMY_TRACK_MODIFICATIONS = False
     MAIL_SERVER = 'smtp.gmail.com'
     MAIL_PORT = 587
