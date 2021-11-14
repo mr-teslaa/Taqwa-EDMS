@@ -70,10 +70,10 @@ class Classroom(db.Model):
 class Parent(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String(20))
-    username = db.Column(db.String(20))
     phone = db.Column(db.String(20))
     mail = db.Column(db.String(20))
     photo = db.Column(db.String(20), default = 'default.jpg')
+    password = db.Column(db.String(20))
     
     student_roll = db.Column(db.Integer, db.ForeignKey('student.student_roll'))
     
