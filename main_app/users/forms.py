@@ -6,6 +6,8 @@ from wtforms import SelectField
 from wtforms import BooleanField
 from wtforms import IntegerField
 from wtforms import FileField
+from flask_wtf.file import FileAllowed
+from wtforms.fields.core import DateField
 
 #   wtf validators
 from wtforms.validators import DataRequired
@@ -73,7 +75,7 @@ class AdmissionForm(FlaskForm):
     )
 
     #   make a field for phone number
-    phone_number = IntegerField(
+    phone_number = StringField(
         'Phone Number',
         validators = [
             DataRequired(),
@@ -110,6 +112,7 @@ class AdmissionForm(FlaskForm):
     #   make a radio for trasportation no
     no = BooleanField('no')
 
+    '''
     #   make a field for care of address
     care_of = StringField(
         'Care of',
@@ -118,7 +121,9 @@ class AdmissionForm(FlaskForm):
             Length(min=3, max=80)
         ]
     )
+    '''
 
+    '''
     #   make a field for zip code
     zip_code = IntegerField(
         'Post Code',
@@ -127,6 +132,7 @@ class AdmissionForm(FlaskForm):
             Length(min=4, max=4)
         ]
     )
+    '''
 
     #   make a filed for address
     address = StringField(
@@ -149,14 +155,17 @@ class AdmissionForm(FlaskForm):
     #   make a photo upload field
     photo = FileField(
         'Photo',
-        validators = [ DataRequired() ]
+        validators = [ DataRequired() , FileAllowed(['jpg', 'jpeg', 'png'])]
     )
 
     #   make a field for signature
     signature = FileField(
         'Signature',
-        validators = [ DataRequired()]
+        validators = [ DataRequired(), FileAllowed(['jpg', 'jpeg', 'png'])]
     )
+
+    #  make a date of birth field
+    birth_date = DateField('Date of Birth', format = '%d-%m-%Y')
 
     #   make a select field for date of birth
     """ birth_date = SelectField(
@@ -180,7 +189,7 @@ class AdmissionForm(FlaskForm):
             ('29', '29'), ('30', '30'),
             ('31', '31')
         ]
-    ) """
+    ) 
 
     #   make a select field for month
     birth_month = SelectField(
@@ -213,7 +222,9 @@ class AdmissionForm(FlaskForm):
             ('2019', '2019'), ('2020', '2020'),
         ]
     )
-
+    """
+    
+    '''
     #   make checkbox for agree with terms and codition
     checkbox = BooleanField(
         'I cirtify that all the information is given above is true. If the authority find any false information I will accept any decission the authority take.',
@@ -221,7 +232,8 @@ class AdmissionForm(FlaskForm):
             DataRequired(),
         ]
     )
-
+    
+    '''
     #   make a submit field
     submit = SubmitField('Submit')
 

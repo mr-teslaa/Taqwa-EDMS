@@ -7,7 +7,7 @@ from flask import current_app
 from main_app import db
 
 #   importing login manager
-from main_sa import login_manager
+from main_app import login_manager
 from flask_login import UserMixin
 
 #   making sure that the user is logged in

@@ -14,10 +14,10 @@
 
         <section class="d-flex justify-content-center">
 
-            <form action="" method="post" class="form-large">
-                {{ form.hidden_tag() }}
-
-
+            <form action="/admission" method="POST" class="form-large" enctype="multipart/form-data">
+                {{ form.csrf_token() }}
+                {{ form.name }}
+                
                 <div class="row">
 
                     <!-- father name -->
@@ -191,10 +191,22 @@
                     <div class="col-sm-6">
                         {{ form.address.label(class="form-label") }}
 
-                        {{ form.address(
-                            class="form-control",
-                            placeholder="Address"
+                        {% if form.address.errors %}
+                            {{ form.address( class = "form-control is-invalid" ) }}
+                             <div class="invalid-feedback">
+                                {% for error in form.address.errors %}
+                                        <span>  {{ error }}   </span>
+                                {% endfor %}
+                            </div>
+
+                        {% else %}
+                            {{ form.address(
+                                class="form-control",
+                                placeholder="Address"
                         ) }}
+                        {% endif %}
+
+                        
                     </div>
 
                     <!-- gender -->
@@ -258,13 +270,39 @@
                     <!-- photo -->
                     <div class="col-sm-6">
                         {{ form.photo.label(class="form-label") }}
-                        {{ form.photo( class="form-control" ) }}
+
+                        {% if form.photo.errors %}
+                            {{ form.photo( class = "form-control is-invalid" ) }}
+                             <div class="invalid-feedback">
+                                {% for error in form.photo.errors %}
+                                        <span>  {{ error }}   </span>
+                                {% endfor %}
+                            </div>
+
+                        {% else %}
+                            {{ form.photo(
+                                class="form-control"
+                        ) }}
+                        {% endif %}
                     </div>
 
                     <!-- signature -->
                     <div class="col-sm-6">
                         {{ form.signature.label(class="form-label") }}
-                        {{ form.signature( class="form-control" ) }}
+
+                        {% if form.signature.errors %}
+                            {{ form.signature( class = "form-control is-invalid" ) }}
+                             <div class="invalid-feedback">
+                                {% for error in form.signature.errors %}
+                                        <span>  {{ error }}   </span>
+                                {% endfor %}
+                            </div>
+
+                        {% else %}
+                            {{ form.signature(
+                                class="form-control"
+                        ) }}
+                        {% endif %}
                     </div>
                 </div>
 
@@ -285,6 +323,5 @@
         </section>
 
         </div>
-
     </main>
 {% endblock %}

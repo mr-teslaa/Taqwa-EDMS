@@ -2,6 +2,7 @@
 from datetime import datetime
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from flask import current_app
+from sqlalchemy.orm import backref, relationship
 
 #   importing dataase
 from main_app import db
@@ -41,6 +42,42 @@ class User(db.Model, UserMixin):
 
     def __repr__(self):
         return f"User('{self.username}', '{self.email}', '{self.image_file}')"
+
+
+class Student(db.Model):
+    student_roll = db.Column(db.Integer, primary_key = True)
+    first_name = db.Column(db.String(20), nullable = False)
+    last_name = db.Column(db.String(20), nullable = False)
+    father_name = db.Column(db.String(20), nullable = False)
+    mother_name = db.Column(db.String(20), nullable = False)
+    phone = db.Column(db.String(20), nullable = False)
+    birth_cirtificate = db.Column(db.String(20), nullable = False)
+    date_of_birth = db.Column(db.DateTime, nullable = False)
+    address = db.Column(db.String(300), nullable = False)
+    male = db.Column(db.Boolean)
+    female = db.Column(db.Boolean)
+    mail = db.Column(db.String(20), nullable = False)
+    transportation = db.Column(db.Boolean, nullable = False)
+    photo = db.Column(db.String(), nullable = False, default = 'default.jpg')
+    signature = db.Column(db.String(), nullable = False, default = 'default.jpg')
+
+    classroom_id = db.Column(db.Integer, db.ForeignKey('classroom.id'))
+
+class Classroom(db.Model):
+    id = db.Column(db.Integer, primary_key = True ,nullable = False)
+    class_name = db.Column(db.String(), nullable = False)
+
+class Parent(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    name = db.Column(db.String(20))
+    username = db.Column(db.String(20))
+    phone = db.Column(db.String(20))
+    mail = db.Column(db.String(20))
+    photo = db.Column(db.String(20), default = 'default.jpg')
+    
+    student_roll = db.Column(db.Integer, db.ForeignKey('student.student_roll'))
+    
+
 
 
 class Notice(db.Model):

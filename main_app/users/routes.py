@@ -10,12 +10,16 @@ from flask_login import login_user
 from flask_login import current_user
 from flask_login import logout_user
 from flask_login import login_required
+import flask_login
 
 #   importing database uri
 from main_app import db
 from main_app import bcrypt    #password hash generator
 from main_app.models import User
 from main_app.models import Notice
+from main_app.models import Student
+from main_app.models import Parent
+from main_app.models import Classroom
 
 from main_app.users.forms import AdmissionForm
 from main_app.users.forms import LoginForm
@@ -33,6 +37,24 @@ users = Blueprint('users', __name__)
 @users.route('/admission', methods=['GET', 'POST'])
 def admission():
     form = AdmissionForm()
+
+    if form.validate_on_submit():
+
+        classroom = Classroom.query.filter_by(class_name = form.applicable_class.data.upper()).first()
+        student = Student(first_name = form.firstname.data, last_name = form.lastname.data, 
+                        father_name = form.father_name.data, mother_name = form.mother_name.data,
+                        phone = form.phone_number.data, birth_cirtificate = form.birth_cirtificate_no.data,
+                        date_of_birth = form.birth_date.data, address = form.address.data,
+                        male = form.male.data, female = form.female.data ,mail = form.email.data,
+                        transportation = form.yes.data, classroom_id = classroom.id)
+                        
+        parent = Parent(student_roll = student.student_roll)
+
+        db.session.add_all([student, parent])
+        db.session.commit()
+
+        return redirect(url_for('users.admission'))
+
     return render_template('admission.html', title='Admission', form=form)
 
 
@@ -82,3 +104,10 @@ def login():
 def login_parents():
     form = LoginFormParents()
     return render_template('login_parents.html', title='Login', form=form)
+
+
+@login_required
+@users.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for('main.index'))
