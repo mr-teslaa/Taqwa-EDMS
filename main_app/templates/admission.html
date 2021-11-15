@@ -1,7 +1,5 @@
 {% extends 'layout.html' %}
 
-
-
 {% block additional_title %}
     Admission -
 {% endblock %}
@@ -213,6 +211,7 @@
                         {% else %}
                             {{ form.address(class="form-control", placeholder="Address") }}
                         {% endif %}
+
                     </div>
 
                     <!-- gender -->
@@ -315,13 +314,13 @@
             
                     <!-- photo -->
                     <div class="col-sm-6">
-                        {{ form.image_file.label(class="form-label") }}
+                        {{ form.photo.label(class="form-label") }}
 
-                        {% if form.image_file.errors %}
-                            {{ form.image_file( class="form-control is-invalid" ) }}
-                            <div class="invalid-feedback">
-                                {% for error in form.image_file.errors %}
-                                    <span class="text-danger">  {{ error }}   </span>
+                        {% if form.photo.errors %}
+                            {{ form.photo( class = "form-control is-invalid" ) }}
+                             <div class="invalid-feedback">
+                                {% for error in form.photo.errors %}
+                                    <span>  {{ error }}   </span>
                                 {% endfor %}
                             </div>
 
@@ -365,6 +364,5 @@
         </section>
 
         </div>
-
     </main>
 {% endblock %}

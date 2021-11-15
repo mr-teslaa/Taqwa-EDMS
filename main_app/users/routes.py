@@ -11,6 +11,11 @@ from flask import url_for
 from flask import flash
 from flask import current_app
 
+from flask.helpers import flash
+
+#importing module from sqlachemy
+from sqlalchemy import func
+
 #   importing module from flask login
 from flask_login import current_user
 from flask_login import login_required
@@ -18,11 +23,15 @@ from flask_login import login_user
 from flask_login import logout_user
 
 
+
 import bcrypt  # password hash generator
 from main_app import db
 from main_app.models import Notice
 from main_app.models import User
-from main_app.models import StudentsInfo
+from main_app.models import Student
+from main_app.models import Parent
+from main_app.models import Classroom
+
 from main_app.users.forms import AdmissionForm
 from main_app.users.forms import ApplyParentsForm
 from main_app.users.forms import ApplyTeacherForm
@@ -70,57 +79,16 @@ def save_signature(form_picture):
 def admission():
     form = AdmissionForm()
     if form.validate_on_submit():
-        student = StudentsInfo(unique_id=form.unique_id.data, roll_id=form.roll_id.data, firstname=form.firstname, lastname=form.lastname.data, father_name=form.father_name.data, mother_name=form.mother_name.data, current_class=form.applicable_class.data, phone_number=form.phone_number.data, birth_cirtificate_no=form.birth_cirtificate_no.data, birth_date=form.birth_date.data, gender=form.gender.data, care_of=form.care_of.data, zip_code=form.zip_code.data, address=form.address.data, email=form.email.data, image_file=save_picture(form.image_file.data), signature=save_picture(form.signature.data), transportation_status=form.transportation_status.data)
-        
+        classroom = Classroom.query.filter_by(class_name = form.applicable_class.data.upper()).first()
+        student = Student(first_name = form.firstname.data, last_name = form.lastname.data, father_name = form.father_name.data, mother_name = form.mother_name.data, phone = form.phone_number.data, birth_cirtificate = form.birth_cirtificate_no.data, date_of_birth = form.birth_date.data, address = form.address.data, male = form.male.data, female = form.female.data ,mail = form.email.data, transportation = form.yes.data, classroom_id = classroom.id)           
         db.session.add(student)
         db.session.commit()
-        print('===================== I am in. Success =====================')
-        print(f'unique id: {form.unique_id.data}')
-        print(f'roll id: {form.roll_id.data}')
-        print(f'first: {form.firstname.data}')
-        print(f'last: {form.lastname.data}')
-        print(f'father_name: {form.father_name.data}')
-        print(f'mother_name: {form.mother_name.data}')
-        print(f'applicable class: {form.applicable_class.data}')
-        print(f'phone : {form.phone_number.data}')
-        print(f'birth certificate: {form.birth_cirtificate_no.data}')
-        print(f'birth date: {form.birth_date.data}')  
-        print(f'gender: {form.gender.data}')
-        print(f'transportation: {form.transportation_status.data}')
-        print(f'care of: {form.care_of.data}')
-        print(f'zip code: {form.zip_code.data}')
-        print(f'address: {form.address.data}')
-        print(f'email: {form.email.data}')
-        print(f'care of: {form.care_of.data}')
-        print(f'zip: {form.zip_code.data}')
-        print(f'image file: {form.image_file.data}')
-        print(f'signature: {form.signature.data}')
-        flash(f'Success')
-        return redirect(url_for('dashboard'))
-    else:
-        print('===================== Failed =====================')
-        print(f'unique id: {form.unique_id.data}')
-        print(f'roll id: {form.roll_id.data}')
-        print(f'first: {form.firstname.data}')
-        print(f'last: {form.lastname.data}')
-        print(f'father_name: {form.father_name.data}')
-        print(f'mother_name: {form.mother_name.data}')
-        print(f'applicable class: {form.applicable_class.data}')
-        print(f'phone : {form.phone_number.data}')
-        print(f'birth certificate: {form.birth_cirtificate_no.data}')
-        print(f'birth date: {form.birth_date.data}')  
-        print(f'gender: {form.gender.data}')
-        print(f'transportation: {form.transportation_status.data}')
-        print(f'care of: {form.care_of.data}')
-        print(f'zip code: {form.zip_code.data}')
-        print(f'address: {form.address.data}')
-        print(f'email: {form.email.data}')
-        print(f'care of: {form.care_of.data}')
-        print(f'zip: {form.zip_code.data}')
-        print(f'image file: {form.image_file.data}')
-        print(f'signature: {form.signature.data}')
-        flash(f'sorry, dude')
-    print('/////// FINSIH /////////')
+
+        parent = Parent(student_roll = student.student_roll)
+        db.session.add(parent)
+        db.session.commit()
+        return redirect(url_for('users.admission'))
+
     return render_template('admission.html', title='Admission', form=form)
 
 
@@ -128,6 +96,32 @@ def admission():
 @users.route('/parents/apply', methods=['GET', 'POST'])
 def apply_parents():
     form = ApplyParentsForm()
+
+    if form.validate_on_submit():
+        
+        firstname, lastname = form.student_name_lastname.data.split(' ')
+        classroom = Classroom.query.filter_by(class_name = form.student_class.data.upper()).first()
+        student = Student.query.filter_by(first_name = firstname, last_name = lastname,
+        student_roll = form.student_roll.data, classroom_id = classroom.id).first()
+
+        if student:
+            parent = Parent.query.filter_by(student_roll = form.student_roll.data).first()
+            parent.name = form.name.data
+            parent.phone = form.phone_number.data
+            parent.mail = form.email.data
+    
+            hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+            parent.password = hashed_password
+            
+            db.session.commit()
+            flash('User successfully created.')
+
+        else:
+            flash('Student does not exist, please check values.')
+
+        return redirect(url_for('users.apply_parents'))
+
+
     return render_template('apply_parents.html', title='Parents Application', form=form)
 
 #   apply for a parents accout route
@@ -181,3 +175,10 @@ def login():
 def login_parents():
     form = LoginFormParents()
     return render_template('login_parents.html', title='Login', form=form)
+
+
+@login_required
+@users.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for('main.index'))

@@ -30,7 +30,7 @@ def create_app(config_class=Config):
     login_manager.init_app(app)
     mail.init_app(app)
     migrate.init_app(app, db)
-
+    
     from main_app.users.routes import users
     app.register_blueprint(users)
 

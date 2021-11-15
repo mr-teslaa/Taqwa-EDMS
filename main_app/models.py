@@ -3,6 +3,7 @@ from datetime import datetime
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from flask import current_app
 from sqlalchemy.orm import defaultload
+from sqlalchemy.orm import backref, relationship
 
 #   importing dataase
 from main_app import db
@@ -44,7 +45,40 @@ class User(db.Model, UserMixin):
         return f"User('{self.username}', '{self.email}', '{self.image_file}')"
 
 
-# table for all notice
+class Student(db.Model):
+    student_roll = db.Column(db.Integer, primary_key = True)
+    first_name = db.Column(db.String(20), nullable = False)
+    last_name = db.Column(db.String(20), nullable = False)
+    father_name = db.Column(db.String(20), nullable = False)
+    mother_name = db.Column(db.String(20), nullable = False)
+    phone = db.Column(db.String(20), nullable = False)
+    birth_cirtificate = db.Column(db.String(20), nullable = False)
+    date_of_birth = db.Column(db.DateTime, nullable = False)
+    address = db.Column(db.String(300), nullable = False)
+    male = db.Column(db.Boolean)
+    female = db.Column(db.Boolean)
+    mail = db.Column(db.String(20), nullable = False)
+    transportation = db.Column(db.Boolean, nullable = False)
+    photo = db.Column(db.String(), nullable = False, default = 'default.jpg')
+    signature = db.Column(db.String(), nullable = False, default = 'default.jpg')
+
+    classroom_id = db.Column(db.Integer, db.ForeignKey('classroom.id'))
+
+class Classroom(db.Model):
+    id = db.Column(db.Integer, primary_key = True ,nullable = False)
+    class_name = db.Column(db.String(), nullable = False)
+
+class Parent(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    name = db.Column(db.String(20))
+    phone = db.Column(db.String(20))
+    mail = db.Column(db.String(20))
+    photo = db.Column(db.String(20), default = 'default.jpg')
+    password = db.Column(db.String(20))
+    
+    student_roll = db.Column(db.Integer, db.ForeignKey('student.student_roll'))
+    
+
 class Notice(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), nullable=False)
@@ -57,40 +91,11 @@ class Notice(db.Model):
         return f"Post('{self.title}', '{self.date_posted}')"
 
 
-# table for student's info
-class StudentsInfo(db.Model):
-    __tablename__ = 'students_info'
-    id = db.Column(db.Integer, primary_key=True)
-    unique_id = db.Column(db.String(20), unique=True)
-    roll_id = db.Column(db.Integer, nullable=False)
-    firstname = db.Column(db.String(200))
-    lastname = db.Column(db.String(200))
-    father_name = db.Column(db.String(200))
-    mother_name = db.Column(db.String(200))
-    current_class = db.Column(db.String(20))
-    phone_number = db.Column(db.String(11))
-    birth_cirtificate_no = db.Column(db.String(20), unique=True)
-    birth_date = db.Column(db.String(50))
-    gender = db.Column(db.String(20))
-    care_of = db.Column(db.String(300))
-    zip_code = db.Column(db.String(10))
-    address = db.Column(db.String(500))
-    email = db.Column(db.String(100))
-    image_file = db.Column(db.String(50), default='default.jpg')
-    signature = db.Column(db.String(50), default='default.jpg')
-    transportation_status = db.Column(db.String(5), default='no')
-    
-
-    def __repr__(self):
-        return f"User('{self.uniqueID}', '{self.firstname}', '{self.lastname}', '{self.father_name}', '{self.mother_name}', '{self.current_class}', '{self.phone_number}', '{self.birth_cirtificate_no}', '{self.birth_date}', '{self.gender}', '{self.care_of}', '{self.zip_code}', '{self.address}', '{self.email}', '{self.image_file}', '{self.signature}', '{self.transportation_status}'"
-
 
 # table for total 100 marks
 class Marks(db.Model):
     __tablename__ = 'marks'
     id = db.Column(db.Integer, primary_key=True)
-    unique_id = db.Column(db.String(500), db.ForeignKey('students_info.unique_id'))
-    roll_id = db.Column(db.String(500), db.ForeignKey('students_info.roll_id'))
     classname = db.Column(db.String(120), nullable=False)
     name = db.Column(db.String(300), nullable=False)
     bengali = db.Column(db.String(100), nullable=False)
@@ -111,8 +116,6 @@ class Marks(db.Model):
 class Marks50(db.Model):
     __tablename__ = 'marks50'
     id = db.Column(db.Integer, primary_key=True)
-    unique_id = db.Column(db.String(500), db.ForeignKey('students_info.unique_id'))
-    roll_id = db.Column(db.String(500), db.ForeignKey('students_info.roll_id'))
     classname = db.Column(db.String(120))
     name = db.Column(db.String(300))
     bengali = db.Column(db.String(100))

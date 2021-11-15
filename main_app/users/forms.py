@@ -6,10 +6,11 @@ from wtforms import SubmitField
 from wtforms import SelectField
 from wtforms import BooleanField
 from wtforms import IntegerField
-from wtforms.fields.core import RadioField
 
 from flask_wtf.file import FileField
 from flask_wtf.file import FileAllowed
+from wtforms.fields.core import DateField
+from wtforms.fields.core import RadioField
 
 #   wtf validators
 from wtforms.validators import DataRequired
@@ -75,7 +76,7 @@ class AdmissionForm(FlaskForm):
     )
 
     #   make a field for phone number
-    phone_number = IntegerField(
+    phone_number = StringField(
         'Phone Number',
         validators = [
             DataRequired()
@@ -146,90 +147,27 @@ class AdmissionForm(FlaskForm):
         ]
     )
 
-    # care of
-    care_of = StringField(
-        'Care Of',
-        validators = [ DataRequired() ]
-    )
-
-    # zip code
-    zip_code = StringField(
-        'Zip Code',
-        validators = [ DataRequired() ]
-    )
-
     #   make a photo upload field
-    image_file = FileField(
+    photo = FileField(
         'Photo',
-        validators = [
-            FileAllowed(['jpeg', 'jpg', 'png'])
+        validators = [ 
+            DataRequired() , 
+            FileAllowed(['jpg', 'jpeg', 'png'])
         ]
     )
 
     #   make a field for signature
     signature = FileField(
         'Signature',
-        validators = [
-            FileAllowed(['jpeg', 'jpg', 'png'])
-        ]
+        validators = [ 
+            DataRequired(), 
+            FileAllowed(['jpg', 'jpeg', 'png'])]
     )
 
-    #   make a select field for date of birth
-    """ birth_date = SelectField(
-        'Date of Birth',
-        choices = [
-            ('n/a', '--- Select Birth Date ---'),
-            ('01', '01'), ('02', '02'),
-            ('03', '03'), ('04', '04'),
-            ('05', '05'), ('06', '06'),
-            ('07', '07'), ('08', '08'),
-            ('09', '09'), ('10', '10'),
-            ('11', '11'), ('12', '12'),
-            ('13', '13'), ('14', '14'),
-            ('15', '15'), ('16', '16'),
-            ('17', '17'), ('18', '18'),
-            ('19', '19'), ('20', '20'),
-            ('21', '21'), ('22', '22'),
-            ('23', '23'), ('24', '24'),
-            ('25', '25'), ('26', '26'),
-            ('27', '27'), ('28', '28'),
-            ('29', '29'), ('30', '30'),
-            ('31', '31')
-        ]
-    ) """
+    #  make a date of birth field
+    birth_date = DateField('Date of Birth', format = '%d-%m-%Y')
 
-    #   make a select field for month
-    birth_month = SelectField(
-        'Date of Birth',
-        choices = [
-            ('n/a', '--- Select Birth Month ---'),
-            ('January', '01 - January'),('February', '02 - February'),
-            ('March', '03 - March'), ('April', '04 - April'),
-            ('May', '05 - May'), ('June', '06 - June'),
-            ('July', '07 - July'), ('August', '08 - August'),
-            ('September', '09 - September'), ('October', '10 - October'),
-            ('November', '11 - November'), ('December', '12 - December')
-        ]
-    )
-
-    #   make a select field for year
-    birth_year = SelectField(
-        'Date of Birth',
-        choices = [
-            ('n/a', '--- Select Birth Year ---'), ('2000', '2000'),
-            ('2001', '2001'), ('2002', '2002'),
-            ('2003', '2003'), ('2004', '2004'),
-            ('2005', '2005'), ('2006', '2006'),
-            ('2007', '2007'), ('2008', '2008'),
-            ('2009', '2009'), ('2010', '2010'),
-            ('2011', '2011'), ('2012', '2012'),
-            ('2013', '2013'), ('2014', '2014'),
-            ('2015', '2015'), ('2016', '2016'),
-            ('2017', '2017'), ('2018', '2018'),
-            ('2019', '2019'), ('2020', '2020'),
-        ]
-    )
-
+    
     #   make a submit field
     submit = SubmitField('Submit')
 
@@ -250,12 +188,6 @@ class ApplyParentsForm(FlaskForm):
         validators = [ DataRequired() ]
     )
 
-    #   make username for teacher
-    username = StringField(
-        'Username',
-        validators = [ DataRequired() ]
-    )
-
     #   make phone number filed
     phone_number = IntegerField(
         'Phone Number',
@@ -272,8 +204,8 @@ class ApplyParentsForm(FlaskForm):
     )
 
     #   make student name field
-    student_name = StringField(
-        'Student Name',
+    student_name_lastname = StringField(
+        'Your children\'s name and lastname',
         validators = [ DataRequired() ]
     )
 
@@ -292,29 +224,25 @@ class ApplyParentsForm(FlaskForm):
     )
 
     #   make a student roll field
-    student_roll = StringField(
+    student_roll = IntegerField(
         'Student Roll',
-        validators = [ DataRequired() ]
-    )
-
-    #   make a student id field
-    student_id = IntegerField(
-        'Student ID',
         validators = [ DataRequired() ]
     )
 
     #   make password field
     password = PasswordField(
         'Password',
-        validators = [ DataRequired() ]
+        validators = [ 
+            DataRequired(),
+            EqualTo('confirm_password', message = 'Passwords must be match')   
+        ]
     )
 
     #   make cofirm password
     confirm_password = PasswordField(
         'Confirm Password',
         validators = [
-            DataRequired(),
-            EqualTo(password)
+            DataRequired()
         ]
     )
 
