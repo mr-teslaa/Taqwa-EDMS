@@ -1,0 +1,109 @@
+{% extends 'layout.html' %}
+
+<!--  -->
+{% block body %}
+
+<main>
+    <div class="container my-3">
+        <div class="d-flex">
+            <h2>Exam Center</h2>
+
+            <span class="align-self-center ms-3">
+                <button
+                    type="button"
+                    class="btn btn-outline-dark"
+                    data-bs-toggle="modal"
+                    data-bs-target="#addExamModal"
+                >
+                    Add new exam
+                </button>
+            </span>
+        </div>
+        <!-- Modal -->
+        <div
+            class="modal fade"
+            id="addExamModal"
+            tabindex="-1"
+            aria-labelledby="addExamModalLabel"
+            aria-hidden="true"
+        >
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <!-- MODAL HADER -->
+                    <div class="modal-header">
+                        <h3 class="modal-title fs-5" id="addExamModalLabel">
+                            Add new exam
+                        </h3>
+                        <button
+                            type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                        ></button>
+                    </div>
+
+                    <form action="" method="POST">
+                        <!-- MODAL BODY -->
+                        <div class="modal-body">
+                            
+                                {{ form.hidden_tag() }}
+                                <div class="mb-3">
+                                    {{ form.exam_name(
+                                        class="form-control",
+                                        placeholder="Exam name"
+                                    ) }}
+                                </div>
+                            
+                        </div>
+
+                        <!-- MODAL FOOTER -->
+                        <div class="modal-footer">
+                            <button
+                                type="button"
+                                class="btn btn-sm btn-outline-secondary"
+                                data-bs-dismiss="modal"
+                            >
+                                Close
+                            </button>
+                            
+                            {{ form.submit(class="btn btn-sm btn-dark") }}
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-5">
+            <h3>Available exam</h3>
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Exam Name</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for exam in exams %}
+                    <tr>
+                        <th>{{ exam.id }}</th>
+                        <td>{{ exam.exam_name }}</td>
+                        <td>
+                            <form action="{{ url_for('exam.exam_delete', exam_id=exam.id) }}" method="POST">
+                                <button 
+                                    class="btn btn-sm btn-danger"
+                                    type="submit"    
+                                >
+                                    Delete
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+
+{% endblock %}

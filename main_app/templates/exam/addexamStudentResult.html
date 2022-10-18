@@ -1,0 +1,461 @@
+{% extends 'layout.html' %}
+
+<!--  -->
+{% block body %}
+
+<main>
+      <div class="container my-3">
+        <div class="d-flex">
+            <h1>Exam Center - Student Result</h1>
+
+            <span class="align-self-center ms-3">
+                <button
+                    type="button"
+                    class="btn btn-outline-dark"
+                    data-bs-toggle="modal"
+                    data-bs-target="#addExamModal"
+                >
+                    Add new result
+                </button>
+            </span>
+        </div>
+        <!-- Modal -->
+        <div
+            class="modal fade"
+            id="addExamModal"
+            tabindex="-1"
+            aria-labelledby="addExamModalLabel"
+            aria-hidden="true"
+        >
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <!-- MODAL HADER -->
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="addExamModalLabel">
+                            Add Result
+                        </h1>
+                        <button
+                            type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                        ></button>
+                    </div>
+
+                    <form action="" method="POST">
+                        {{ form.hidden_tag() }}
+                        <!-- MODAL BODY -->
+                        <div class="modal-body">
+                            <div class="row mb-3">
+                                <div class="col-md-12">  
+                                    {{ form.student_name(
+                                        class="form-control",
+                                        placeholder="Student Name"
+                                    ) }} 
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="col-md-4">
+                                    {{ form.exam(
+                                        class="form-select"
+                                    ) }}
+                                </div>
+
+                                <div class="col-sm-4">
+                                    {{ form.student_class(
+                                        class="form-control", 
+                                        placeholder="Class"
+                                    ) }}
+                                </div>
+
+                                <div class="col-sm-4">
+                                    {{ form.student_roll(
+                                        class="form-control",
+                                        placeholder="Roll"
+                                    ) }}
+                                </div>
+                            </div>
+
+                            {% for subject in range(totalsubject) %}
+                            <div class="row mb-3">
+                                <div class="col-md-5">
+                                    {{ form.exam_subject_name(
+                                        class="form-select"
+                                    ) }}
+                                </div>
+
+                                <div class="col-md-2">
+                                    {{ form.exam_total_marks(
+                                        class="form-control",
+                                        readonly="",
+                                        disabled=""
+                                    ) }}
+                                </div>
+
+                                <div class="col-md-2">
+                                    {{ form.exam_name.ful }}
+                                    <input 
+                                        type="text"
+                                        name="mark"
+                                        placeholder="Mark"
+                                        class="form-control"
+                                    />
+                                </div>
+
+                                <div class="col-md-3">
+                                    <input 
+                                        type="text"
+                                        name="grade"
+                                        placeholder="Grade"
+                                        disabled readonly
+                                        class="form-control"
+                                    />
+                                </div>
+                            </div>
+                            {% endfor %}
+
+                            <div class="row mb-3">
+                                <div class="col-md-5">
+                                    <select class="form-select" aria-label="Default select example">
+                                        <option selected> Select Subject </option>
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-2">
+                                    <input 
+                                        type="text"
+                                        name="fullmark"
+                                        placeholder="Full Mark"
+                                        disabled readonly
+                                        class="form-control"
+                                    />
+                                </div>
+
+                                <div class="col-md-2">
+                                    <input 
+                                        type="text"
+                                        name="mark"
+                                        placeholder="Mark"
+                                        class="form-control"
+                                    />
+                                </div>
+
+                                <div class="col-md-3">
+                                    <input 
+                                        type="text"
+                                        name="grade"
+                                        placeholder="Grade"
+                                        disabled readonly
+                                        class="form-control"
+                                    />
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="col-md-5">
+                                    <select class="form-select" aria-label="Default select example">
+                                        <option selected> Select Subject </option>
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-2">
+                                    <input 
+                                        type="text"
+                                        name="fullmark"
+                                        placeholder="Full Mark"
+                                        disabled readonly
+                                        class="form-control"
+                                    />
+                                </div>
+
+                                <div class="col-md-2">
+                                    <input 
+                                        type="text"
+                                        name="mark"
+                                        placeholder="Mark"
+                                        class="form-control"
+                                    />
+                                </div>
+
+                                <div class="col-md-3">
+                                    <input 
+                                        type="text"
+                                        name="grade"
+                                        placeholder="Grade"
+                                        disabled readonly
+                                        class="form-control"
+                                    />
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="col-md-5">
+                                    <select class="form-select" aria-label="Default select example">
+                                        <option selected> Select Subject </option>
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-2">
+                                    <input 
+                                        type="text"
+                                        name="fullmark"
+                                        placeholder="Full Mark"
+                                        disabled readonly
+                                        class="form-control"
+                                    />
+                                </div>
+
+                                <div class="col-md-2">
+                                    <input 
+                                        type="text"
+                                        name="mark"
+                                        placeholder="Mark"
+                                        class="form-control"
+                                    />
+                                </div>
+
+                                <div class="col-md-3">
+                                    <input 
+                                        type="text"
+                                        name="grade"
+                                        placeholder="Grade"
+                                        disabled readonly
+                                        class="form-control"
+                                    />
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="col-md-5">
+                                    <select class="form-select" aria-label="Default select example">
+                                        <option selected> Select Subject </option>
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-2">
+                                    <input 
+                                        type="text"
+                                        name="fullmark"
+                                        placeholder="Full Mark"
+                                        disabled readonly
+                                        class="form-control"
+                                    />
+                                </div>
+
+                                <div class="col-md-2">
+                                    <input 
+                                        type="text"
+                                        name="mark"
+                                        placeholder="Mark"
+                                        class="form-control"
+                                    />
+                                </div>
+
+                                <div class="col-md-3">
+                                    <input 
+                                        type="text"
+                                        name="grade"
+                                        placeholder="Grade"
+                                        disabled readonly
+                                        class="form-control"
+                                    />
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="col-md-5">
+                                    <select class="form-select" aria-label="Default select example">
+                                        <option selected> Select Subject </option>
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-2">
+                                    <input 
+                                        type="text"
+                                        name="fullmark"
+                                        placeholder="Full Mark"
+                                        disabled readonly
+                                        class="form-control"
+                                    />
+                                </div>
+
+                                <div class="col-md-2">
+                                    <input 
+                                        type="text"
+                                        name="mark"
+                                        placeholder="Mark"
+                                        class="form-control"
+                                    />
+                                </div>
+
+                                <div class="col-md-3">
+                                    <input 
+                                        type="text"
+                                        name="grade"
+                                        placeholder="Grade"
+                                        disabled readonly
+                                        class="form-control"
+                                    />
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="col-md-5">
+                                    <select class="form-select" aria-label="Default select example">
+                                        <option selected> Select Subject </option>
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-2">
+                                    <input 
+                                        type="text"
+                                        name="fullmark"
+                                        placeholder="Full Mark"
+                                        disabled readonly
+                                        class="form-control"
+                                    />
+                                </div>
+
+                                <div class="col-md-2">
+                                    <input 
+                                        type="text"
+                                        name="mark"
+                                        placeholder="Mark"
+                                        class="form-control"
+                                    />
+                                </div>
+
+                                <div class="col-md-3">
+                                    <input 
+                                        type="text"
+                                        name="grade"
+                                        placeholder="Grade"
+                                        disabled readonly
+                                        class="form-control"
+                                    />
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="totalmarks" class="fs-4">
+                                        Total Marks
+                                    </label>
+                                    <input 
+                                        type="text"
+                                        class="form-control form-control-lg"
+                                        placeholder="Total Marks"
+                                        name="totalmarks"
+                                        disabled readonly
+                                    />
+                                </div>
+
+                                <div class="col-md-6">
+                                     <label for="grade" class="fs-4">
+                                        Grade
+                                    </label>
+                                    <input 
+                                        type="text"
+                                        class="form-control form-control-lg"
+                                        placeholder="grade"
+                                        name="grade"
+                                        disabled readonly
+                                    />
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label class="fs-5"> Result Note </label>
+                                    <textarea 
+                                        name="resultnote"
+                                        class="form-control" 
+                                        rows="3"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- MODAL FOOTER -->
+                        <div class="modal-footer">
+                            <button
+                                type="button"
+                                class="btn btn-sm btn-outline-secondary"
+                                data-bs-dismiss="modal"
+                            >
+                                Close
+                            </button>
+
+                            <button type="button" class="btn btn-sm btn-warning">Calculate</button>
+
+                            <button type="submit" class="btn btn-sm btn-dark">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="table__container mt-5">
+            <h2>Available exam</h2>
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">
+                            Student Name
+                        </th>
+                        <th scope="col">Full Marks</th>
+                        <th scope="col">Total Marks</th>
+                        <th scope="col">G.P.A</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>Lorem ipsum </td>
+                        <td>Lorem ipsum </td>
+                        <td>Lorem ipsum </td>
+                        <td>Lorem ipsum </td>
+                        <td>Lorem ipsum </td>
+                        <td>
+                            <button
+                                data-bs-toggle="modal"
+                                data-bs-target="#addExamModal" 
+                                class="btn btn-sm btn-dark"
+                            >
+                                Details
+                            </button>
+                            <button type="submit" class="btn btn-sm btn-danger">
+                                Delete
+                            </button>
+                        </td>
+                    </tr>
+                    
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+
+{% endblock %}

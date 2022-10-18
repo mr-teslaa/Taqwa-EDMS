@@ -52,3 +52,19 @@ class Notice(db.Model):
 
     def __repr__(self):
         return f"Post('{self.title}', '{self.date_posted}')"
+        
+    
+
+class Exam(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    exam_name = db.Column(db.String(100), nullable=False)
+    date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    exam_subject = db.relationship('ExamSubject', backref='exam_name', lazy=True)
+
+class ExamSubject(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    exam_subject = db.Column(db.String(100), nullable=False)
+    full_marks = db.Column(db.String(100), nullable=False)
+    pass_marks = db.Column(db.String(100), nullable=False)
+    date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    exam_id = db.Column(db.Integer, db.ForeignKey('exam.id'), nullable=False)

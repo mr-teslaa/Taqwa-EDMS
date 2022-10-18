@@ -1,3 +1,4 @@
+alembic==1.8.1
 bcrypt==3.2.0
 blinker==1.4
 cffi==1.14.6
@@ -9,12 +10,14 @@ Flask==2.0.1
 Flask-Bcrypt==0.7.1
 Flask-Login==0.5.0
 Flask-Mail==0.9.1
+Flask-Migrate==3.0.0
 Flask-SQLAlchemy==2.5.1
 Flask-WTF==0.15.1
 greenlet==1.1.1
 idna==3.2
 itsdangerous==2.0.1
 Jinja2==3.0.1
+Mako==1.2.3
 MarkupSafe==2.0.1
 pycparser==2.20
 six==1.16.0

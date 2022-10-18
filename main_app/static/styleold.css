@@ -1,0 +1,332 @@
+@import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
+
+.bg_gray {
+    background: #f8f9fa !important;
+}
+
+.vh100 {
+    height: 100vh;
+}
+
+/* move the form in center both horizontal and vertical */
+.custom_form_center {
+    height: 150vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.custom_form_center_100vh {
+    height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* resize the small form  */
+.form-small {
+    width: 30rem;
+}
+
+/* resize the much bigger form */
+.form-large {
+    width: 60rem;
+}
+
+/* give hover effect of nav button */
+a.nav-link:hover {
+    color: #fff !important;
+}
+
+/* change color of active button */
+a.active-nav-link {
+    color: #fff;
+}
+
+/* remove white background in check box */
+.nobg .form-control {
+    background-color: transparent !important;
+    border: none;
+}
+
+/* dashboard */
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #ffffff;
+}
+
+.up {
+    color: green;
+}
+
+#sidebarCollapse {
+    background-color: #15365F;
+    border: none;
+}
+
+#placeHolder {
+    background-color: #15365F;
+    text-align: center;
+    font-weight: 400;
+}
+
+h5 {
+    font-size: 27px;
+}
+
+#stats {
+    box-sizing: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#header {
+    border-radius: 10px;
+}
+
+
+
+.class {
+    position: relative;
+    right: -69%;
+    border: 1px;
+    margin-right: 0px;
+}
+
+#search-box {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 40px;
+    border-radius: 30px;
+    border: 1px solid black;
+    padding: 10px;
+    width: 50%;
+}
+
+#number {
+    font-family: "Poppins";
+}
+
+#sidebarCollapse:hover {
+    background-color: #21518b;
+}
+
+.sidebar-header {
+    font-family: "Cascadia Code";
+}
+
+#log {
+    display: inline-block;
+}
+
+.down {
+    color: red;
+}
+
+.table {
+    color: rgb(0, 0, 0);
+    background-color: rgb(255, 255, 255);
+    font-size: 25px;
+    font-weight: 100;
+    box-shadow: 10px 10px 10px grey;
+    text-align: center;
+    border-radius: 10px;
+}
+
+.card {
+    width: 7cm;
+    border-radius: 15px;
+    color: #fff;
+    background-color: #15365F;
+}
+
+.card-text {
+    text-align: center;
+    font-family: 'Poppins';
+    color: #fff;
+    font-weight: 800;
+    font-size: 60px;
+}
+
+.anything:hover {
+    color: #000;
+    background-color: #fff;
+}
+
+.textBox {
+    text-align: center;
+}
+
+p {
+    font-family: "Cascadia Code";
+    font-size: 1.1em;
+    font-weight: 300;
+    line-height: 1.7em;
+    text-align: justify;
+    color: #999;
+}
+
+a,
+a:hover,
+a:focus {
+    color: inherit;
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+.navbar {
+    padding: 15px 10px;
+    background: rgb(161, 161, 161);
+    border: none;
+    border-radius: 0;
+    margin-bottom: 40px;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-btn {
+    box-shadow: none;
+    outline: none !important;
+    border: none;
+}
+
+.line {
+    width: 100%;
+    height: 1px;
+    border-bottom: 1px dashed #ddd;
+    margin: 40px 0;
+}
+
+/* ---------------------------------------------------
+    SIDEBAR STYLE
+----------------------------------------------------- */
+
+.wrapper {
+    display: flex;
+    width: 100%;
+    align-items: stretch;
+}
+
+#sidebar {
+    min-width: 250px;
+    max-width: 250px;
+    background: #15365F;
+    color: #fff;
+    transition: all 0.5s;
+}
+
+#sidebar.active {
+    margin-left: -250px;
+}
+
+#sidebar .sidebar-header {
+    padding: 20px;
+    background: #15365F;
+}
+
+#sidebar ul.components {
+    padding: 20px 0;
+    border-bottom: 1px solid #15365F;
+}
+
+#sidebar ul p {
+    color: #fff;
+    padding: 10px;
+}
+
+#sidebar ul li a {
+    padding: 10px;
+    font-size: 1.1em;
+    display: block;
+}
+
+#sidebar ul li a:hover {
+    color: #fff;
+    background: #15365F;
+}
+
+#sidebar ul li.active>a,
+a[aria-expanded="true"] {
+    color: #fff;
+    background: #15365F;
+}
+
+a[data-toggle="collapse"] {
+    position: relative;
+}
+
+.dropdown-toggle::after {
+    display: block;
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+}
+
+ul ul a {
+    font-size: 0.9em !important;
+    padding-left: 30px !important;
+    background: #15365F;
+}
+
+ul.CTAs {
+    padding: 20px;
+}
+
+ul.CTAs a {
+    text-align: center;
+    font-size: 0.9em !important;
+    display: block;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+
+a.download {
+    background: #fff;
+    color: #7386D5;
+}
+
+a.article,
+a.article:hover {
+    background: #6d7fcc !important;
+    color: #fff !important;
+}
+
+/* ---------------------------------------------------
+    CONTENT STYLE
+----------------------------------------------------- */
+
+#content {
+    width: 100%;
+    padding: 20px;
+    min-height: 100vh;
+    transition: all 0.3s;
+}
+
+/* ---------------------------------------------------
+    MEDIAQUERIES
+----------------------------------------------------- */
+
+@media (max-width: 768px) {
+    #sidebar {
+        margin-left: -250px;
+    }
+    #sidebar.active {
+        margin-left: 0;
+    }
+    #sidebarCollapse span {
+        display: none;
+    }
+}
+
+@media (max-width:768px) {
+    #stats{
+        flex-direction: column;
+    }
+    #stats .row-md-10 .card {
+        margin-bottom: 6px;
+    }
+}
