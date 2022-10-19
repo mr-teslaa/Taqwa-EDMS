@@ -121,6 +121,7 @@
                                         class="form-control form-control-lg"
                                         placeholder="Total Marks"
                                         name="totalmarks"
+                                        value="0"
                                         disabled readonly
                                     />
                                 </div>
@@ -249,19 +250,16 @@ let totalmarkel = document.querySelector('#totalmarks');
 let calculate = document.querySelector('#calculate');
 
 calculate.addEventListener('click', () => {
-    
+    totalmarks=0;
     allmarks.forEach(mark => {
         // console.log(mark.value);
-        if (mark != NaN) {
+        if (mark.value!=false){
             totalmarks = totalmarks + parseFloat(mark.value);
-            console.log(totalmarks);
-        }
-        // totalmarks = totalmarks + parseFloat(mark.value);    
-    })
+        } 
+    });
 
     totalmarkel.value = totalmarks;
-    // console.log(totalmarks)
-})
+});
 
 
 </script>
