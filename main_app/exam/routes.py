@@ -74,6 +74,7 @@ def exam_subject_delete(exam_id):
 def addexam_student_result():
     form = AddStudentResultForm()
     form.exam.choices = [(exam.id, exam.exam_name) for exam in Exam.query.all()]
+    form.exam_subject_name.choices = [(examsubj.id, examsubj.exam_subject) for examsubj in ExamSubject.query.all()]
     exam_subject = ExamSubject.query.all()
     totalsubject=7
     if form.validate_on_submit():
@@ -87,12 +88,12 @@ def addexam_student_result():
     return render_template('exam/addexamStudentResult.html', form=form, exam_subject=exam_subject, totalsubject=totalsubject)
 
 
-@exam.route('/exam/subject/marks/<string:subject>', methods=['GET', 'POST'])
-def get_total_marks(subject):
-    subjects = ExamSubject.query.filter_by(exam_subject=subject).all()
+@exam.route('/exam/subject/marks/<int:subject_id>', methods=['GET', 'POST'])
+def get_total_marks(subject_id):
+    subjects = ExamSubject.query.filter_by(id=subject_id).all()
 
     subjectArray = []
-
+    
     for subject in subjects:
         subobj = {}
         subobj['id'] = subject.id

@@ -78,282 +78,37 @@
                             </div>
 
                             {% for subject in range(totalsubject) %}
-                            <div class="row mb-3">
+                            <div class="row mb-3 exam__container">
                                 <div class="col-md-5">
                                     {{ form.exam_subject_name(
-                                        class="form-select"
+                                        class="form-select text-uppercase exam__subject"
                                     ) }}
                                 </div>
 
                                 <div class="col-md-2">
-                                    {{ form.exam_total_marks(
-                                        class="form-control",
+                                    {{ form.subject_total_marks(
+                                        class="form-control full__marks",
                                         readonly="",
                                         disabled=""
                                     ) }}
                                 </div>
 
                                 <div class="col-md-2">
-                                    {{ form.exam_name.ful }}
-                                    <input 
-                                        type="text"
-                                        name="mark"
+                                    {{ form.full_marks(
+                                        class="form-control",
                                         placeholder="Mark"
-                                        class="form-control"
-                                    />
+                                    ) }}
                                 </div>
 
                                 <div class="col-md-3">
-                                    <input 
-                                        type="text"
-                                        name="grade"
-                                        placeholder="Grade"
-                                        disabled readonly
-                                        class="form-control"
-                                    />
+                                    {{ form.grade(
+                                        class="form-control",
+                                        readonly="",
+                                        disabled=""
+                                    ) }}
                                 </div>
                             </div>
                             {% endfor %}
-
-                            <div class="row mb-3">
-                                <div class="col-md-5">
-                                    <select class="form-select" aria-label="Default select example">
-                                        <option selected> Select Subject </option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
-                                    </select>
-                                </div>
-
-                                <div class="col-md-2">
-                                    <input 
-                                        type="text"
-                                        name="fullmark"
-                                        placeholder="Full Mark"
-                                        disabled readonly
-                                        class="form-control"
-                                    />
-                                </div>
-
-                                <div class="col-md-2">
-                                    <input 
-                                        type="text"
-                                        name="mark"
-                                        placeholder="Mark"
-                                        class="form-control"
-                                    />
-                                </div>
-
-                                <div class="col-md-3">
-                                    <input 
-                                        type="text"
-                                        name="grade"
-                                        placeholder="Grade"
-                                        disabled readonly
-                                        class="form-control"
-                                    />
-                                </div>
-                            </div>
-
-                            <div class="row mb-3">
-                                <div class="col-md-5">
-                                    <select class="form-select" aria-label="Default select example">
-                                        <option selected> Select Subject </option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
-                                    </select>
-                                </div>
-
-                                <div class="col-md-2">
-                                    <input 
-                                        type="text"
-                                        name="fullmark"
-                                        placeholder="Full Mark"
-                                        disabled readonly
-                                        class="form-control"
-                                    />
-                                </div>
-
-                                <div class="col-md-2">
-                                    <input 
-                                        type="text"
-                                        name="mark"
-                                        placeholder="Mark"
-                                        class="form-control"
-                                    />
-                                </div>
-
-                                <div class="col-md-3">
-                                    <input 
-                                        type="text"
-                                        name="grade"
-                                        placeholder="Grade"
-                                        disabled readonly
-                                        class="form-control"
-                                    />
-                                </div>
-                            </div>
-
-                            <div class="row mb-3">
-                                <div class="col-md-5">
-                                    <select class="form-select" aria-label="Default select example">
-                                        <option selected> Select Subject </option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
-                                    </select>
-                                </div>
-
-                                <div class="col-md-2">
-                                    <input 
-                                        type="text"
-                                        name="fullmark"
-                                        placeholder="Full Mark"
-                                        disabled readonly
-                                        class="form-control"
-                                    />
-                                </div>
-
-                                <div class="col-md-2">
-                                    <input 
-                                        type="text"
-                                        name="mark"
-                                        placeholder="Mark"
-                                        class="form-control"
-                                    />
-                                </div>
-
-                                <div class="col-md-3">
-                                    <input 
-                                        type="text"
-                                        name="grade"
-                                        placeholder="Grade"
-                                        disabled readonly
-                                        class="form-control"
-                                    />
-                                </div>
-                            </div>
-
-                            <div class="row mb-3">
-                                <div class="col-md-5">
-                                    <select class="form-select" aria-label="Default select example">
-                                        <option selected> Select Subject </option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
-                                    </select>
-                                </div>
-
-                                <div class="col-md-2">
-                                    <input 
-                                        type="text"
-                                        name="fullmark"
-                                        placeholder="Full Mark"
-                                        disabled readonly
-                                        class="form-control"
-                                    />
-                                </div>
-
-                                <div class="col-md-2">
-                                    <input 
-                                        type="text"
-                                        name="mark"
-                                        placeholder="Mark"
-                                        class="form-control"
-                                    />
-                                </div>
-
-                                <div class="col-md-3">
-                                    <input 
-                                        type="text"
-                                        name="grade"
-                                        placeholder="Grade"
-                                        disabled readonly
-                                        class="form-control"
-                                    />
-                                </div>
-                            </div>
-
-                            <div class="row mb-3">
-                                <div class="col-md-5">
-                                    <select class="form-select" aria-label="Default select example">
-                                        <option selected> Select Subject </option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
-                                    </select>
-                                </div>
-
-                                <div class="col-md-2">
-                                    <input 
-                                        type="text"
-                                        name="fullmark"
-                                        placeholder="Full Mark"
-                                        disabled readonly
-                                        class="form-control"
-                                    />
-                                </div>
-
-                                <div class="col-md-2">
-                                    <input 
-                                        type="text"
-                                        name="mark"
-                                        placeholder="Mark"
-                                        class="form-control"
-                                    />
-                                </div>
-
-                                <div class="col-md-3">
-                                    <input 
-                                        type="text"
-                                        name="grade"
-                                        placeholder="Grade"
-                                        disabled readonly
-                                        class="form-control"
-                                    />
-                                </div>
-                            </div>
-
-                            <div class="row mb-3">
-                                <div class="col-md-5">
-                                    <select class="form-select" aria-label="Default select example">
-                                        <option selected> Select Subject </option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
-                                    </select>
-                                </div>
-
-                                <div class="col-md-2">
-                                    <input 
-                                        type="text"
-                                        name="fullmark"
-                                        placeholder="Full Mark"
-                                        disabled readonly
-                                        class="form-control"
-                                    />
-                                </div>
-
-                                <div class="col-md-2">
-                                    <input 
-                                        type="text"
-                                        name="mark"
-                                        placeholder="Mark"
-                                        class="form-control"
-                                    />
-                                </div>
-
-                                <div class="col-md-3">
-                                    <input 
-                                        type="text"
-                                        name="grade"
-                                        placeholder="Grade"
-                                        disabled readonly
-                                        class="form-control"
-                                    />
-                                </div>
-                            </div>
 
                             <div class="row mb-3">
                                 <div class="col-md-6">
@@ -362,6 +117,7 @@
                                     </label>
                                     <input 
                                         type="text"
+                                        id="totalmarks"
                                         class="form-control form-control-lg"
                                         placeholder="Total Marks"
                                         name="totalmarks"
@@ -404,7 +160,7 @@
                                 Close
                             </button>
 
-                            <button type="button" class="btn btn-sm btn-warning">Calculate</button>
+                            <button type="button" id="calculate" class="btn btn-sm btn-warning">Calculate</button>
 
                             <button type="submit" class="btn btn-sm btn-dark">Submit</button>
                         </div>
@@ -458,4 +214,55 @@
     </div>
 </main>
 
+
+<script>
+// FETCH DATA OF SUBJECT 
+let exam__container = document.querySelectorAll('.exam__container');
+
+exam__container.forEach(element => {
+    let current_state = element.querySelector('.exam__subject');
+    let current_fullmarks = element.querySelector('.full__marks');
+
+    current_state.addEventListener('change', () => {
+        subject = current_state.value;
+
+        fetch('/exam/subject/marks/'+subject)
+        .then(response => {
+            response.json()
+            .then(data => {
+                fullmarks = data.subjects[0].full_marks; 
+                current_fullmarks.value = fullmarks;
+            });
+        });
+    });
+});
+
+
+// CALCULATE TOTAL MARKS
+const totalmarkCalc = () => {
+
+}
+
+let totalmarks = 0;
+const allmarks = document.querySelectorAll('.full__marks');
+let totalmarkel = document.querySelector('#totalmarks');
+let calculate = document.querySelector('#calculate');
+
+calculate.addEventListener('click', () => {
+    
+    allmarks.forEach(mark => {
+        // console.log(mark.value);
+        if (mark != NaN) {
+            totalmarks = totalmarks + parseFloat(mark.value);
+            console.log(totalmarks);
+        }
+        // totalmarks = totalmarks + parseFloat(mark.value);    
+    })
+
+    totalmarkel.value = totalmarks;
+    // console.log(totalmarks)
+})
+
+
+</script>
 {% endblock %}

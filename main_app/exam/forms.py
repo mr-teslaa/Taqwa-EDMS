@@ -81,12 +81,22 @@ class AddStudentResultForm(FlaskForm):
         validators = [ DataRequired() ]
     )
 
+    full_marks = StringField(
+        'Full Marks',
+        validators = [ DataRequired() ]
+    )
+
+    grade = StringField(
+        'Grade',
+        validators = [ DataRequired() ]
+    )
+
     subject_total_marks = StringField(
         'Total Marks',
         validators = [ DataRequired() ]
     )    
 
-    grade = StringField(
-        'Grade',
+    total_grade = StringField(
+        'Total Grade',
         validators = [ DataRequired() ]
     )
