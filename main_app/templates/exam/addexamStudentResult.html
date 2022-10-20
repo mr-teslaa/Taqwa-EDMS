@@ -95,14 +95,14 @@
 
                                 <div class="col-md-2">
                                     {{ form.full_marks(
-                                        class="form-control",
+                                        class="form-control achive_total__marks",
                                         placeholder="Mark"
                                     ) }}
                                 </div>
 
                                 <div class="col-md-3">
                                     {{ form.grade(
-                                        class="form-control",
+                                        class="form-control achive_gpa",
                                         readonly="",
                                         disabled=""
                                     ) }}
@@ -111,33 +111,43 @@
                             {% endfor %}
 
                             <div class="row mb-3">
-                                <div class="col-md-6">
+                                <div class="col-md-5">
                                     <label for="totalmarks" class="fs-4">
-                                        Total Marks
+                                        Total
                                     </label>
+                                </div>
+
+                                <div class="col-md-2">
                                     <input 
                                         type="text"
-                                        id="totalmarks"
                                         class="form-control form-control-lg"
-                                        placeholder="Total Marks"
-                                        name="totalmarks"
-                                        value="0"
+                                        id="totalmarks"
+                                        placeholder="00"
                                         disabled readonly
                                     />
                                 </div>
 
-                                <div class="col-md-6">
-                                     <label for="grade" class="fs-4">
-                                        Grade
-                                    </label>
-                                    <input 
-                                        type="text"
-                                        class="form-control form-control-lg"
-                                        placeholder="grade"
-                                        name="grade"
-                                        disabled readonly
-                                    />
+                                <div class="col-md-2">
+                                    {{ form.subject_total_marks(
+                                        id="totalachivemarks",
+                                        class="form-control form-control-lg",
+                                        value="00",
+                                        readonly="",
+                                        disabled=""
+                                    ) }}
                                 </div>
+
+                                <div class="col-md-3">
+                                    {{ form.total_grade(
+                                        id="totalgrade",
+                                        class="form-control form-control-lg",
+                                        value="0.00",
+                                        readonly="",
+                                        disabled=""
+                                    ) }}
+                                </div>
+
+                                
                             </div>
 
                             <div class="row">
@@ -217,12 +227,115 @@
 
 
 <script>
+// CALCULATE GPA - 100
+const gpaCalc = (number) => {
+    if (number > 79) {
+        return 5.0;
+    } else if (number > 69 && number < 80) {
+        return 4.0;
+    } else if (number > 59 && number < 70) {
+        return 3.5;
+    } else if (number > 49 && number < 60) {
+        return 3.0;
+    } else if (number > 39 && number < 50) {
+        return 2.0;
+    } else if (number >= 32 && number < 40) {
+        return 1.0;
+    } else if (number >= 0 && number < 32) {
+        return 0;
+    } else {
+        alert(
+            "Please check the number again. something went wrong!"
+        );
+    }
+}
+
+
+// for 50 marks
+const gpaClC50 = (number) => {
+    if (number >= 40 && number <= 50) {
+        return 5.0;
+    } else if (number >= 36 && number <= 39) {
+        return 4.0;
+    } else if (number >= 30 && number <= 35) {
+        return 3.5;
+    } else if (number >= 25 && number <= 29) {
+        return 3.0;
+    } else if (number >= 20 && number <= 24) {
+        return 2.0;
+    } else if (number >= 16 && number <= 19) {
+        return 1.0;
+    } else if (number >= 0 && number <= 15) {
+        return 0;
+    } 
+    
+    // else {
+    //     alert(
+    //         "Please check the number again. something went wrong!"
+    //     );
+    // }
+};
+
+let gpa;
+let totalmarks = 0; 
+let totalAchiveMarks = 0;
+const allFullMarks = document.querySelectorAll('.full__marks');
+const achiveTotalMarks = document.querySelectorAll('.achive_total__marks');
+let totalMarkEl = document.querySelector('#totalmarks');
+let totalAchivemarkEl = document.querySelector('#totalachivemarks');
+let totalAchiveGradeEl = document.querySelector('#totalgrade');
+let calculate = document.querySelector('#calculate');
+
+calculate.addEventListener('click', () => {
+    
+    // reset the total marks, otherwise it will add previouse number that we added
+    totalmarks=0; 
+    totalAchiveMarks = 0;
+    
+    allFullMarks.forEach(mark => {
+        if (mark.value!=false){
+
+            if(mark.value == '50') {
+                achiveTotalMarks.forEach(achivemark => {
+                    if (achivemark.value!=false) {
+                        gpa = gpaClC50(achivemark.value);
+                        totalAchiveGradeEl.vlaue = gpa;
+                    }
+                });
+            } else if (mark.value == '100') {
+                achiveTotalMarks.forEach(achivemark => {
+                    if (achivemark.value!=false) {
+                        gpa = gpaCalc(achivemark.value);
+                        totalAchiveGradeEl.vlaue = gpa;
+                    }
+                });
+            }
+
+            totalmarks = totalmarks + parseFloat(mark.value);
+        } 
+    });
+
+    achiveTotalMarks.forEach(achivemark => {
+        if (achivemark.value!=false){
+            totalAchiveMarks = totalAchiveMarks + parseFloat(achivemark.value);
+        } 
+    });
+
+    totalMarkEl.value = totalmarks;
+    totalAchivemarkEl.value = totalAchiveMarks;
+});
+
+
+
 // FETCH DATA OF SUBJECT 
 let exam__container = document.querySelectorAll('.exam__container');
 
 exam__container.forEach(element => {
     let current_state = element.querySelector('.exam__subject');
     let current_fullmarks = element.querySelector('.full__marks');
+    let current_gpa = element.querySelector('.achive_gpa');
+    
+    current_gpa.value = gpa;
 
     current_state.addEventListener('change', () => {
         subject = current_state.value;
@@ -233,34 +346,11 @@ exam__container.forEach(element => {
             .then(data => {
                 fullmarks = data.subjects[0].full_marks; 
                 current_fullmarks.value = fullmarks;
+                
             });
         });
     });
 });
-
-
-// CALCULATE TOTAL MARKS
-const totalmarkCalc = () => {
-
-}
-
-let totalmarks = 0;
-const allmarks = document.querySelectorAll('.full__marks');
-let totalmarkel = document.querySelector('#totalmarks');
-let calculate = document.querySelector('#calculate');
-
-calculate.addEventListener('click', () => {
-    totalmarks=0;
-    allmarks.forEach(mark => {
-        // console.log(mark.value);
-        if (mark.value!=false){
-            totalmarks = totalmarks + parseFloat(mark.value);
-        } 
-    });
-
-    totalmarkel.value = totalmarks;
-});
-
 
 </script>
 {% endblock %}
