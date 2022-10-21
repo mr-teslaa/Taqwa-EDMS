@@ -95,7 +95,7 @@
 
                                 <div class="col-md-2">
                                     {{ form.full_marks(
-                                        class="form-control achive_total__marks",
+                                        class="form-control achive__marks",
                                         placeholder="Mark"
                                     ) }}
                                 </div>
@@ -268,74 +268,67 @@ const gpaClC50 = (number) => {
     } else if (number >= 0 && number <= 15) {
         return 0;
     } 
-    
-    // else {
-    //     alert(
-    //         "Please check the number again. something went wrong!"
-    //     );
-    // }
 };
 
-let gpa;
 let totalmarks = 0; 
-let totalAchiveMarks = 0;
+let gpa;
+const allgpa = [];
+const allAchiveMarks = [];
 const allFullMarks = document.querySelectorAll('.full__marks');
 const achiveTotalMarks = document.querySelectorAll('.achive_total__marks');
-let totalMarkEl = document.querySelector('#totalmarks');
-let totalAchivemarkEl = document.querySelector('#totalachivemarks');
-let totalAchiveGradeEl = document.querySelector('#totalgrade');
+let totalMark = document.querySelector('#totalmarks');
+let totalAchivemark = document.querySelector('#totalachivemarks');
+let totalAchiveGrade = document.querySelector('#totalgrade');
 let calculate = document.querySelector('#calculate');
-
-calculate.addEventListener('click', () => {
-    
-    // reset the total marks, otherwise it will add previouse number that we added
-    totalmarks=0; 
-    totalAchiveMarks = 0;
-    
-    allFullMarks.forEach(mark => {
-        if (mark.value!=false){
-
-            if(mark.value == '50') {
-                achiveTotalMarks.forEach(achivemark => {
-                    if (achivemark.value!=false) {
-                        gpa = gpaClC50(achivemark.value);
-                        totalAchiveGradeEl.vlaue = gpa;
-                    }
-                });
-            } else if (mark.value == '100') {
-                achiveTotalMarks.forEach(achivemark => {
-                    if (achivemark.value!=false) {
-                        gpa = gpaCalc(achivemark.value);
-                        totalAchiveGradeEl.vlaue = gpa;
-                    }
-                });
-            }
-
-            totalmarks = totalmarks + parseFloat(mark.value);
-        } 
-    });
-
-    achiveTotalMarks.forEach(achivemark => {
-        if (achivemark.value!=false){
-            totalAchiveMarks = totalAchiveMarks + parseFloat(achivemark.value);
-        } 
-    });
-
-    totalMarkEl.value = totalmarks;
-    totalAchivemarkEl.value = totalAchiveMarks;
-});
-
-
 
 // FETCH DATA OF SUBJECT 
 let exam__container = document.querySelectorAll('.exam__container');
 
+const each_container = (element) => {
+    console.log('each container called');
+    let current_fullmarks = element.querySelector('.full__marks');
+    let current_achive_gpa = element.querySelector('.achive_gpa');
+    let current_achive_mark = element.querySelector('.achive__marks'); 
+
+    if (current_fullmarks.value!=false){
+
+        // CHECKING IF THE FULL MARK OF THAT SUBJECT IS 50 OR 100 
+        // SO THAT WE CAN USE DIFFERENT GPA MODEL FOR THEM
+        if(current_fullmarks.value == 50) {
+            
+            if (current_achive_mark.value!=false) {
+                gpa = gpaClC50(current_achive_mark.value);
+                allAchiveMarks.push(current_achive_mark.value)
+                allgpa.push(gpa);
+                current_achive_gpa.value = gpa;
+            }
+
+        } else if (current_fullmarks.value == 100) {
+           
+            if (current_achive_mark.value!=false) {
+                gpa = gpaCalc(parseFloat(current_achive_mark.value));
+                allAchiveMarks.push(parseFloat(current_achive_mark.value))
+                allgpa.push(gpa);
+                current_achive_gpa.value = gpa;
+            }
+    
+        } else alert('something went wrong with gpa calculate system. reload the page and reenter the marks');
+        
+        totalmarks = totalmarks + parseFloat(current_fullmarks.value);
+    }
+
+    totalMark.value = totalmarks;
+    totalAchivemark.value = allAchiveMarks.reduce((sum, i) => sum + i)   // ADDITION OF ALL VALUE OF TOTAL ACHIVE MARK
+    let final_achive_gpa = allgpa.reduce((sum, j) => sum + j) / allgpa.length;
+    totalAchiveGrade.value = final_achive_gpa;
+
+}
+
 exam__container.forEach(element => {
     let current_state = element.querySelector('.exam__subject');
     let current_fullmarks = element.querySelector('.full__marks');
-    let current_gpa = element.querySelector('.achive_gpa');
-    
-    current_gpa.value = gpa;
+    let current_achive_gpa = element.querySelector('.achive_gpa');
+    let current_achive_mark = element.querySelector('.achive__marks'); 
 
     current_state.addEventListener('change', () => {
         subject = current_state.value;
@@ -350,7 +343,12 @@ exam__container.forEach(element => {
             });
         });
     });
-});
 
+    calculate.addEventListener('click',() => {
+        if (current_achive_mark == false) {
+            current_achive_gpa.value = '0'
+        } else each_container(element);
+    });
+});
 </script>
 {% endblock %}
