@@ -39,9 +39,6 @@ class User(db.Model, UserMixin):
             return None
         return User.query.get(user_id)
 
-    def __repr__(self):
-        return f"User('{self.username}', '{self.email}', '{self.image_file}')"
-
 
 class Notice(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -49,22 +46,38 @@ class Notice(db.Model):
     date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     content = db.Column(db.Text, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-
-    def __repr__(self):
-        return f"Post('{self.title}', '{self.date_posted}')"
         
-    
 
 class Exam(db.Model):
+    __tablename__ = 'exam'
     id = db.Column(db.Integer, primary_key=True)
     exam_name = db.Column(db.String(100), nullable=False)
     date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     exam_subject = db.relationship('ExamSubject', backref='exam_name', lazy=True)
+    student_exam_subject = db.relationship('StudentResult', backref='exam_name', lazy=True)
+
 
 class ExamSubject(db.Model):
+    __tablename__ = 'exam_subject'
     id = db.Column(db.Integer, primary_key=True)
-    exam_subject = db.Column(db.String(100), nullable=False)
+    subject = db.Column(db.String(100), nullable=False)
     full_marks = db.Column(db.String(100), nullable=False)
     pass_marks = db.Column(db.String(100), nullable=False)
     date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     exam_id = db.Column(db.Integer, db.ForeignKey('exam.id'), nullable=False)
+    student_exam_subject = db.relationship('StudentResult', backref='exam_subject', lazy=True)
+
+
+class StudentResult(db.Model):
+    __tablename__ = 'student_result'
+    id = db.Column(db.Integer, primary_key=True)
+    student_name = db.Column(db.String(100), nullable=False)
+    student_roll = db.Column(db.String(100), nullable=False)
+    student_class = db.Column(db.String(100), nullable=False)
+    student_mark_details = db.Column(db.String(500), nullable=False)
+    subject_total_marks = db.Column(db.String(100), nullable=False)
+    total_achive_mark = db.Column(db.String(100), nullable=False, default=datetime.utcnow)
+    total_achive_grade = db.Column(db.String(100), nullable=False)
+    date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    exam_id = db.Column(db.Integer, db.ForeignKey('exam.id'), nullable=False)
+    exam_subject_id = db.Column(db.Integer, db.ForeignKey('exam_subject.id'), nullable=False)

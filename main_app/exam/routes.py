@@ -22,7 +22,7 @@ exam = Blueprint('exam', __name__)
 
 
 #   ADD EXAM 
-@exam.route('/exam/add', methods=['GET','POST'])
+@exam.route('/exam/add/', methods=['GET','POST'])
 def addexam():
     form = AddExamForm()
     exams = Exam.query.all()
@@ -45,13 +45,13 @@ def exam_delete(exam_id):
 
 
 #   ADD EXAM SUBJECT
-@exam.route('/exam/subject/add', methods=['GET', 'POST'])
+@exam.route('/exam/subject/add/', methods=['GET', 'POST'])
 def addexam_subject():
     form = AddExamSubjectForm()
     form.exam.choices = [(exam.id, exam.exam_name) for exam in Exam.query.all()]
     exam_subject = ExamSubject.query.all()
     if form.validate_on_submit():
-        subject = ExamSubject(exam_subject=form.exam_subject_name.data.lower(), full_marks=form.full_marks.data, pass_marks=form.pass_marks.data,exam_id=form.exam.data)
+        subject = ExamSubject(subject=form.exam_subject_name.data.lower(), full_marks=form.full_marks.data, pass_marks=form.pass_marks.data,exam_id=form.exam.data)
         db.session.add(subject)
         db.session.commit()
         flash('Exam Subject added successfuylly ✔', 'success')
@@ -70,25 +70,32 @@ def exam_subject_delete(exam_id):
 
 
 #   ADD STUDENT RESULT
-@exam.route('/exam/student/result', methods=['GET', 'POST'])
+@exam.route('/exam/student/result/', methods=['GET', 'POST'])
 def addexam_student_result():
     form = AddStudentResultForm()
     form.exam.choices = [(exam.id, exam.exam_name) for exam in Exam.query.all()]
-    form.exam_subject_name.choices = [(examsubj.id, examsubj.exam_subject) for examsubj in ExamSubject.query.all()]
+    form.exam_subject_name.choices = [(examsubj.id, examsubj.subject) for examsubj in ExamSubject.query.all()]
     exam_subject = ExamSubject.query.all()
     totalsubject=7
     if form.validate_on_submit():
-        pass
+        print(form.exam_subject_name.data)
+        print("==== yes =====")
+        # single_sub_array = []
+        # for subject in range(totalsubject):
+        #     subjectobj = {}
+        #     subject['subject'] = 
+            # subject['']=
+            # exam_details = jsonify({'allsubjectresult': subjectArray})
         # subject = ExamSubject(exam_subject=form.exam_subject_name.data, full_marks=form.full_marks.data, pass_marks=form.pass_marks.data,exam_id=form.exam.data)
         # db.session.add(subject)
         # db.session.commit()
-        # flash('Exam Subject added successfuylly ✔', 'success')
-        # return redirect(url_for('exam.addexam_subject'))
+        flash('Exam Subject added successfuylly ✔', 'success')
+        return redirect(url_for('exam.addexam'))
 
     return render_template('exam/addexamStudentResult.html', form=form, exam_subject=exam_subject, totalsubject=totalsubject)
 
 
-@exam.route('/exam/subject/marks/<int:subject_id>', methods=['GET', 'POST'])
+@exam.route('/exam/subject/marks/<int:subject_id>/', methods=['GET', 'POST'])
 def get_total_marks(subject_id):
     subjects = ExamSubject.query.filter_by(id=subject_id).all()
 
@@ -97,7 +104,7 @@ def get_total_marks(subject_id):
     for subject in subjects:
         subobj = {}
         subobj['id'] = subject.id
-        subobj['subject_name'] = subject.exam_subject
+        subobj['subject_name'] = subject.subject
         subobj['full_marks'] = subject.full_marks
         subobj['pass_marks'] = subject.pass_marks
         subjectArray.append(subobj)

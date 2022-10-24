@@ -44,33 +44,33 @@
                     <form action="" method="POST">
                         <!-- MODAL BODY -->
                         <div class="modal-body">
-                                {{ form.hidden_tag() }}
-                                <div class="mb-3">
-                                    {{ form.exam_subject_name(
-                                        class="form-control",
-                                        placeholder="Exam Subject"
-                                    ) }}
-                                </div>
+                            {{ form.hidden_tag() }}
+                            <div class="mb-3">
+                                {{ form.exam_subject_name(
+                                    class="form-control",
+                                    placeholder="Exam Subject"
+                                ) }}
+                            </div>
 
-                                <div class="mb-3">
-                                    {{ form.full_marks(
-                                        class="form-control",
-                                        placeholder="Full Marks"
-                                    ) }}
-                                </div>
+                            <div class="mb-3">
+                                {{ form.full_marks(
+                                    class="form-control",
+                                    placeholder="Full Marks"
+                                ) }}
+                            </div>
 
-                                <div class="mb-3">
-                                    {{ form.pass_marks(
-                                        class="form-control",
-                                        placeholder="Pass Marks"
-                                    ) }}
-                                </div>
+                            <div class="mb-3">
+                                {{ form.pass_marks(
+                                    class="form-control",
+                                    placeholder="Pass Marks"
+                                ) }}
+                            </div>
 
-                                <div class="mb-3">
-                                    {{ form.exam(
-                                        class="form-select"
-                                    ) }}
-                                </div>
+                            <div class="mb-3">
+                                {{ form.exam(
+                                    class="form-select"
+                                ) }}
+                            </div>
                         </div>
 
                         <!-- MODAL FOOTER -->
@@ -107,7 +107,7 @@
                     {% for exam in exam_subject %}
                     <tr>
                         <th scope="row">1</th>
-                        <td>{{ exam.exam_subject }}</td>
+                        <td class="text-capitalize">{{ exam.subject }}</td>
                         <td>{{ exam.full_marks }}</td>
                         <td>{{ exam.pass_marks }}</td>
                         <td>{{ exam.exam_name.exam_name }}</td>

@@ -118,17 +118,17 @@
                                 </div>
 
                                 <div class="col-md-2">
-                                    <input 
-                                        type="text"
-                                        class="form-control form-control-lg"
-                                        id="totalmarks"
-                                        placeholder="00"
-                                        disabled readonly
-                                    />
+                                    {{ form.subject_total_marks(
+                                        id="totalmarks",
+                                        class="form-control form-control-lg",
+                                        placeholder="00",
+                                        disabled="", 
+                                        readonly=""
+                                    ) }}
                                 </div>
 
                                 <div class="col-md-2">
-                                    {{ form.subject_total_marks(
+                                    {{ form.total_achive_mark(
                                         id="totalachivemarks",
                                         class="form-control form-control-lg",
                                         value="00",
@@ -138,7 +138,7 @@
                                 </div>
 
                                 <div class="col-md-3">
-                                    {{ form.total_grade(
+                                    {{ form.total_achive_grade(
                                         id="totalgrade",
                                         class="form-control form-control-lg",
                                         value="0.00",
@@ -152,11 +152,12 @@
 
                             <div class="row">
                                 <div class="col-md-12">
-                                    <label class="fs-5"> Result Note </label>
-                                    <textarea 
-                                        name="resultnote"
-                                        class="form-control" 
-                                        rows="3"></textarea>
+                                    {{ form.result_note.label(class="fs-5") }}
+                                    
+                                    {{ form.result_note(
+                                        class="form-control",
+                                        rows="3"
+                                    ) }}
                                 </div>
                             </div>
                         </div>
@@ -173,7 +174,7 @@
 
                             <button type="button" id="calculate" class="btn btn-sm btn-warning">Calculate</button>
 
-                            <button type="submit" class="btn btn-sm btn-dark">Submit</button>
+                            {{ form.submit(class="btn btn-sm btn-dark") }}
                         </div>
                     </form>
                 </div>
@@ -227,6 +228,25 @@
 
 
 <script>
+// calculate the grade
+const calcGRADE = (grades) => {
+    if (grades == 5) {
+        return "A+";
+    } else if (grades >= 4 && grades < 5) {
+        return "A";
+    } else if (grades >= 3.5 && grades < 4) {
+        return "A-";
+    } else if (grades >= 3 && grades < 3.5) {
+        return "B";
+    } else if (grades >= 2 && grades < 3) {
+        return "C";
+    } else if (grades >= 1 && grades < 2) {
+        return "D";
+    } else {
+        return "F";
+    }
+};
+
 // CALCULATE GPA - 100
 const gpaCalc = (number) => {
     if (number > 79) {
@@ -270,8 +290,34 @@ const gpaClC50 = (number) => {
     } 
 };
 
+
+// CALCULATE GPA - 100
+const gpaCalc25 = (number) => {
+    if (number >= 20 && number <= 25) {
+        return 5.0;
+    } else if (number >= 18 && number < 20) {
+        return 4.0;
+    } else if (number >= 15 && number < 18) {
+        return 3.5;
+    } else if (number >= 13 && number < 15) {
+        return 3.0;
+    } else if (number >= 10 && number < 13) {
+        return 2.0;
+    } else if (number >= 8 && number < 10) {
+        return 1.0;
+    } else if (number == 0 || number < 8) {
+        return 0;
+    } else {
+        alert(
+            "Please check the number again. something went wrong!"
+        );
+    }
+}
+
+
 let totalmarks = 0; 
 let gpa;
+let grade;
 const allgpa = [];
 const allAchiveMarks = [];
 const allFullMarks = document.querySelectorAll('.full__marks');
@@ -285,7 +331,6 @@ let calculate = document.querySelector('#calculate');
 let exam__container = document.querySelectorAll('.exam__container');
 
 const each_container = (element) => {
-    console.log('each container called');
     let current_fullmarks = element.querySelector('.full__marks');
     let current_achive_gpa = element.querySelector('.achive_gpa');
     let current_achive_mark = element.querySelector('.achive__marks'); 
@@ -297,30 +342,48 @@ const each_container = (element) => {
         if(current_fullmarks.value == 50) {
             
             if (current_achive_mark.value!=false) {
-                gpa = gpaClC50(current_achive_mark.value);
-                allAchiveMarks.push(current_achive_mark.value)
+                gpa = gpaClC50(parseFloat(current_achive_mark.value));
+                grade = calcGRADE(gpa);
+                allAchiveMarks.push(parseFloat(current_achive_mark.value));
                 allgpa.push(gpa);
-                current_achive_gpa.value = gpa;
+                current_achive_gpa.value = `${grade} (${gpa})`;
             }
 
         } else if (current_fullmarks.value == 100) {
            
             if (current_achive_mark.value!=false) {
                 gpa = gpaCalc(parseFloat(current_achive_mark.value));
+                grade = calcGRADE(gpa);
                 allAchiveMarks.push(parseFloat(current_achive_mark.value))
                 allgpa.push(gpa);
-                current_achive_gpa.value = gpa;
+                current_achive_gpa.value = `${grade} (${gpa})`;
             }
     
+        } else if (current_fullmarks.value == 25) {
+            
+            console.log(`Current Full Marks =  ${current_fullmarks.value}`)
+
+            if (current_achive_mark.value!=false) {
+                gpa = gpaCalc25(parseFloat(current_achive_mark.value));
+                
+                console.log(`Current GPA = ${gpa}`)
+            
+                grade = calcGRADE(gpa);
+                allAchiveMarks.push(parseFloat(current_achive_mark.value))
+                allgpa.push(gpa);
+                current_achive_gpa.value = `${grade} (${gpa})`;
+            }
         } else alert('something went wrong with gpa calculate system. reload the page and reenter the marks');
         
         totalmarks = totalmarks + parseFloat(current_fullmarks.value);
     }
 
     totalMark.value = totalmarks;
-    totalAchivemark.value = allAchiveMarks.reduce((sum, i) => sum + i)   // ADDITION OF ALL VALUE OF TOTAL ACHIVE MARK
+    totalAchivemark.value = allAchiveMarks.reduce((total, amount) => total + amount);  // ADDITION OF ALL VALUE OF TOTAL ACHIVE MARK
+    console.log(`all achive marks = ${allAchiveMarks}`)
     let final_achive_gpa = allgpa.reduce((sum, j) => sum + j) / allgpa.length;
-    totalAchiveGrade.value = final_achive_gpa;
+    let final_grade = calcGRADE(final_achive_gpa)
+    totalAchiveGrade.value = `${final_grade} (${final_achive_gpa})`;
 
 }
 

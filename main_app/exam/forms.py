@@ -1,8 +1,10 @@
 from socketserver import DatagramRequestHandler
 from tokenize import String
+from unittest import result
 from wsgiref.validate import validator
 from flask_wtf import FlaskForm
 from wtforms import StringField
+from wtforms import TextAreaField
 from wtforms import PasswordField
 from wtforms import SubmitField
 from wtforms import SelectField
@@ -81,10 +83,7 @@ class AddStudentResultForm(FlaskForm):
         validators = [ DataRequired() ]
     )
 
-    full_marks = StringField(
-        'Full Marks',
-        validators = [ DataRequired() ]
-    )
+    full_marks = StringField('Full Marks')
 
     grade = StringField(
         'Grade',
@@ -96,7 +95,16 @@ class AddStudentResultForm(FlaskForm):
         validators = [ DataRequired() ]
     )    
 
-    total_grade = StringField(
+    total_achive_mark = StringField(
+        'Total Achive Marks',
+        validators = [ DataRequired() ]
+    )    
+
+    total_achive_grade = StringField(
         'Total Grade',
         validators = [ DataRequired() ]
     )
+
+    result_note = TextAreaField('Result Note')
+
+    submit = SubmitField('Add Result')
