@@ -57,18 +57,15 @@ class AddExamSubjectForm(FlaskForm):
 
 class AddStudentResultForm(FlaskForm):
     student_name = StringField(
-        'Student name',
-        validators = [ DataRequired() ]
+        'Student name'
     )
 
     student_roll = IntegerField(
-        'Student Roll',
-        validators = [ DataRequired() ]
+        'Student Roll'
     )
 
     student_class = StringField(
-        'Student Class',
-        validators = [ DataRequired() ]
+        'Student Class'
     )
 
     exam = SelectField(
@@ -86,23 +83,23 @@ class AddStudentResultForm(FlaskForm):
     full_marks = StringField('Full Marks')
 
     grade = StringField(
-        'Grade',
-        validators = [ DataRequired() ]
+        'Grade'
     )
 
-    subject_total_marks = StringField(
-        'Total Marks',
-        validators = [ DataRequired() ]
+    achive_mark = StringField(
+        'Achive Mark'
+    )
+
+    total_marks = StringField(
+        'Total Marks'
     )    
 
     total_achive_mark = StringField(
-        'Total Achive Marks',
-        validators = [ DataRequired() ]
+        'Total Achive Marks'
     )    
 
     total_achive_grade = StringField(
-        'Total Grade',
-        validators = [ DataRequired() ]
+        'Total Grade'
     )
 
     result_note = TextAreaField('Result Note')

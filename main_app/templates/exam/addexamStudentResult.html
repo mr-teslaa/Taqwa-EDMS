@@ -42,141 +42,293 @@
                         ></button>
                     </div>
 
-                    <form action="" method="POST">
-                        {{ form.hidden_tag() }}
-                        <!-- MODAL BODY -->
-                        <div class="modal-body">
-                            <div class="row mb-3">
-                                <div class="col-md-12">  
-                                    {{ form.student_name(
-                                        class="form-control",
-                                        placeholder="Student Name"
-                                    ) }} 
+                    <!-- PAST HERE -->
+                    <!-- new demo -->
+            <form action="" method="POST">
+                {{ form.hidden_tag() }}
+                <!-- MODAL BODY -->
+                <div class="modal-body">
+                    <div class="row mb-3">
+                        <div class="col-md-12"> 
+                            {% if form.student_name.errors %}
+                                {{ form.student_name(
+                                    class="form-control is-invalid",
+                                    placeholder="Student Name"
+                                ) }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.student_name.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
                                 </div>
-                            </div>
+                            {% else %}
+                                {{ form.student_name(
+                                    class="form-control",
+                                    placeholder="Student Name"
+                                ) }}
+                            {% endif %}
+                        </div>
+                    </div>
 
-                            <div class="row mb-3">
-                                <div class="col-md-4">
-                                    {{ form.exam(
-                                        class="form-select"
-                                    ) }}
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            {% if form.exam.errors %}
+                                {{ form.exam(
+                                    class="form-select is-invalid",
+                                ) }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.exam.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
                                 </div>
-
-                                <div class="col-sm-4">
-                                    {{ form.student_class(
-                                        class="form-control", 
-                                        placeholder="Class"
-                                    ) }}
-                                </div>
-
-                                <div class="col-sm-4">
-                                    {{ form.student_roll(
-                                        class="form-control",
-                                        placeholder="Roll"
-                                    ) }}
-                                </div>
-                            </div>
-
-                            {% for subject in range(totalsubject) %}
-                            <div class="row mb-3 exam__container">
-                                <div class="col-md-5">
-                                    {{ form.exam_subject_name(
-                                        class="form-select text-uppercase exam__subject"
-                                    ) }}
-                                </div>
-
-                                <div class="col-md-2">
-                                    {{ form.subject_total_marks(
-                                        class="form-control full__marks",
-                                        readonly="",
-                                        disabled=""
-                                    ) }}
-                                </div>
-
-                                <div class="col-md-2">
-                                    {{ form.full_marks(
-                                        class="form-control achive__marks",
-                                        placeholder="Mark"
-                                    ) }}
-                                </div>
-
-                                <div class="col-md-3">
-                                    {{ form.grade(
-                                        class="form-control achive_gpa",
-                                        readonly="",
-                                        disabled=""
-                                    ) }}
-                                </div>
-                            </div>
-                            {% endfor %}
-
-                            <div class="row mb-3">
-                                <div class="col-md-5">
-                                    <label for="totalmarks" class="fs-4">
-                                        Total
-                                    </label>
-                                </div>
-
-                                <div class="col-md-2">
-                                    {{ form.subject_total_marks(
-                                        id="totalmarks",
-                                        class="form-control form-control-lg",
-                                        placeholder="00",
-                                        disabled="", 
-                                        readonly=""
-                                    ) }}
-                                </div>
-
-                                <div class="col-md-2">
-                                    {{ form.total_achive_mark(
-                                        id="totalachivemarks",
-                                        class="form-control form-control-lg",
-                                        value="00",
-                                        readonly="",
-                                        disabled=""
-                                    ) }}
-                                </div>
-
-                                <div class="col-md-3">
-                                    {{ form.total_achive_grade(
-                                        id="totalgrade",
-                                        class="form-control form-control-lg",
-                                        value="0.00",
-                                        readonly="",
-                                        disabled=""
-                                    ) }}
-                                </div>
-
-                                
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-12">
-                                    {{ form.result_note.label(class="fs-5") }}
-                                    
-                                    {{ form.result_note(
-                                        class="form-control",
-                                        rows="3"
-                                    ) }}
-                                </div>
-                            </div>
+                            {% else %}
+                                {{ form.exam(
+                                    class="form-select"
+                                ) }}
+                            {% endif %}
                         </div>
 
-                        <!-- MODAL FOOTER -->
-                        <div class="modal-footer">
-                            <button
-                                type="button"
-                                class="btn btn-sm btn-outline-secondary"
-                                data-bs-dismiss="modal"
-                            >
-                                Close
-                            </button>
-
-                            <button type="button" id="calculate" class="btn btn-sm btn-warning">Calculate</button>
-
-                            {{ form.submit(class="btn btn-sm btn-dark") }}
+                        <div class="col-sm-4">
+                            {% if form.student_class.errors %}
+                                {{ form.student_class(
+                                    class="form-control is-invalid",
+                                    placeholder="Class"
+                                ) }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.student_class.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.student_class(
+                                    class="form-control", 
+                                    placeholder="Class"
+                                ) }}
+                            {% endif %}  
                         </div>
-                    </form>
+
+                        <div class="col-sm-4">
+                            {% if form.student_roll.errors %}
+                                {{ form.student_roll(
+                                    class="form-control is-invalid",
+                                    placeholder="Roll"
+                                ) }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.student_roll.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.student_roll(
+                                    class="form-control",
+                                    placeholder="Roll"
+                                ) }}
+                            {% endif %}  
+                        </div>
+                    </div>
+
+                    {% for subject in range(totalsubject) %}
+                    <div class="row mb-3 exam__container">
+                        <div class="col-md-5">
+                            {% if form.exam_subject_name.errors %}
+                                {{ form.exam_subject_name(
+                                    class="form-select text-uppercase exam__subject is-invalid"
+                                ) }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.exam_subject_name.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.exam_subject_name(
+                                    class="form-select text-uppercase exam__subject"
+                                ) }}
+                            {% endif %} 
+                            
+                        </div>
+
+                        <div class="col-md-2">
+                            {% if form.achive_mark.errors %}
+                                {{ form.achive_mark(
+                                    class="form-control full__marks is-invalid",
+                                    readonly=""
+                                ) }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.achive_mark.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.achive_mark(
+                                    class="form-control full__marks",
+                                    readonly=""
+                                ) }}
+                            {% endif %} 
+                        </div>
+
+                        <div class="col-md-2">
+                            {% if form.full_marks.errors %}
+                                {{ form.full_marks(
+                                    class="form-control achive__marks is-invalid",
+                                    placeholder="Mark"
+                                ) }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.full_marks.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.full_marks(
+                                    class="form-control achive__marks",
+                                    placeholder="Mark"
+                                ) }}
+                            {% endif %} 
+                        </div>
+
+                        <div class="col-md-3">
+                            {% if form.grade.errors %}
+                                {{ form.grade(
+                                    class="form-control achive_gpa is-invalid",
+                                    readonly=""
+                                ) }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.grade.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.grade(
+                                    class="form-control achive_gpa",
+                                    readonly=""
+                                ) }}
+                            {% endif %} 
+                        </div>
+                    </div>
+                    {% endfor %}
+                
+                    <div class="row mb-3">
+                        <div class="col-md-5">
+                            <label for="totalmarks" class="fs-4">
+                                Total
+                            </label>
+                        </div>
+
+                        <div class="col-md-2">
+                            {% if form.total_marks.errors %}
+                                {{ form.total_marks(
+                                    id="totalmarks",
+                                    class="form-control form-control-lg is-invalid",
+                                    placeholder="00",
+                                    readonly=""
+                                ) }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.total_marks.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.total_marks(
+                                    id="totalmarks",
+                                    class="form-control form-control-lg",
+                                    placeholder="00",
+                                    readonly=""
+                                ) }}
+                            {% endif %} 
+                            
+                        </div>
+
+                        <div class="col-md-2">
+                            {% if form.total_achive_mark.errors %}
+                                {{ form.total_achive_mark(
+                                    id="totalachivemarks",
+                                    class="form-control form-control-lg is-invalid",
+                                    value="00",
+                                    readonly=""
+                                ) }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.total_achive_mark.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.total_achive_mark(
+                                    id="totalachivemarks",
+                                    class="form-control form-control-lg",
+                                    value="00",
+                                    readonly=""
+                                ) }}
+                            {% endif %} 
+                            
+                        </div>
+
+                        <div class="col-md-3">
+                            {% if form.total_achive_grade.errors %}
+                                {{ form.total_achive_grade(
+                                    id="totalgrade",
+                                    class="form-control form-control-lg is-invalid",
+                                    value="0.00",
+                                    readonly=""
+                                ) }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.total_achive_grade.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.total_achive_grade(
+                                    id="totalgrade",
+                                    class="form-control form-control-lg",
+                                    value="0.00",
+                                    readonly=""
+                                ) }}
+                            {% endif %} 
+                            
+                        </div>
+
+                        
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            {{ form.result_note.label(class="fs-5") }}
+                            
+                            {% if form.result_note.errors %}
+                                {{ form.result_note(
+                                    id="totalgrade",
+                                    class="form-control form-control-lg is-invalid",
+                                    value="0.00",
+                                    readonly=""
+                                ) }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.result_note.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.result_note(
+                                    class="form-control",
+                                    rows="3"
+                                ) }}
+                            {% endif %}
+                            
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MODAL FOOTER -->
+                <div class="modal-footer">
+                    <button
+                        type="button"
+                        class="btn btn-sm btn-outline-secondary"
+                        data-bs-dismiss="modal"
+                    >
+                        Close
+                    </button>
+
+                    <button type="button" id="calculate" class="btn btn-sm btn-warning">Calculate</button>
+
+                    {{ form.submit(class="btn btn-sm btn-dark") }}
+                </div>
+            </form>
                 </div>
             </div>
         </div>
@@ -222,6 +374,10 @@
                     
                 </tbody>
             </table>
+
+
+
+            
         </div>
     </div>
 </main>

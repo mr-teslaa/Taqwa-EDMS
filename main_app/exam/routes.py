@@ -1,4 +1,5 @@
 from decimal import Subnormal
+from logging import RootLogger
 from main_app import db
 
 #   importing basic flask module
@@ -72,14 +73,33 @@ def exam_subject_delete(exam_id):
 #   ADD STUDENT RESULT
 @exam.route('/exam/student/result/', methods=['GET', 'POST'])
 def addexam_student_result():
+    # THIS METHOD IS NOT WORKING.
+    # GOT A NEW IDEA
+
+    # WE SHOULD ADD INDIVIDUAL SUBJECT MARK WITH STUDENT NAME AND ROLL 
+    # AND SAVE INTO DATABASE, THEN WE CAN QUERY THEM BY SUBJECT AND MAKE A INDIVIDUAL STUDENT MARKSHEET 
+
+
+
     form = AddStudentResultForm()
     form.exam.choices = [(exam.id, exam.exam_name) for exam in Exam.query.all()]
     form.exam_subject_name.choices = [(examsubj.id, examsubj.subject) for examsubj in ExamSubject.query.all()]
     exam_subject = ExamSubject.query.all()
     totalsubject=7
     if form.validate_on_submit():
-        print(form.exam_subject_name.data)
-        print("==== yes =====")
+        print(f"Student name: {form.student_name.data}")
+        print(f"Student Roll: {form.student_roll.data}")
+        print(f"Student Class: {form.student_class.data}")
+        print(f"Exam: {form.exam.data}")
+        for subject in range(totalsubject):
+            print(f"Exam subject name: {form.exam_subject_name.data}")
+            print(f"Subject full marks: {form.full_marks.data}")
+            print(f"Subject grade: {form.grade.data}")
+            print(f"Subject Achive mark: {form.achive_mark.data}")
+        print(f"Total mark: {form.total_marks.data}")
+        print(f"Total achive mark: {form.total_achive_mark.data}")
+        print(f"Total achive grade: {form.total_achive_grade.data}")
+        print(f"Result note: {form.result_note.data}")
         # single_sub_array = []
         # for subject in range(totalsubject):
         #     subjectobj = {}
