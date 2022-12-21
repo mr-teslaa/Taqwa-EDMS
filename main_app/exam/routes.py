@@ -1,7 +1,3 @@
-from decimal import Subnormal
-from logging import RootLogger
-from main_app import db
-
 #   importing basic flask module
 from flask import render_template
 from flask import Blueprint
@@ -11,12 +7,15 @@ from flask import flash
 from flask import url_for
 from flask import jsonify
 
+from main_app import db
+
 from main_app.exam.forms import AddExamForm
 from main_app.exam.forms import AddExamSubjectForm 
 from main_app.exam.forms import AddStudentResultForm 
 
 from main_app.models import Exam
 from main_app.models import ExamSubject
+from main_app.models import Student
 
 #   initializing blueprint
 exam = Blueprint('exam', __name__)
@@ -118,9 +117,7 @@ def addexam_student_result():
 @exam.route('/exam/subject/marks/<int:subject_id>/', methods=['GET', 'POST'])
 def get_total_marks(subject_id):
     subjects = ExamSubject.query.filter_by(id=subject_id).all()
-
     subjectArray = []
-    
     for subject in subjects:
         subobj = {}
         subobj['id'] = subject.id
@@ -130,3 +127,11 @@ def get_total_marks(subject_id):
         subjectArray.append(subobj)
 
     return jsonify({'subjects': subjectArray})
+
+# ADD EXAM SUBJECT WISE RESULT
+@exam.route('/exam/<int:exam_id>/<string:classname>/<string:subjectname>/result/create/', methods=['GET', 'POST'])
+def addexam_subject_result(exam_id, classname, subjectname):
+    exam = Exam.query.filter_by(id=exam_id).first()
+    examsubject = ExamSubject.query.filter_by(subject=subjectname).first()
+    students = Student.query.filter_by(classname=classname).all()
+    return render_template('exam/addexamSubjectResult.html', classname=classname, students=students, examsubject=examsubject, exam=exam)

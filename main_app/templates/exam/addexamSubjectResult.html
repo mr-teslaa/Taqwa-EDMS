@@ -1,0 +1,207 @@
+{% extends 'layout.html' %}
+
+<!--  -->
+{% block body %}
+<main>
+    <div class="container my-3">
+        <div class="d-flex">
+            <h1>Exam Center - Subjectwise Result</h1>
+        </div>
+
+        <div class="table__container mt-5">
+            <h2 class="text-center">{{ exam.exam_name }}</h2>
+            <div class="row text-center">
+                <div class="col-sm-6">
+                    <h4>Subject:
+                        <span class="text-uppercase">{{ examsubject.subject }}</span>
+                    </h4>
+                </div>
+                <div class="col-sm-6">
+                    <h4>Class:
+                        <span class="text-uppercase">{{ classname }}</span>
+                    </h4>
+                </div>
+            </div>
+
+            <div class="table-responsive p-3">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th width="10%">Roll</th>
+                            <th>StudentName</th>
+                            <th width="15%">Full Marks</th>
+                            <th width="10%">Marks</th>
+                            <th width="10%" class="text-center">Grade</th>
+                            <th width="10%">GPA</th>
+                        </tr>
+                        {% for student in students %}
+                        <tr class="exam__container">
+                            <td>{{ student.roll }}</td>
+                            <td>{{ student.name }}</td>
+                            <td class="full__marks">{{ examsubject.full_marks }}</>
+                            <td contenteditable class="form-control achive__marks"></td>
+                            <td class="text-center achive_grade">--</td>
+                            <td class="achive_gpa">0.00</td>
+                        </tr>
+                        {% endfor %}
+                    </thead>
+                </table>
+
+                <button class="btn btn-sm btn-warning" id="calculate">Calculate Grade</button>
+                <button class="btn btn-sm btn-dark">Submit Rresult</button>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+<script>
+    // calculate the grade
+    const calcGRADE = (grades) => {
+        if (grades == 5) {
+            return "A+";
+        } else if (grades >= 4 && grades < 5) {
+            return "A";
+        } else if (grades >= 3.5 && grades < 4) {
+            return "A-";
+        } else if (grades >= 3 && grades < 3.5) {
+            return "B";
+        } else if (grades >= 2 && grades < 3) {
+            return "C";
+        } else if (grades >= 1 && grades < 2) {
+            return "D";
+        } else {
+            return "F";
+        }
+    };
+
+    // CALCULATE GPA - 100
+    const gpaCalc = (number) => {
+        if (number > 79) {
+            return 5.0;
+        } else if (number > 69 && number < 80) {
+            return 4.0;
+        } else if (number > 59 && number < 70) {
+            return 3.5;
+        } else if (number > 49 && number < 60) {
+            return 3.0;
+        } else if (number > 39 && number < 50) {
+            return 2.0;
+        } else if (number >= 32 && number < 40) {
+            return 1.0;
+        } else if (number >= 0 && number < 32) {
+            return 0;
+        } else {
+            alert(
+                "Please check the number again. something went wrong!"
+            );
+        }
+    }
+
+
+    // for 50 marks
+    const gpaClC50 = (number) => {
+        if (number >= 40 && number <= 50) {
+            return 5.0;
+        } else if (number >= 36 && number <= 39) {
+            return 4.0;
+        } else if (number >= 30 && number <= 35) {
+            return 3.5;
+        } else if (number >= 25 && number <= 29) {
+            return 3.0;
+        } else if (number >= 20 && number <= 24) {
+            return 2.0;
+        } else if (number >= 16 && number <= 19) {
+            return 1.0;
+        } else if (number >= 0 && number <= 15) {
+            return 0;
+        }
+    };
+
+
+    // CALCULATE GPA - 25
+    const gpaCalc25 = (number) => {
+        if (number >= 20 && number <= 25) {
+            return 5.0;
+        } else if (number >= 18 && number < 20) {
+            return 4.0;
+        } else if (number >= 15 && number < 18) {
+            return 3.5;
+        } else if (number >= 13 && number < 15) {
+            return 3.0;
+        } else if (number >= 10 && number < 13) {
+            return 2.0;
+        } else if (number >= 8 && number < 10) {
+            return 1.0;
+        } else if (number == 0 || number < 8) {
+            return 0;
+        } else {
+            alert(
+                "Please check the number again. something went wrong!"
+            );
+        }
+    }
+
+
+    let totalmarks = 0;
+    let gpa;
+    let grade;
+    const allFullMarks = document.querySelectorAll('.full__marks');
+    let calculate = document.querySelector('#calculate');
+
+    // FETCH DATA OF SUBJECT 
+    let exam__container = document.querySelectorAll('.exam__container');
+
+    const each_container = (element) => {
+        let current_fullmarks = element.querySelector('.full__marks').innerText;
+        let current_achive_gpa = element.querySelector('.achive_gpa');
+        let current_achive_grade = element.querySelector('.achive_grade');
+        let current_achive_mark = element.querySelector('.achive__marks').innerText;
+
+        if (current_fullmarks != false) {
+
+            // CHECKING IF THE FULL MARK OF THAT SUBJECT IS 50 OR 100 
+            // SO THAT WE CAN USE DIFFERENT GPA MODEL FOR THEM
+            if (current_fullmarks == 50) {
+                if (current_achive_mark != false) {
+                    gpa = gpaClC50(parseFloat(current_achive_mark));
+                    grade = calcGRADE(gpa);
+
+                    current_achive_gpa.innerText = `${gpa}`;
+                    current_achive_grade.innerText = `${grade}`;
+                }
+
+            } else if (current_fullmarks == 100) {
+                if (current_achive_mark != false) {
+                    gpa = gpaCalc(parseFloat(current_achive_mark));
+                    grade = calcGRADE(gpa);
+
+                    current_achive_gpa.innerText = `${gpa}`;
+                    current_achive_grade.innerText = `${grade}`;
+                }
+
+            } else if (current_fullmarks == 25) {
+                if (current_achive_mark != false) {
+                    gpa = gpaCalc25(parseFloat(current_achive_mark));
+                    grade = calcGRADE(gpa);
+
+                    current_achive_gpa.innerText = `${gpa}`;
+                    current_achive_grade.innerText = `${grade}`;
+                }
+            } else alert('something went wrong with gpa calculate system. reload the page and reenter the marks');
+        }
+    }
+
+    exam__container.forEach(element => {
+        let current_fullmarks = element.querySelector('.full__marks');
+        let current_achive_gpa = element.querySelector('.achive_gpa');
+        let current_achive_mark = element.querySelector('.achive__marks');
+
+        calculate.addEventListener('click', () => {
+            if (current_achive_mark == false) {
+                current_achive_gpa.value = '0'
+            } else each_container(element);
+        });
+    });
+</script>
+{% endblock %}

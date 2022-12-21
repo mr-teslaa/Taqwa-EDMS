@@ -22,7 +22,6 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(120), unique=True, nullable=False)
     image_file = db.Column(db.String(20), nullable=False, default='default.jpg')
     password = db.Column(db.String(60), nullable=False)
-    notice = db.relationship('Notice', backref='author', lazy=True)
 
     #   generating the password reseting roken
     def get_reset_token(self, expires_sec=1800):
@@ -40,21 +39,34 @@ class User(db.Model, UserMixin):
         return User.query.get(user_id)
 
 
-class Notice(db.Model):
+class Student(db.Model):
+    __tablename__ = "student"
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(100), nullable=False)
-    date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    content = db.Column(db.Text, nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-        
+    name = db.Column(db.String())
+    classname = db.Column(db.String())
+    roll = db.Column(db.String())
+    address = db.Column(db.String())
+    result = db.relationship('Result', backref='student_result', lazy=True)
+
+
+class Result(db.Model):
+    __tablename__ = "result"
+    id = db.Column(db.Integer, primary_key=True)
+    subjectname = db.Column(db.String())
+    marks = db.Column(db.String())
+    gpa = db.Column(db.String())
+    grade = db.Column(db.String())
+    exam_id = db.Column(db.Integer, db.ForeignKey('exam.id'), nullable=False)
+    student_id = db.Column(db.Integer, db.ForeignKey('student.id'), nullable=False)
+
 
 class Exam(db.Model):
     __tablename__ = 'exam'
     id = db.Column(db.Integer, primary_key=True)
     exam_name = db.Column(db.String(100), nullable=False)
     date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    exam_subject = db.relationship('ExamSubject', backref='exam_name', lazy=True)
-    student_exam_subject = db.relationship('StudentResult', backref='exam_name', lazy=True)
+    exam_subject = db.relationship('ExamSubject', backref='exam_subject', lazy=True)
+    result = db.relationship('Result', backref='result', lazy=True)
 
 
 class ExamSubject(db.Model):
@@ -65,19 +77,3 @@ class ExamSubject(db.Model):
     pass_marks = db.Column(db.String(100), nullable=False)
     date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     exam_id = db.Column(db.Integer, db.ForeignKey('exam.id'), nullable=False)
-    student_exam_subject = db.relationship('StudentResult', backref='exam_subject', lazy=True)
-
-
-class StudentResult(db.Model):
-    __tablename__ = 'student_result'
-    id = db.Column(db.Integer, primary_key=True)
-    student_name = db.Column(db.String(100), nullable=False)
-    student_roll = db.Column(db.String(100), nullable=False)
-    student_class = db.Column(db.String(100), nullable=False)
-    student_mark_details = db.Column(db.String(500), nullable=False)
-    subject_total_marks = db.Column(db.String(100), nullable=False)
-    total_achive_mark = db.Column(db.String(100), nullable=False, default=datetime.utcnow)
-    total_achive_grade = db.Column(db.String(100), nullable=False)
-    date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    exam_id = db.Column(db.Integer, db.ForeignKey('exam.id'), nullable=False)
-    exam_subject_id = db.Column(db.Integer, db.ForeignKey('exam_subject.id'), nullable=False)

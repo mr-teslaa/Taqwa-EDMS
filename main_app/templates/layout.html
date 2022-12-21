@@ -13,48 +13,45 @@
 
 <html lang="en">
 
-{% block help_developer %}
-{% endblock %}
-
-<head>
-
-    <!-- meta section -->
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="author" content="Emon Hossain">
-    {% if title %}
-        <title> {{ title }} - Junior School and College </title>
-    {% else %}
-        <title> Junior School and College </title>
-    {% endif %}
-
-    <!-- link section -->
-
-    <link rel="stylesheet" href=" {{ url_for('static', filename='bootstrap.css') }} " />
-    <link
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
-        rel="stylesheet"
-    />
-    <link rel="stylesheet" href=" {{  url_for('static', filename='style.css')  }} " />
-
-    {% block additional_link %}
+    {% block help_developer %}
     {% endblock %}
 
-</head>
+    <head>
+
+        <!-- meta section -->
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="author" content="Emon Hossain">
+        {% if title %}
+        <title> {{ title }} - Junior School and College </title>
+        {% else %}
+        <title> Junior School and College </title>
+        {% endif %}
+
+        <!-- link section -->
+
+        <link rel="stylesheet" href=" {{ url_for('static', filename='bootstrap.css') }} " />
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" />
+        <!-- <link rel="stylesheet" href=" {{  url_for('static', filename='style.css')  }} " /> -->
+
+        {% block additional_link %}
+        {% endblock %}
+
+    </head>
 
 
 
-<body>
+    <body>
 
-{% block body %}
+        {% block body %}
 
-{% endblock %}
+        {% endblock %}
 
-    <!-- scripts for bootstrap -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- scripts for bootstrap -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 
-</body>
+    </body>
 
 
 

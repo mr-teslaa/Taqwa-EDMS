@@ -5,12 +5,12 @@
 <main>
     <div class="container my-3">
         <div class="d-flex">
-            <h1>Exam Center - Subject</h1>
+            <h1>All Students</h1>
 
             <span class="align-self-center ms-3">
                 <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal"
                     data-bs-target="#addExamModal">
-                    Add new Subject
+                    Add new Student
                 </button>
             </span>
         </div>
@@ -31,28 +31,21 @@
                         <div class="modal-body">
                             {{ form.hidden_tag() }}
                             <div class="mb-3">
-                                {{ form.exam_subject_name(
+                                {{ form.student_name(
                                     class="form-control",
-                                    placeholder="Exam Subject"
+                                    placeholder="Student Name"
                                 ) }}
                             </div>
 
                             <div class="mb-3">
-                                {{ form.full_marks(
+                                {{ form.student_roll(
                                     class="form-control",
-                                    placeholder="Full Marks"
+                                    placeholder="Student Roll"
                                 ) }}
                             </div>
 
                             <div class="mb-3">
-                                {{ form.pass_marks(
-                                    class="form-control",
-                                    placeholder="Pass Marks"
-                                ) }}
-                            </div>
-
-                            <div class="mb-3">
-                                {{ form.exam(
+                                {{ form.student_class(
                                     class="form-select"
                                 ) }}
                             </div>
@@ -77,23 +70,21 @@
                 <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">Exam Subject</th>
-                        <th scope="col">Full Marks</th>
-                        <th scope="col">Pass Marks</th>
-                        <th scope="col">Exam Name</th>
+                        <th scope="col">Student Name</th>
+                        <th scope="col">Roll</th>
+                        <th scope="col">Class</th>
                         <th scope="col">Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for exam in exam_subject %}
+                    {% for student in students %}
                     <tr>
                         <th scope="row">1</th>
-                        <td class="text-capitalize">{{ exam.subject }}</td>
-                        <td>{{ exam.full_marks }}</td>
-                        <td>{{ exam.pass_marks }}</td>
-                        <td>{{ exam.exam_name }}</td>
+                        <td class="text-capitalize">{{ student.name }}</td>
+                        <td>{{ student.roll }}</td>
+                        <td class="text-uppercase">{{ student.classname }}</td>
                         <td>
-                            <form action="{{ url_for('exam.exam_subject_delete', exam_id=exam.id) }}" method="POST">
+                            <form action="{{ url_for('student.student_delete', student_id=student.id) }}" method="POST">
                                 <button type="submit" class="btn btn-sm btn-danger">
                                     Delete
                                 </button>

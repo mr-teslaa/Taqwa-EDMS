@@ -34,8 +34,10 @@ def create_app(config_class=Config):
     from main_app.users.routes import users
     from main_app.main.routes import main
     from main_app.exam.routes import exam
+    from main_app.student.routes import student
     app.register_blueprint(users)
     app.register_blueprint(main)
     app.register_blueprint(exam)
+    app.register_blueprint(student)
 
     return app

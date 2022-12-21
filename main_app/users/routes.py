@@ -15,7 +15,6 @@ from flask_login import login_required
 from main_app import db
 from main_app import bcrypt    #password hash generator
 from main_app.models import User
-from main_app.models import Notice
 
 from main_app.users.forms import AdmissionForm
 from main_app.users.forms import LoginForm
