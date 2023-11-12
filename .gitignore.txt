@@ -1,2 +1,7 @@
-__pycache__
+*__pycache__
 .idea/
+instance/
+venv
+*.env
+env
+*.db

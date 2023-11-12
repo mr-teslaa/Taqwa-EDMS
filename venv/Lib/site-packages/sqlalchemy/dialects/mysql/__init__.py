@@ -1,19 +1,21 @@
 # mysql/__init__.py
-# Copyright (C) 2005-2020 the SQLAlchemy authors and contributors
+# Copyright (C) 2005-2023 the SQLAlchemy authors and contributors
 # <see AUTHORS file>
 #
 # This module is part of SQLAlchemy and is released under
-# the MIT License: http://www.opensource.org/licenses/mit-license.php
+# the MIT License: https://www.opensource.org/licenses/mit-license.php
+# mypy: ignore-errors
 
+
+from . import aiomysql  # noqa
+from . import asyncmy  # noqa
 from . import base  # noqa
 from . import cymysql  # noqa
-from . import gaerdbms  # noqa
+from . import mariadbconnector  # noqa
 from . import mysqlconnector  # noqa
 from . import mysqldb  # noqa
-from . import oursql  # noqa
 from . import pymysql  # noqa
 from . import pyodbc  # noqa
-from . import zxjdbc  # noqa
 from .base import BIGINT
 from .base import BINARY
 from .base import BIT
@@ -50,11 +52,11 @@ from .base import VARCHAR
 from .base import YEAR
 from .dml import Insert
 from .dml import insert
-
+from .expression import match
+from ...util import compat
 
 # default dialect
 base.dialect = dialect = mysqldb.dialect
-
 
 __all__ = (
     "BIGINT",
@@ -68,7 +70,6 @@ __all__ = (
     "DECIMAL",
     "DOUBLE",
     "ENUM",
-    "DECIMAL",
     "FLOAT",
     "INTEGER",
     "INTEGER",
@@ -96,4 +97,5 @@ __all__ = (
     "dialect",
     "insert",
     "Insert",
+    "match",
 )

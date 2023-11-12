@@ -17,11 +17,15 @@
 
 """DNS Rdata Types."""
 
+from typing import Dict
+
 import dns.enum
 import dns.exception
 
+
 class RdataType(dns.enum.IntEnum):
     """DNS Rdata Type"""
+
     TYPE0 = 0
     NONE = 0
     A = 1
@@ -72,14 +76,22 @@ class RdataType(dns.enum.IntEnum):
     NSEC3 = 50
     NSEC3PARAM = 51
     TLSA = 52
+    SMIMEA = 53
     HIP = 55
     NINFO = 56
     CDS = 59
     CDNSKEY = 60
     OPENPGPKEY = 61
     CSYNC = 62
+    ZONEMD = 63
+    SVCB = 64
+    HTTPS = 65
     SPF = 99
     UNSPEC = 103
+    NID = 104
+    L32 = 105
+    L64 = 106
+    LP = 107
     EUI48 = 108
     EUI64 = 109
     TKEY = 249
@@ -92,7 +104,7 @@ class RdataType(dns.enum.IntEnum):
     URI = 256
     CAA = 257
     AVC = 258
-    AMTRELAY = 259
+    AMTRELAY = 260
     TA = 32768
     DLV = 32769
 
@@ -109,25 +121,46 @@ class RdataType(dns.enum.IntEnum):
         return "TYPE"
 
     @classmethod
+    def _extra_from_text(cls, text):
+        if text.find("-") >= 0:
+            try:
+                return cls[text.replace("-", "_")]
+            except KeyError:
+                pass
+        return _registered_by_text.get(text)
+
+    @classmethod
+    def _extra_to_text(cls, value, current_text):
+        if current_text is None:
+            return _registered_by_value.get(value)
+        if current_text.find("_") >= 0:
+            return current_text.replace("_", "-")
+        return current_text
+
+    @classmethod
     def _unknown_exception_class(cls):
         return UnknownRdatatype
 
-_registered_by_text = {}
-_registered_by_value = {}
 
-globals().update(RdataType.__members__)
+_registered_by_text: Dict[str, RdataType] = {}
+_registered_by_value: Dict[RdataType, str] = {}
 
 _metatypes = {RdataType.OPT}
 
-_singletons = {RdataType.SOA, RdataType.NXT, RdataType.DNAME,
-               RdataType.NSEC, RdataType.CNAME}
+_singletons = {
+    RdataType.SOA,
+    RdataType.NXT,
+    RdataType.DNAME,
+    RdataType.NSEC,
+    RdataType.CNAME,
+}
 
 
 class UnknownRdatatype(dns.exception.DNSException):
     """DNS resource record type is unknown."""
 
 
-def from_text(text):
+def from_text(text: str) -> RdataType:
     """Convert text into a DNS rdata type value.
 
     The input text can be a defined DNS RR type mnemonic or
@@ -139,20 +172,13 @@ def from_text(text):
 
     Raises ``ValueError`` if the rdata type value is not >= 0 and <= 65535.
 
-    Returns an ``int``.
+    Returns a ``dns.rdatatype.RdataType``.
     """
 
-    text = text.upper().replace('-', '_')
-    try:
-        return RdataType.from_text(text)
-    except UnknownRdatatype:
-        registered_type = _registered_by_text.get(text)
-        if registered_type:
-            return registered_type
-        raise
+    return RdataType.from_text(text)
 
 
-def to_text(value):
+def to_text(value: RdataType) -> str:
     """Convert a DNS rdata type value to text.
 
     If the value has a known mnemonic, it will be used, otherwise the
@@ -163,18 +189,13 @@ def to_text(value):
     Returns a ``str``.
     """
 
-    text = RdataType.to_text(value)
-    if text.startswith("TYPE"):
-        registered_text = _registered_by_value.get(value)
-        if registered_text:
-            text = registered_text
-    return text.replace('_', '-')
+    return RdataType.to_text(value)
 
 
-def is_metatype(rdtype):
+def is_metatype(rdtype: RdataType) -> bool:
     """True if the specified type is a metatype.
 
-    *rdtype* is an ``int``.
+    *rdtype* is a ``dns.rdatatype.RdataType``.
 
     The currently defined metatypes are TKEY, TSIG, IXFR, AXFR, MAILA,
     MAILB, ANY, and OPT.
@@ -185,7 +206,7 @@ def is_metatype(rdtype):
     return (256 > rdtype >= 128) or rdtype in _metatypes
 
 
-def is_singleton(rdtype):
+def is_singleton(rdtype: RdataType) -> bool:
     """Is the specified type a singleton type?
 
     Singleton types can only have a single rdata in an rdataset, or a single
@@ -203,11 +224,14 @@ def is_singleton(rdtype):
         return True
     return False
 
+
 # pylint: disable=redefined-outer-name
-def register_type(rdtype, rdtype_text, is_singleton=False):
+def register_type(
+    rdtype: RdataType, rdtype_text: str, is_singleton: bool = False
+) -> None:
     """Dynamically register an rdatatype.
 
-    *rdtype*, an ``int``, the rdatatype to register.
+    *rdtype*, a ``dns.rdatatype.RdataType``, the rdatatype to register.
 
     *rdtype_text*, a ``str``, the textual form of the rdatatype.
 
@@ -219,3 +243,90 @@ def register_type(rdtype, rdtype_text, is_singleton=False):
     _registered_by_value[rdtype] = rdtype_text
     if is_singleton:
         _singletons.add(rdtype)
+
+
+### BEGIN generated RdataType constants
+
+TYPE0 = RdataType.TYPE0
+NONE = RdataType.NONE
+A = RdataType.A
+NS = RdataType.NS
+MD = RdataType.MD
+MF = RdataType.MF
+CNAME = RdataType.CNAME
+SOA = RdataType.SOA
+MB = RdataType.MB
+MG = RdataType.MG
+MR = RdataType.MR
+NULL = RdataType.NULL
+WKS = RdataType.WKS
+PTR = RdataType.PTR
+HINFO = RdataType.HINFO
+MINFO = RdataType.MINFO
+MX = RdataType.MX
+TXT = RdataType.TXT
+RP = RdataType.RP
+AFSDB = RdataType.AFSDB
+X25 = RdataType.X25
+ISDN = RdataType.ISDN
+RT = RdataType.RT
+NSAP = RdataType.NSAP
+NSAP_PTR = RdataType.NSAP_PTR
+SIG = RdataType.SIG
+KEY = RdataType.KEY
+PX = RdataType.PX
+GPOS = RdataType.GPOS
+AAAA = RdataType.AAAA
+LOC = RdataType.LOC
+NXT = RdataType.NXT
+SRV = RdataType.SRV
+NAPTR = RdataType.NAPTR
+KX = RdataType.KX
+CERT = RdataType.CERT
+A6 = RdataType.A6
+DNAME = RdataType.DNAME
+OPT = RdataType.OPT
+APL = RdataType.APL
+DS = RdataType.DS
+SSHFP = RdataType.SSHFP
+IPSECKEY = RdataType.IPSECKEY
+RRSIG = RdataType.RRSIG
+NSEC = RdataType.NSEC
+DNSKEY = RdataType.DNSKEY
+DHCID = RdataType.DHCID
+NSEC3 = RdataType.NSEC3
+NSEC3PARAM = RdataType.NSEC3PARAM
+TLSA = RdataType.TLSA
+SMIMEA = RdataType.SMIMEA
+HIP = RdataType.HIP
+NINFO = RdataType.NINFO
+CDS = RdataType.CDS
+CDNSKEY = RdataType.CDNSKEY
+OPENPGPKEY = RdataType.OPENPGPKEY
+CSYNC = RdataType.CSYNC
+ZONEMD = RdataType.ZONEMD
+SVCB = RdataType.SVCB
+HTTPS = RdataType.HTTPS
+SPF = RdataType.SPF
+UNSPEC = RdataType.UNSPEC
+NID = RdataType.NID
+L32 = RdataType.L32
+L64 = RdataType.L64
+LP = RdataType.LP
+EUI48 = RdataType.EUI48
+EUI64 = RdataType.EUI64
+TKEY = RdataType.TKEY
+TSIG = RdataType.TSIG
+IXFR = RdataType.IXFR
+AXFR = RdataType.AXFR
+MAILB = RdataType.MAILB
+MAILA = RdataType.MAILA
+ANY = RdataType.ANY
+URI = RdataType.URI
+CAA = RdataType.CAA
+AVC = RdataType.AVC
+AMTRELAY = RdataType.AMTRELAY
+TA = RdataType.TA
+DLV = RdataType.DLV
+
+### END generated RdataType constants

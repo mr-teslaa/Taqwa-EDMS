@@ -18,9 +18,12 @@
 import base64
 
 import dns.exception
+import dns.immutable
 import dns.rdata
 import dns.tokenizer
 
+
+@dns.immutable.immutable
 class OPENPGPKEY(dns.rdata.Rdata):
 
     """OPENPGPKEY record"""
@@ -29,14 +32,15 @@ class OPENPGPKEY(dns.rdata.Rdata):
 
     def __init__(self, rdclass, rdtype, key):
         super().__init__(rdclass, rdtype)
-        object.__setattr__(self, 'key', key)
+        self.key = self._as_bytes(key)
 
     def to_text(self, origin=None, relativize=True, **kw):
-        return dns.rdata._base64ify(self.key)
+        return dns.rdata._base64ify(self.key, chunksize=None, **kw)
 
     @classmethod
-    def from_text(cls, rdclass, rdtype, tok, origin=None, relativize=True,
-                  relativize_to=None):
+    def from_text(
+        cls, rdclass, rdtype, tok, origin=None, relativize=True, relativize_to=None
+    ):
         b64 = tok.concatenate_remaining_identifiers().encode()
         key = base64.b64decode(b64)
         return cls(rdclass, rdtype, key)

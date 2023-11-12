@@ -1,9 +1,11 @@
 # testing/profiling.py
-# Copyright (C) 2005-2020 the SQLAlchemy authors and contributors
+# Copyright (C) 2005-2023 the SQLAlchemy authors and contributors
 # <see AUTHORS file>
 #
 # This module is part of SQLAlchemy and is released under
-# the MIT License: http://www.opensource.org/licenses/mit-license.php
+# the MIT License: https://www.opensource.org/licenses/mit-license.php
+# mypy: ignore-errors
+
 
 """Profiling support for unit and performance tests.
 
@@ -12,16 +14,19 @@ in a more fine-grained way than nose's profiling plugin.
 
 """
 
+from __future__ import annotations
+
 import collections
 import contextlib
 import os
 import platform
 import pstats
+import re
 import sys
 
 from . import config
 from .util import gc_collect
-from ..util import update_wrapper
+from ..util import has_compiled_ext
 
 
 try:
@@ -29,21 +34,41 @@ try:
 except ImportError:
     cProfile = None
 
-_current_test = None
-
-# ProfileStatsFile instance, set up in plugin_base
 _profile_stats = None
+"""global ProfileStatsFileInstance.
+
+plugin_base assigns this at the start of all tests.
+
+"""
 
 
-class ProfileStatsFile(object):
+_current_test = None
+"""String id of current test.
+
+plugin_base assigns this at the start of each test using
+_start_current_test.
+
+"""
+
+
+def _start_current_test(id_):
+    global _current_test
+    _current_test = id_
+
+    if _profile_stats.force_write:
+        _profile_stats.reset_count()
+
+
+class ProfileStatsFile:
     """Store per-platform/fn profiling results in a file.
 
-    We're still targeting Py2.5, 2.4 on 0.7 with no dependencies,
-    so no json lib :(  need to roll something silly
+    There was no json module available when this was written, but now
+    the file format which is very deterministically line oriented is kind of
+    handy in any case for diffs and merges.
 
     """
 
-    def __init__(self, filename):
+    def __init__(self, filename, sort="cumulative", dump=None):
         self.force_write = (
             config.options is not None and config.options.force_write_profiles
         )
@@ -55,6 +80,8 @@ class ProfileStatsFile(object):
         self.data = collections.defaultdict(
             lambda: collections.defaultdict(dict)
         )
+        self.dump = dump
+        self.sort = sort
         self._read()
         if self.write:
             # rewrite for the case where features changed,
@@ -63,7 +90,6 @@ class ProfileStatsFile(object):
 
     @property
     def platform_key(self):
-
         dbapi_key = config.db.name + "_" + config.db.driver
 
         if config.db.name == "sqlite" and config.db.dialect._is_url_file_db(
@@ -82,12 +108,8 @@ class ProfileStatsFile(object):
             dbapi_key,
         ]
 
-        platform_tokens.append(
-            "nativeunicode"
-            if config.db.dialect.convert_unicode
-            else "dbapiunicode"
-        )
-        _has_cext = config.requirements._has_cextensions()
+        platform_tokens.append("dbapiunicode")
+        _has_cext = has_compiled_ext()
         platform_tokens.append(_has_cext and "cextensions" or "nocextensions")
         return "_".join(platform_tokens)
 
@@ -124,6 +146,19 @@ class ProfileStatsFile(object):
         per_platform["current_count"] += 1
         return result
 
+    def reset_count(self):
+        test_key = _current_test
+        # since self.data is a defaultdict, don't access a key
+        # if we don't know it's there first.
+        if test_key not in self.data:
+            return
+        per_fn = self.data[test_key]
+        if self.platform_key not in per_fn:
+            return
+        per_platform = per_fn[self.platform_key]
+        if "counts" in per_platform:
+            per_platform["counts"][:] = []
+
     def replace(self, callcount):
         test_key = _current_test
         per_fn = self.data[test_key]
@@ -159,7 +194,7 @@ class ProfileStatsFile(object):
     def _read(self):
         try:
             profile_f = open(self.fname)
-        except IOError:
+        except OSError:
             return
         for lineno, line in enumerate(profile_f):
             line = line.strip()
@@ -176,11 +211,10 @@ class ProfileStatsFile(object):
         profile_f.close()
 
     def _write(self):
-        print(("Writing profile file %s" % self.fname))
+        print("Writing profile file %s" % self.fname)
         profile_f = open(self.fname, "w")
         profile_f.write(self._header())
         for test_key in sorted(self.data):
-
             per_fn = self.data[test_key]
             profile_f.write("\n# TEST: %s\n\n" % test_key)
             for platform_key in sorted(per_fn):
@@ -201,19 +235,24 @@ def function_call_count(variance=0.05, times=1, warmup=0):
 
     """
 
-    def decorate(fn):
-        def wrap(*args, **kw):
-            for warm in range(warmup):
-                fn(*args, **kw)
-            timerange = range(times)
-            with count_functions(variance=variance):
-                for time in timerange:
-                    rv = fn(*args, **kw)
-                return rv
+    # use signature-rewriting decorator function so that pytest fixtures
+    # still work on py27.  In Py3, update_wrapper() alone is good enough,
+    # likely due to the introduction of __signature__.
 
-        return update_wrapper(wrap, fn)
+    from sqlalchemy.util import decorator
 
-    return decorate
+    @decorator
+    def wrap(fn, *args, **kw):
+        for warm in range(warmup):
+            fn(*args, **kw)
+
+        timerange = range(times)
+        with count_functions(variance=variance):
+            for time in timerange:
+                rv = fn(*args, **kw)
+            return rv
+
+    return wrap
 
 
 @contextlib.contextmanager
@@ -238,7 +277,7 @@ def count_functions(variance=0.05):
     # ended = time.time()
     pr.disable()
 
-    # s = compat.StringIO()
+    # s = StringIO()
     stats = pstats.Stats(pr, stream=sys.stdout)
 
     # timespent = ended - began
@@ -251,15 +290,23 @@ def count_functions(variance=0.05):
     else:
         line_no, expected_count = expected
 
-    print(("Pstats calls: %d Expected %s" % (callcount, expected_count)))
-    stats.sort_stats("cumulative")
+    print("Pstats calls: %d Expected %s" % (callcount, expected_count))
+    stats.sort_stats(*re.split(r"[, ]", _profile_stats.sort))
     stats.print_stats()
-
-    if expected_count:
+    if _profile_stats.dump:
+        base, ext = os.path.splitext(_profile_stats.dump)
+        test_name = _current_test.split(".")[-1]
+        dumpfile = "%s_%s%s" % (base, test_name, ext or ".profile")
+        stats.dump_stats(dumpfile)
+        print("Dumped stats to file %s" % dumpfile)
+    # stats.print_callers()
+    if _profile_stats.force_write:
+        _profile_stats.replace(callcount)
+    elif expected_count:
         deviance = int(callcount * variance)
         failed = abs(callcount - expected_count) > deviance
 
-        if failed or _profile_stats.force_write:
+        if failed:
             if _profile_stats.write:
                 _profile_stats.replace(callcount)
             else:

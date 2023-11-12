@@ -1,9 +1,10 @@
 # ext/index.py
-# Copyright (C) 2005-2020 the SQLAlchemy authors and contributors
+# Copyright (C) 2005-2023 the SQLAlchemy authors and contributors
 # <see AUTHORS file>
 #
 # This module is part of SQLAlchemy and is released under
-# the MIT License: http://www.opensource.org/licenses/mit-license.php
+# the MIT License: https://www.opensource.org/licenses/mit-license.php
+# mypy: ignore-errors
 
 """Define attributes on ORM-mapped classes that have "index" attributes for
 columns with :class:`_types.Indexable` types.
@@ -20,9 +21,6 @@ The :mod:`~sqlalchemy.ext.indexable` extension provides
 :class:`_schema.Column`-like interface for any element of an
 :class:`_types.Indexable` typed column. In simple cases, it can be
 treated as a :class:`_schema.Column` - mapped attribute.
-
-
-.. versionadded:: 1.1
 
 Synopsis
 ========
@@ -221,10 +219,7 @@ The above query will render::
     WHERE CAST(person.data ->> %(data_1)s AS INTEGER) < %(param_1)s
 
 """  # noqa
-from __future__ import absolute_import
-
 from .. import inspect
-from .. import util
 from ..ext.hybrid import hybrid_property
 from ..orm.attributes import flag_modified
 
@@ -236,8 +231,6 @@ class index_property(hybrid_property):  # noqa
     """A property generator. The generated property describes an object
     attribute that corresponds to an :class:`_types.Indexable`
     column.
-
-    .. versionadded:: 1.1
 
     .. seealso::
 
@@ -280,13 +273,9 @@ class index_property(hybrid_property):  # noqa
         """
 
         if mutable:
-            super(index_property, self).__init__(
-                self.fget, self.fset, self.fdel, self.expr
-            )
+            super().__init__(self.fget, self.fset, self.fdel, self.expr)
         else:
-            super(index_property, self).__init__(
-                self.fget, None, None, self.expr
-            )
+            super().__init__(self.fget, None, None, self.expr)
         self.attr_name = attr_name
         self.index = index
         self.default = default
@@ -304,7 +293,7 @@ class index_property(hybrid_property):  # noqa
 
     def _fget_default(self, err=None):
         if self.default == self._NO_DEFAULT_ARGUMENT:
-            util.raise_(AttributeError(self.attr_name), replace_context=err)
+            raise AttributeError(self.attr_name) from err
         else:
             return self.default
 
@@ -339,7 +328,7 @@ class index_property(hybrid_property):  # noqa
         try:
             del column_value[self.index]
         except KeyError as err:
-            util.raise_(AttributeError(self.attr_name), replace_context=err)
+            raise AttributeError(self.attr_name) from err
         else:
             setattr(instance, attr_name, column_value)
             flag_modified(instance, attr_name)

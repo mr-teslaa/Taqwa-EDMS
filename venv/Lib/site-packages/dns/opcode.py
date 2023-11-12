@@ -20,6 +20,7 @@
 import dns.enum
 import dns.exception
 
+
 class Opcode(dns.enum.IntEnum):
     #: Query
     QUERY = 0
@@ -40,14 +41,12 @@ class Opcode(dns.enum.IntEnum):
     def _unknown_exception_class(cls):
         return UnknownOpcode
 
-globals().update(Opcode.__members__)
-
 
 class UnknownOpcode(dns.exception.DNSException):
     """An DNS opcode is unknown."""
 
 
-def from_text(text):
+def from_text(text: str) -> Opcode:
     """Convert text into an opcode.
 
     *text*, a ``str``, the textual opcode
@@ -60,7 +59,7 @@ def from_text(text):
     return Opcode.from_text(text)
 
 
-def from_flags(flags):
+def from_flags(flags: int) -> Opcode:
     """Extract an opcode from DNS message flags.
 
     *flags*, an ``int``, the DNS flags.
@@ -68,10 +67,10 @@ def from_flags(flags):
     Returns an ``int``.
     """
 
-    return (flags & 0x7800) >> 11
+    return Opcode((flags & 0x7800) >> 11)
 
 
-def to_flags(value):
+def to_flags(value: Opcode) -> int:
     """Convert an opcode to a value suitable for ORing into DNS message
     flags.
 
@@ -83,7 +82,7 @@ def to_flags(value):
     return (value << 11) & 0x7800
 
 
-def to_text(value):
+def to_text(value: Opcode) -> str:
     """Convert an opcode to text.
 
     *value*, an ``int`` the opcode value,
@@ -96,7 +95,7 @@ def to_text(value):
     return Opcode.to_text(value)
 
 
-def is_update(flags):
+def is_update(flags: int) -> bool:
     """Is the opcode in flags UPDATE?
 
     *flags*, an ``int``, the DNS message flags.
@@ -105,3 +104,14 @@ def is_update(flags):
     """
 
     return from_flags(flags) == Opcode.UPDATE
+
+
+### BEGIN generated Opcode constants
+
+QUERY = Opcode.QUERY
+IQUERY = Opcode.IQUERY
+STATUS = Opcode.STATUS
+NOTIFY = Opcode.NOTIFY
+UPDATE = Opcode.UPDATE
+
+### END generated Opcode constants

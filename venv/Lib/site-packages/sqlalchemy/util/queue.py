@@ -1,9 +1,10 @@
 # util/queue.py
-# Copyright (C) 2005-2020 the SQLAlchemy authors and contributors
+# Copyright (C) 2005-2023 the SQLAlchemy authors and contributors
 # <see AUTHORS file>
 #
 # This module is part of SQLAlchemy and is released under
-# the MIT License: http://www.opensource.org/licenses/mit-license.php
+# the MIT License: https://www.opensource.org/licenses/mit-license.php
+# mypy: allow-untyped-defs, allow-untyped-calls
 
 """An adaptation of Py2.3/2.4's Queue module which supports reentrant
 behavior, using RLock instead of Lock for its mutex object.  The
@@ -17,13 +18,26 @@ producing a ``put()`` inside the ``get()`` and therefore a reentrant
 condition.
 
 """
+from __future__ import annotations
 
+import asyncio
 from collections import deque
+import threading
 from time import time as _time
+import typing
+from typing import Any
+from typing import Awaitable
+from typing import Deque
+from typing import Generic
+from typing import Optional
+from typing import TypeVar
 
-from .compat import threading
+from .concurrency import await_fallback
+from .concurrency import await_only
+from .langhelpers import memoized_property
 
 
+_T = TypeVar("_T", bound=Any)
 __all__ = ["Empty", "Full", "Queue"]
 
 
@@ -39,8 +53,41 @@ class Full(Exception):
     pass
 
 
-class Queue:
-    def __init__(self, maxsize=0, use_lifo=False):
+class QueueCommon(Generic[_T]):
+    maxsize: int
+    use_lifo: bool
+
+    def __init__(self, maxsize: int = 0, use_lifo: bool = False):
+        ...
+
+    def empty(self) -> bool:
+        raise NotImplementedError()
+
+    def full(self) -> bool:
+        raise NotImplementedError()
+
+    def qsize(self) -> int:
+        raise NotImplementedError()
+
+    def put_nowait(self, item: _T) -> None:
+        raise NotImplementedError()
+
+    def put(
+        self, item: _T, block: bool = True, timeout: Optional[float] = None
+    ) -> None:
+        raise NotImplementedError()
+
+    def get_nowait(self) -> _T:
+        raise NotImplementedError()
+
+    def get(self, block: bool = True, timeout: Optional[float] = None) -> _T:
+        raise NotImplementedError()
+
+
+class Queue(QueueCommon[_T]):
+    queue: Deque[_T]
+
+    def __init__(self, maxsize: int = 0, use_lifo: bool = False):
         """Initialize a queue object with a given maximum size.
 
         If `maxsize` is <= 0, the queue size is infinite.
@@ -63,33 +110,29 @@ class Queue:
         # If this queue uses LIFO or FIFO
         self.use_lifo = use_lifo
 
-    def qsize(self):
+    def qsize(self) -> int:
         """Return the approximate size of the queue (not reliable!)."""
 
-        self.mutex.acquire()
-        n = self._qsize()
-        self.mutex.release()
-        return n
+        with self.mutex:
+            return self._qsize()
 
-    def empty(self):
+    def empty(self) -> bool:
         """Return True if the queue is empty, False otherwise (not
         reliable!)."""
 
-        self.mutex.acquire()
-        n = self._empty()
-        self.mutex.release()
-        return n
+        with self.mutex:
+            return self._empty()
 
-    def full(self):
+    def full(self) -> bool:
         """Return True if the queue is full, False otherwise (not
         reliable!)."""
 
-        self.mutex.acquire()
-        n = self._full()
-        self.mutex.release()
-        return n
+        with self.mutex:
+            return self._full()
 
-    def put(self, item, block=True, timeout=None):
+    def put(
+        self, item: _T, block: bool = True, timeout: Optional[float] = None
+    ) -> None:
         """Put an item into the queue.
 
         If optional args `block` is True and `timeout` is None (the
@@ -102,8 +145,7 @@ class Queue:
         (`timeout` is ignored in that case).
         """
 
-        self.not_full.acquire()
-        try:
+        with self.not_full:
             if not block:
                 if self._full():
                     raise Full
@@ -121,10 +163,8 @@ class Queue:
                     self.not_full.wait(remaining)
             self._put(item)
             self.not_empty.notify()
-        finally:
-            self.not_full.release()
 
-    def put_nowait(self, item):
+    def put_nowait(self, item: _T) -> None:
         """Put an item into the queue without blocking.
 
         Only enqueue the item if a free slot is immediately available.
@@ -132,7 +172,7 @@ class Queue:
         """
         return self.put(item, False)
 
-    def get(self, block=True, timeout=None):
+    def get(self, block: bool = True, timeout: Optional[float] = None) -> _T:
         """Remove and return an item from the queue.
 
         If optional args `block` is True and `timeout` is None (the
@@ -142,9 +182,9 @@ class Queue:
         available within that time.  Otherwise (`block` is false),
         return an item if one is immediately available, else raise the
         ``Empty`` exception (`timeout` is ignored in that case).
+
         """
-        self.not_empty.acquire()
-        try:
+        with self.not_empty:
             if not block:
                 if self._empty():
                     raise Empty
@@ -163,10 +203,8 @@ class Queue:
             item = self._get()
             self.not_full.notify()
             return item
-        finally:
-            self.not_empty.release()
 
-    def get_nowait(self):
+    def get_nowait(self) -> _T:
         """Remove and return an item from the queue without blocking.
 
         Only get an item if one is immediately available. Otherwise
@@ -175,35 +213,112 @@ class Queue:
 
         return self.get(False)
 
-    # Override these methods to implement other queue organizations
-    # (e.g. stack or priority queue).
-    # These will only be called with appropriate locks held
-
-    # Initialize the queue representation
-    def _init(self, maxsize):
+    def _init(self, maxsize: int) -> None:
         self.maxsize = maxsize
         self.queue = deque()
 
-    def _qsize(self):
+    def _qsize(self) -> int:
         return len(self.queue)
 
-    # Check whether the queue is empty
-    def _empty(self):
+    def _empty(self) -> bool:
         return not self.queue
 
-    # Check whether the queue is full
-    def _full(self):
+    def _full(self) -> bool:
         return self.maxsize > 0 and len(self.queue) == self.maxsize
 
-    # Put a new item in the queue
-    def _put(self, item):
+    def _put(self, item: _T) -> None:
         self.queue.append(item)
 
-    # Get an item from the queue
-    def _get(self):
+    def _get(self) -> _T:
         if self.use_lifo:
             # LIFO
             return self.queue.pop()
         else:
             # FIFO
             return self.queue.popleft()
+
+
+class AsyncAdaptedQueue(QueueCommon[_T]):
+    if typing.TYPE_CHECKING:
+
+        @staticmethod
+        def await_(coroutine: Awaitable[Any]) -> _T:
+            ...
+
+    else:
+        await_ = staticmethod(await_only)
+
+    def __init__(self, maxsize: int = 0, use_lifo: bool = False):
+        self.use_lifo = use_lifo
+        self.maxsize = maxsize
+
+    def empty(self) -> bool:
+        return self._queue.empty()
+
+    def full(self):
+        return self._queue.full()
+
+    def qsize(self):
+        return self._queue.qsize()
+
+    @memoized_property
+    def _queue(self) -> asyncio.Queue[_T]:
+        # Delay creation of the queue until it is first used, to avoid
+        # binding it to a possibly wrong event loop.
+        # By delaying the creation of the pool we accommodate the common
+        # usage pattern of instantiating the engine at module level, where a
+        # different event loop is in present compared to when the application
+        # is actually run.
+
+        queue: asyncio.Queue[_T]
+
+        if self.use_lifo:
+            queue = asyncio.LifoQueue(maxsize=self.maxsize)
+        else:
+            queue = asyncio.Queue(maxsize=self.maxsize)
+        return queue
+
+    def put_nowait(self, item: _T) -> None:
+        try:
+            self._queue.put_nowait(item)
+        except asyncio.QueueFull as err:
+            raise Full() from err
+
+    def put(
+        self, item: _T, block: bool = True, timeout: Optional[float] = None
+    ) -> None:
+        if not block:
+            return self.put_nowait(item)
+
+        try:
+            if timeout is not None:
+                self.await_(asyncio.wait_for(self._queue.put(item), timeout))
+            else:
+                self.await_(self._queue.put(item))
+        except (asyncio.QueueFull, asyncio.TimeoutError) as err:
+            raise Full() from err
+
+    def get_nowait(self) -> _T:
+        try:
+            return self._queue.get_nowait()
+        except asyncio.QueueEmpty as err:
+            raise Empty() from err
+
+    def get(self, block: bool = True, timeout: Optional[float] = None) -> _T:
+        if not block:
+            return self.get_nowait()
+
+        try:
+            if timeout is not None:
+                return self.await_(
+                    asyncio.wait_for(self._queue.get(), timeout)
+                )
+            else:
+                return self.await_(self._queue.get())
+        except (asyncio.QueueEmpty, asyncio.TimeoutError) as err:
+            raise Empty() from err
+
+
+class FallbackAsyncAdaptedQueue(AsyncAdaptedQueue[_T]):
+    if not typing.TYPE_CHECKING:
+        await_ = staticmethod(await_fallback)

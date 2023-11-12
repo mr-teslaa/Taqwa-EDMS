@@ -1,19 +1,22 @@
 # orm/sync.py
-# Copyright (C) 2005-2020 the SQLAlchemy authors and contributors
+# Copyright (C) 2005-2023 the SQLAlchemy authors and contributors
 # <see AUTHORS file>
 #
 # This module is part of SQLAlchemy and is released under
-# the MIT License: http://www.opensource.org/licenses/mit-license.php
+# the MIT License: https://www.opensource.org/licenses/mit-license.php
+# mypy: allow-untyped-defs, allow-untyped-calls
+
 
 """private module containing functions used for copying data
 between instances based on join conditions.
 
 """
 
-from . import attributes
+from __future__ import annotations
+
 from . import exc
 from . import util as orm_util
-from .. import util
+from .base import PassiveFlag
 
 
 def populate(
@@ -33,7 +36,7 @@ def populate(
             # inline of source_mapper._get_state_attr_by_column
             prop = source_mapper._columntoproperty[l]
             value = source.manager[prop.key].impl.get(
-                source, source_dict, attributes.PASSIVE_OFF
+                source, source_dict, PassiveFlag.PASSIVE_OFF
             )
         except exc.UnmappedColumnError as err:
             _raise_col_to_prop(False, source_mapper, l, dest_mapper, r, err)
@@ -71,8 +74,8 @@ def bulk_populate_inherit_keys(source_dict, source_mapper, synchronize_pairs):
         try:
             prop = source_mapper._columntoproperty[r]
             source_dict[prop.key] = value
-        except exc.UnmappedColumnError:
-            _raise_col_to_prop(True, source_mapper, l, source_mapper, r)
+        except exc.UnmappedColumnError as err:
+            _raise_col_to_prop(True, source_mapper, l, source_mapper, r, err)
 
 
 def clear(dest, dest_mapper, synchronize_pairs):
@@ -82,7 +85,6 @@ def clear(dest, dest_mapper, synchronize_pairs):
             and dest_mapper._get_state_attr_by_column(dest, dest.dict, r)
             not in orm_util._none_set
         ):
-
             raise AssertionError(
                 "Dependency rule tried to blank-out primary key "
                 "column '%s' on instance '%s'" % (r, orm_util.state_str(dest))
@@ -100,7 +102,7 @@ def update(source, source_mapper, dest, old_prefix, synchronize_pairs):
                 source.obj(), l
             )
             value = source_mapper._get_state_attr_by_column(
-                source, source.dict, l, passive=attributes.PASSIVE_OFF
+                source, source.dict, l, passive=PassiveFlag.PASSIVE_OFF
             )
         except exc.UnmappedColumnError as err:
             _raise_col_to_prop(False, source_mapper, l, None, r, err)
@@ -112,7 +114,7 @@ def populate_dict(source, source_mapper, dict_, synchronize_pairs):
     for l, r in synchronize_pairs:
         try:
             value = source_mapper._get_state_attr_by_column(
-                source, source.dict, l, passive=attributes.PASSIVE_OFF
+                source, source.dict, l, passive=PassiveFlag.PASSIVE_OFF
             )
         except exc.UnmappedColumnError as err:
             _raise_col_to_prop(False, source_mapper, l, None, r, err)
@@ -131,7 +133,7 @@ def source_modified(uowcommit, source, source_mapper, synchronize_pairs):
         except exc.UnmappedColumnError as err:
             _raise_col_to_prop(False, source_mapper, l, None, r, err)
         history = uowcommit.get_attribute_history(
-            source, prop.key, attributes.PASSIVE_NO_INITIALIZE
+            source, prop.key, PassiveFlag.PASSIVE_NO_INITIALIZE
         )
         if bool(history.deleted):
             return True
@@ -143,25 +145,19 @@ def _raise_col_to_prop(
     isdest, source_mapper, source_column, dest_mapper, dest_column, err
 ):
     if isdest:
-        util.raise_(
-            exc.UnmappedColumnError(
-                "Can't execute sync rule for "
-                "destination column '%s'; mapper '%s' does not map "
-                "this column.  Try using an explicit `foreign_keys` "
-                "collection which does not include this column (or use "
-                "a viewonly=True relation)." % (dest_column, dest_mapper)
-            ),
-            replace_context=err,
-        )
+        raise exc.UnmappedColumnError(
+            "Can't execute sync rule for "
+            "destination column '%s'; mapper '%s' does not map "
+            "this column.  Try using an explicit `foreign_keys` "
+            "collection which does not include this column (or use "
+            "a viewonly=True relation)." % (dest_column, dest_mapper)
+        ) from err
     else:
-        util.raise_(
-            exc.UnmappedColumnError(
-                "Can't execute sync rule for "
-                "source column '%s'; mapper '%s' does not map this "
-                "column.  Try using an explicit `foreign_keys` "
-                "collection which does not include destination column "
-                "'%s' (or use a viewonly=True relation)."
-                % (source_column, source_mapper, dest_column)
-            ),
-            replace_context=err,
-        )
+        raise exc.UnmappedColumnError(
+            "Can't execute sync rule for "
+            "source column '%s'; mapper '%s' does not map this "
+            "column.  Try using an explicit `foreign_keys` "
+            "collection which does not include destination column "
+            "'%s' (or use a viewonly=True relation)."
+            % (source_column, source_mapper, dest_column)
+        ) from err

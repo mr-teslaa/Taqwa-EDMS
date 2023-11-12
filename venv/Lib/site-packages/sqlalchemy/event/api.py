@@ -1,17 +1,22 @@
 # event/api.py
-# Copyright (C) 2005-2020 the SQLAlchemy authors and contributors
+# Copyright (C) 2005-2023 the SQLAlchemy authors and contributors
 # <see AUTHORS file>
 #
 # This module is part of SQLAlchemy and is released under
-# the MIT License: http://www.opensource.org/licenses/mit-license.php
+# the MIT License: https://www.opensource.org/licenses/mit-license.php
 
 """Public API functions for the event system.
 
 """
-from __future__ import absolute_import
+from __future__ import annotations
+
+from typing import Any
+from typing import Callable
 
 from .base import _registrars
+from .registry import _ET
 from .registry import _EventKey
+from .registry import _ListenerFnType
 from .. import exc
 from .. import util
 
@@ -20,9 +25,11 @@ CANCEL = util.symbol("CANCEL")
 NO_RETVAL = util.symbol("NO_RETVAL")
 
 
-def _event_key(target, identifier, fn):
+def _event_key(
+    target: _ET, identifier: str, fn: _ListenerFnType
+) -> _EventKey[_ET]:
     for evt_cls in _registrars[identifier]:
-        tgt = evt_cls._accept_with(target)
+        tgt = evt_cls._accept_with(target, identifier)
         if tgt is not None:
             return _EventKey(target, identifier, fn, tgt)
     else:
@@ -31,7 +38,9 @@ def _event_key(target, identifier, fn):
         )
 
 
-def listen(target, identifier, fn, *args, **kw):
+def listen(
+    target: Any, identifier: str, fn: Callable[..., Any], *args: Any, **kw: Any
+) -> None:
     """Register a listener function for the given target.
 
     The :func:`.listen` function is part of the primary interface for the
@@ -52,24 +61,42 @@ def listen(target, identifier, fn, *args, **kw):
                 "after_parent_attach",
                 unique_constraint_name)
 
+    :param bool insert: The default behavior for event handlers is to append
+      the decorated user defined function to an internal list of registered
+      event listeners upon discovery. If a user registers a function with
+      ``insert=True``, SQLAlchemy will insert (prepend) the function to the
+      internal list upon discovery. This feature is not typically used or
+      recommended by the SQLAlchemy maintainers, but is provided to ensure
+      certain user defined functions can run before others, such as when
+      :ref:`Changing the sql_mode in MySQL <mysql_sql_mode>`.
 
-    A given function can also be invoked for only the first invocation
-    of the event using the ``once`` argument::
+    :param bool named: When using named argument passing, the names listed in
+      the function argument specification will be used as keys in the
+      dictionary.
+      See :ref:`event_named_argument_styles`.
 
-        def on_config():
-            do_config()
+    :param bool once: Private/Internal API usage. Deprecated.  This parameter
+      would provide that an event function would run only once per given
+      target. It does not however imply automatic de-registration of the
+      listener function; associating an arbitrarily high number of listeners
+      without explicitly removing them will cause memory to grow unbounded even
+      if ``once=True`` is specified.
 
-        event.listen(Mapper, "before_configure", on_config, once=True)
+    :param bool propagate: The ``propagate`` kwarg is available when working
+      with ORM instrumentation and mapping events.
+      See :class:`_ormevent.MapperEvents` and
+      :meth:`_ormevent.MapperEvents.before_mapper_configured` for examples.
 
-    .. versionadded:: 0.9.4 Added ``once=True`` to :func:`.event.listen`
-       and :func:`.event.listens_for`.
+    :param bool retval: This flag applies only to specific event listeners,
+      each of which includes documentation explaining when it should be used.
+      By default, no listener ever requires a return value.
+      However, some listeners do support special behaviors for return values,
+      and include in their documentation that the ``retval=True`` flag is
+      necessary for a return value to be processed.
 
-    .. warning:: The ``once`` argument does not imply automatic de-registration
-       of the listener function after it has been invoked a first time; a
-       listener entry will remain associated with the target object.
-       Associating an arbitrarily high number of listeners without explicitly
-       removing them will cause memory to grow unbounded even if ``once=True``
-       is specified.
+      Event listener suites that make use of :paramref:`_event.listen.retval`
+      include :class:`_events.ConnectionEvents` and
+      :class:`_ormevent.AttributeEvents`.
 
     .. note::
 
@@ -86,11 +113,6 @@ def listen(target, identifier, fn, *args, **kw):
         events at high scale, use a mutable structure that is handled
         from inside of a single listener.
 
-        .. versionchanged:: 1.0.0 - a ``collections.deque()`` object is now
-           used as the container for the list of events, which explicitly
-           disallows collection mutation while the collection is being
-           iterated.
-
     .. seealso::
 
         :func:`.listens_for`
@@ -102,11 +124,15 @@ def listen(target, identifier, fn, *args, **kw):
     _event_key(target, identifier, fn).listen(*args, **kw)
 
 
-def listens_for(target, identifier, *args, **kw):
+def listens_for(
+    target: Any, identifier: str, *args: Any, **kw: Any
+) -> Callable[[Callable[..., Any]], Callable[..., Any]]:
     """Decorate a function as a listener for the given target + identifier.
 
     The :func:`.listens_for` decorator is part of the primary interface for the
     SQLAlchemy event system, documented at :ref:`event_toplevel`.
+
+    This function generally shares the same kwargs as :func:`.listens`.
 
     e.g.::
 
@@ -128,9 +154,6 @@ def listens_for(target, identifier, *args, **kw):
             do_config()
 
 
-    .. versionadded:: 0.9.4 Added ``once=True`` to :func:`.event.listen`
-       and :func:`.event.listens_for`.
-
     .. warning:: The ``once`` argument does not imply automatic de-registration
        of the listener function after it has been invoked a first time; a
        listener entry will remain associated with the target object.
@@ -144,14 +167,14 @@ def listens_for(target, identifier, *args, **kw):
 
     """
 
-    def decorate(fn):
+    def decorate(fn: Callable[..., Any]) -> Callable[..., Any]:
         listen(target, identifier, fn, *args, **kw)
         return fn
 
     return decorate
 
 
-def remove(target, identifier, fn):
+def remove(target: Any, identifier: str, fn: Callable[..., Any]) -> None:
     """Remove an event listener.
 
     The arguments here should match exactly those which were sent to
@@ -173,8 +196,6 @@ def remove(target, identifier, fn):
     propagated to subclasses of ``SomeMappedClass``; the :func:`.remove`
     function will revert all of these operations.
 
-    .. versionadded:: 0.9.0
-
     .. note::
 
         The :func:`.remove` function cannot be called at the same time
@@ -190,11 +211,6 @@ def remove(target, identifier, fn):
         events at high scale, use a mutable structure that is handled
         from inside of a single listener.
 
-        .. versionchanged:: 1.0.0 - a ``collections.deque()`` object is now
-           used as the container for the list of events, which explicitly
-           disallows collection mutation while the collection is being
-           iterated.
-
     .. seealso::
 
         :func:`.listen`
@@ -203,11 +219,7 @@ def remove(target, identifier, fn):
     _event_key(target, identifier, fn).remove()
 
 
-def contains(target, identifier, fn):
-    """Return True if the given target/ident/fn is set up to listen.
-
-    .. versionadded:: 0.9.0
-
-    """
+def contains(target: Any, identifier: str, fn: Callable[..., Any]) -> bool:
+    """Return True if the given target/ident/fn is set up to listen."""
 
     return _event_key(target, identifier, fn).contains()

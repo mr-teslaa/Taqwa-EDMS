@@ -1,18 +1,22 @@
 # testing/entities.py
-# Copyright (C) 2005-2020 the SQLAlchemy authors and contributors
+# Copyright (C) 2005-2023 the SQLAlchemy authors and contributors
 # <see AUTHORS file>
 #
 # This module is part of SQLAlchemy and is released under
-# the MIT License: http://www.opensource.org/licenses/mit-license.php
+# the MIT License: https://www.opensource.org/licenses/mit-license.php
+# mypy: ignore-errors
+
+
+from __future__ import annotations
 
 import sqlalchemy as sa
 from .. import exc as sa_exc
-from ..util import compat
+from ..orm.writeonly import WriteOnlyCollection
 
 _repr_stack = set()
 
 
-class BasicEntity(object):
+class BasicEntity:
     def __init__(self, **kw):
         for key, value in kw.items():
             setattr(self, key, value)
@@ -39,10 +43,7 @@ class BasicEntity(object):
 _recursion_stack = set()
 
 
-class ComparableEntity(BasicEntity):
-    def __hash__(self):
-        return hash(self.__class__)
-
+class ComparableMixin:
     def __ne__(self, other):
         return not self.__eq__(other)
 
@@ -82,7 +83,11 @@ class ComparableEntity(BasicEntity):
             for attr in list(a.__dict__):
                 if attr.startswith("_"):
                     continue
+
                 value = getattr(a, attr)
+
+                if isinstance(value, WriteOnlyCollection):
+                    continue
 
                 try:
                     # handle lazy loader errors
@@ -90,9 +95,7 @@ class ComparableEntity(BasicEntity):
                 except (AttributeError, sa_exc.UnboundExecutionError):
                     return False
 
-                if hasattr(value, "__iter__") and not isinstance(
-                    value, compat.string_types
-                ):
+                if hasattr(value, "__iter__") and not isinstance(value, str):
                     if hasattr(value, "__getitem__") and not hasattr(
                         value, "keys"
                     ):
@@ -107,3 +110,8 @@ class ComparableEntity(BasicEntity):
             return True
         finally:
             _recursion_stack.remove(id(self))
+
+
+class ComparableEntity(ComparableMixin, BasicEntity):
+    def __hash__(self):
+        return hash(self.__class__)

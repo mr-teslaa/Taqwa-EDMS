@@ -1,14 +1,32 @@
 # orm/exc.py
-# Copyright (C) 2005-2020 the SQLAlchemy authors and contributors
+# Copyright (C) 2005-2023 the SQLAlchemy authors and contributors
 # <see AUTHORS file>
 #
 # This module is part of SQLAlchemy and is released under
-# the MIT License: http://www.opensource.org/licenses/mit-license.php
+# the MIT License: https://www.opensource.org/licenses/mit-license.php
 
 """SQLAlchemy ORM exceptions."""
+
+from __future__ import annotations
+
+from typing import Any
+from typing import Optional
+from typing import Tuple
+from typing import Type
+from typing import TYPE_CHECKING
+from typing import TypeVar
+
 from .. import exc as sa_exc
 from .. import util
+from ..exc import MultipleResultsFound  # noqa
+from ..exc import NoResultFound  # noqa
 
+if TYPE_CHECKING:
+    from .interfaces import LoaderStrategy
+    from .interfaces import MapperProperty
+    from .state import InstanceState
+
+_T = TypeVar("_T", bound=Any)
 
 NO_STATE = (AttributeError, KeyError)
 """Exception types that may be raised by instrumentation implementations."""
@@ -67,8 +85,10 @@ class DetachedInstanceError(sa_exc.SQLAlchemyError):
 class UnmappedInstanceError(UnmappedError):
     """An mapping operation was requested for an unknown instance."""
 
-    @util.dependencies("sqlalchemy.orm.base")
-    def __init__(self, base, obj, msg=None):
+    @util.preload_module("sqlalchemy.orm.base")
+    def __init__(self, obj: object, msg: Optional[str] = None):
+        base = util.preloaded.orm_base
+
         if not msg:
             try:
                 base.class_mapper(type(obj))
@@ -80,7 +100,7 @@ class UnmappedInstanceError(UnmappedError):
                     "was called." % (name, name)
                 )
             except UnmappedClassError:
-                msg = _default_unmapped(type(obj))
+                msg = f"Class '{_safe_cls_name(type(obj))}' is not mapped"
                 if isinstance(obj, type):
                     msg += (
                         "; was a class (%s) supplied where an instance was "
@@ -88,19 +108,19 @@ class UnmappedInstanceError(UnmappedError):
                     )
         UnmappedError.__init__(self, msg)
 
-    def __reduce__(self):
+    def __reduce__(self) -> Any:
         return self.__class__, (None, self.args[0])
 
 
 class UnmappedClassError(UnmappedError):
     """An mapping operation was requested for an unknown class."""
 
-    def __init__(self, cls, msg=None):
+    def __init__(self, cls: Type[_T], msg: Optional[str] = None):
         if not msg:
             msg = _default_unmapped(cls)
         UnmappedError.__init__(self, msg)
 
-    def __reduce__(self):
+    def __reduce__(self) -> Any:
         return self.__class__, (None, self.args[0])
 
 
@@ -124,8 +144,10 @@ class ObjectDeletedError(sa_exc.InvalidRequestError):
 
     """
 
-    @util.dependencies("sqlalchemy.orm.base")
-    def __init__(self, base, state, msg=None):
+    @util.preload_module("sqlalchemy.orm.base")
+    def __init__(self, state: InstanceState[Any], msg: Optional[str] = None):
+        base = util.preloaded.orm_base
+
         if not msg:
             msg = (
                 "Instance '%s' has been deleted, or its "
@@ -134,7 +156,7 @@ class ObjectDeletedError(sa_exc.InvalidRequestError):
 
         sa_exc.InvalidRequestError.__init__(self, msg)
 
-    def __reduce__(self):
+    def __reduce__(self) -> Any:
         return self.__class__, (None, self.args[0])
 
 
@@ -142,24 +164,16 @@ class UnmappedColumnError(sa_exc.InvalidRequestError):
     """Mapping operation was requested on an unknown column."""
 
 
-class NoResultFound(sa_exc.InvalidRequestError):
-    """A database result was required but none was found."""
-
-
-class MultipleResultsFound(sa_exc.InvalidRequestError):
-    """A single database result was required but more than one were found."""
-
-
 class LoaderStrategyException(sa_exc.InvalidRequestError):
     """A loader strategy for an attribute does not exist."""
 
     def __init__(
         self,
-        applied_to_property_type,
-        requesting_property,
-        applies_to,
-        actual_strategy_type,
-        strategy_key,
+        applied_to_property_type: Type[Any],
+        requesting_property: MapperProperty[Any],
+        applies_to: Optional[Type[MapperProperty[Any]]],
+        actual_strategy_type: Optional[Type[LoaderStrategy]],
+        strategy_key: Tuple[Any, ...],
     ):
         if actual_strategy_type is None:
             sa_exc.InvalidRequestError.__init__(
@@ -168,6 +182,7 @@ class LoaderStrategyException(sa_exc.InvalidRequestError):
                 % (strategy_key, requesting_property),
             )
         else:
+            assert applies_to is not None
             sa_exc.InvalidRequestError.__init__(
                 self,
                 'Can\'t apply "%s" strategy to property "%s", '
@@ -182,7 +197,8 @@ class LoaderStrategyException(sa_exc.InvalidRequestError):
             )
 
 
-def _safe_cls_name(cls):
+def _safe_cls_name(cls: Type[Any]) -> str:
+    cls_name: Optional[str]
     try:
         cls_name = ".".join((cls.__module__, cls.__name__))
     except AttributeError:
@@ -192,15 +208,20 @@ def _safe_cls_name(cls):
     return cls_name
 
 
-@util.dependencies("sqlalchemy.orm.base")
-def _default_unmapped(base, cls):
+@util.preload_module("sqlalchemy.orm.base")
+def _default_unmapped(cls: Type[Any]) -> Optional[str]:
+    base = util.preloaded.orm_base
+
     try:
-        mappers = base.manager_of_class(cls).mappers
-    except NO_STATE:
-        mappers = {}
-    except TypeError:
+        mappers = base.manager_of_class(cls).mappers  # type: ignore
+    except (
+        UnmappedClassError,
+        TypeError,
+    ) + NO_STATE:
         mappers = {}
     name = _safe_cls_name(cls)
 
     if not mappers:
-        return "Class '%s' is not mapped" % name
+        return f"Class '{name}' is not mapped"
+    else:
+        return None

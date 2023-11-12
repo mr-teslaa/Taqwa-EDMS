@@ -1,51 +1,42 @@
 # testing/warnings.py
-# Copyright (C) 2005-2020 the SQLAlchemy authors and contributors
+# Copyright (C) 2005-2023 the SQLAlchemy authors and contributors
 # <see AUTHORS file>
 #
 # This module is part of SQLAlchemy and is released under
-# the MIT License: http://www.opensource.org/licenses/mit-license.php
+# the MIT License: https://www.opensource.org/licenses/mit-license.php
+# mypy: ignore-errors
 
-from __future__ import absolute_import
+from __future__ import annotations
 
 import warnings
 
 from . import assertions
+from .. import exc
 from .. import exc as sa_exc
+from ..exc import SATestSuiteWarning
+from ..util.langhelpers import _warnings_warn
+
+
+def warn_test_suite(message):
+    _warnings_warn(message, category=SATestSuiteWarning)
 
 
 def setup_filters():
-    """Set global warning behavior for the test suite."""
+    """hook for setting up warnings filters.
 
-    warnings.filterwarnings(
-        "ignore", category=sa_exc.SAPendingDeprecationWarning
-    )
-    warnings.filterwarnings("error", category=sa_exc.SADeprecationWarning)
-    warnings.filterwarnings("error", category=sa_exc.SAWarning)
+    SQLAlchemy-specific classes must only be here and not in pytest config,
+    as we need to delay importing SQLAlchemy until conftest.py has been
+    processed.
 
-    warnings.filterwarnings(
-        "ignore",
-        category=sa_exc.SAWarning,
-        message=r"Oracle compatibility version .* is known to have a "
-        "maximum identifier",
-    )
+    NOTE: filters on subclasses of DeprecationWarning or
+    PendingDeprecationWarning have no effect if added here, since pytest
+    will add at each test the following filters
+    ``always::PendingDeprecationWarning`` and ``always::DeprecationWarning``
+    that will take precedence over any added here.
 
-    # some selected deprecations...
-    warnings.filterwarnings("error", category=DeprecationWarning)
-    warnings.filterwarnings(
-        "ignore", category=DeprecationWarning, message=".*StopIteration"
-    )
-    warnings.filterwarnings(
-        "ignore", category=DeprecationWarning, message=".*inspect.getargspec"
-    )
-
-    try:
-        import pytest
-    except ImportError:
-        pass
-    else:
-        warnings.filterwarnings(
-            "once", category=pytest.PytestDeprecationWarning
-        )
+    """
+    warnings.filterwarnings("error", category=exc.SAWarning)
+    warnings.filterwarnings("always", category=exc.SATestSuiteWarning)
 
 
 def assert_warnings(fn, warning_msgs, regex=False):

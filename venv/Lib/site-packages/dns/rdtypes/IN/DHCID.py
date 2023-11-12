@@ -18,26 +18,30 @@
 import base64
 
 import dns.exception
+import dns.immutable
+import dns.rdata
 
 
+@dns.immutable.immutable
 class DHCID(dns.rdata.Rdata):
 
     """DHCID record"""
 
     # see: RFC 4701
 
-    __slots__ = ['data']
+    __slots__ = ["data"]
 
     def __init__(self, rdclass, rdtype, data):
         super().__init__(rdclass, rdtype)
-        object.__setattr__(self, 'data', data)
+        self.data = self._as_bytes(data)
 
     def to_text(self, origin=None, relativize=True, **kw):
-        return dns.rdata._base64ify(self.data)
+        return dns.rdata._base64ify(self.data, **kw)
 
     @classmethod
-    def from_text(cls, rdclass, rdtype, tok, origin=None, relativize=True,
-                  relativize_to=None):
+    def from_text(
+        cls, rdclass, rdtype, tok, origin=None, relativize=True, relativize_to=None
+    ):
         b64 = tok.concatenate_remaining_identifiers().encode()
         data = base64.b64decode(b64)
         return cls(rdclass, rdtype, data)

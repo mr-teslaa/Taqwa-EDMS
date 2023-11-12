@@ -18,35 +18,37 @@
 import binascii
 
 import dns.exception
+import dns.immutable
 import dns.rdata
 import dns.tokenizer
 
 
+@dns.immutable.immutable
 class NSAP(dns.rdata.Rdata):
 
     """NSAP record."""
 
     # see: RFC 1706
 
-    __slots__ = ['address']
+    __slots__ = ["address"]
 
     def __init__(self, rdclass, rdtype, address):
         super().__init__(rdclass, rdtype)
-        object.__setattr__(self, 'address', address)
+        self.address = self._as_bytes(address)
 
     def to_text(self, origin=None, relativize=True, **kw):
         return "0x%s" % binascii.hexlify(self.address).decode()
 
     @classmethod
-    def from_text(cls, rdclass, rdtype, tok, origin=None, relativize=True,
-                  relativize_to=None):
+    def from_text(
+        cls, rdclass, rdtype, tok, origin=None, relativize=True, relativize_to=None
+    ):
         address = tok.get_string()
-        tok.get_eol()
-        if address[0:2] != '0x':
-            raise dns.exception.SyntaxError('string does not start with 0x')
-        address = address[2:].replace('.', '')
+        if address[0:2] != "0x":
+            raise dns.exception.SyntaxError("string does not start with 0x")
+        address = address[2:].replace(".", "")
         if len(address) % 2 != 0:
-            raise dns.exception.SyntaxError('hexstring has odd length')
+            raise dns.exception.SyntaxError("hexstring has odd length")
         address = binascii.unhexlify(address.encode())
         return cls(rdclass, rdtype, address)
 

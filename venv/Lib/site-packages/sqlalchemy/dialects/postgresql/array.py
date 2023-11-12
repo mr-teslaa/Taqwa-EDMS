@@ -1,26 +1,35 @@
 # postgresql/array.py
-# Copyright (C) 2005-2020 the SQLAlchemy authors and contributors
+# Copyright (C) 2005-2023 the SQLAlchemy authors and contributors
 # <see AUTHORS file>
 #
 # This module is part of SQLAlchemy and is released under
-# the MIT License: http://www.opensource.org/licenses/mit-license.php
+# the MIT License: https://www.opensource.org/licenses/mit-license.php
+# mypy: ignore-errors
+
+
+from __future__ import annotations
 
 import re
+from typing import Any
+from typing import Optional
+from typing import TypeVar
 
+from .operators import CONTAINED_BY
+from .operators import CONTAINS
+from .operators import OVERLAP
 from ... import types as sqltypes
 from ... import util
 from ...sql import expression
 from ...sql import operators
+from ...sql._typing import _TypeEngineArgument
+
+
+_T = TypeVar("_T", bound=Any)
 
 
 def Any(other, arrexpr, operator=operators.eq):
-    """A synonym for the :meth:`.ARRAY.Comparator.any` method.
-
-    This method is legacy and is here for backwards-compatibility.
-
-    .. seealso::
-
-        :func:`_expression.any_`
+    """A synonym for the ARRAY-level :meth:`.ARRAY.Comparator.any` method.
+    See that method for details.
 
     """
 
@@ -28,20 +37,15 @@ def Any(other, arrexpr, operator=operators.eq):
 
 
 def All(other, arrexpr, operator=operators.eq):
-    """A synonym for the :meth:`.ARRAY.Comparator.all` method.
-
-    This method is legacy and is here for backwards-compatibility.
-
-    .. seealso::
-
-        :func:`_expression.all_`
+    """A synonym for the ARRAY-level :meth:`.ARRAY.Comparator.all` method.
+    See that method for details.
 
     """
 
     return arrexpr.all(other, operator)
 
 
-class array(expression.Tuple):
+class array(expression.ExpressionClauseList[_T]):
 
     """A PostgreSQL ARRAY literal.
 
@@ -51,9 +55,7 @@ class array(expression.Tuple):
         from sqlalchemy.dialects import postgresql
         from sqlalchemy import select, func
 
-        stmt = select([
-                        array([1,2]) + array([3,4,5])
-                    ])
+        stmt = select(array([1,2]) + array([3,4,5]))
 
         print(stmt.compile(dialect=postgresql.dialect()))
 
@@ -74,11 +76,11 @@ class array(expression.Tuple):
     recursively adding the dimensions of the inner :class:`_types.ARRAY`
     type::
 
-        stmt = select([
+        stmt = select(
             array([
                 array([1, 2]), array([3, 4]), array([column('q'), column('x')])
             ])
-        ])
+        )
         print(stmt.compile(dialect=postgresql.dialect()))
 
     Produces::
@@ -96,17 +98,36 @@ class array(expression.Tuple):
 
     __visit_name__ = "array"
 
+    stringify_dialect = "postgresql"
+    inherit_cache = True
+
     def __init__(self, clauses, **kw):
-        super(array, self).__init__(*clauses, **kw)
-        if isinstance(self.type, ARRAY):
+        type_arg = kw.pop("type_", None)
+        super().__init__(operators.comma_op, *clauses, **kw)
+
+        self._type_tuple = [arg.type for arg in self.clauses]
+
+        main_type = (
+            type_arg
+            if type_arg is not None
+            else self._type_tuple[0]
+            if self._type_tuple
+            else sqltypes.NULLTYPE
+        )
+
+        if isinstance(main_type, ARRAY):
             self.type = ARRAY(
-                self.type.item_type,
-                dimensions=self.type.dimensions + 1
-                if self.type.dimensions is not None
+                main_type.item_type,
+                dimensions=main_type.dimensions + 1
+                if main_type.dimensions is not None
                 else 2,
             )
         else:
-            self.type = ARRAY(self.type)
+            self.type = ARRAY(main_type)
+
+    @property
+    def _select_iterable(self):
+        return (self,)
 
     def _bind_param(self, operator, obj, _assume_scalar=False, type_=None):
         if _assume_scalar or operator is operators.getitem:
@@ -136,19 +157,8 @@ class array(expression.Tuple):
             return self
 
 
-CONTAINS = operators.custom_op("@>", precedence=5)
-
-CONTAINED_BY = operators.custom_op("<@", precedence=5)
-
-OVERLAP = operators.custom_op("&&", precedence=5)
-
-
 class ARRAY(sqltypes.ARRAY):
-
     """PostgreSQL ARRAY type.
-
-    .. versionchanged:: 1.1 The :class:`_postgresql.ARRAY` type is now
-       a subclass of the core :class:`_types.ARRAY` type.
 
     The :class:`_postgresql.ARRAY` type is constructed in the same way
     as the core :class:`_types.ARRAY` type; a member type is required, and a
@@ -182,6 +192,31 @@ class ARRAY(sqltypes.ARRAY):
     conjunction with the :class:`.ENUM` type.  For a workaround, see the
     special type at :ref:`postgresql_array_of_enum`.
 
+    .. container:: topic
+
+        **Detecting Changes in ARRAY columns when using the ORM**
+
+        The :class:`_postgresql.ARRAY` type, when used with the SQLAlchemy ORM,
+        does not detect in-place mutations to the array. In order to detect
+        these, the :mod:`sqlalchemy.ext.mutable` extension must be used, using
+        the :class:`.MutableList` class::
+
+            from sqlalchemy.dialects.postgresql import ARRAY
+            from sqlalchemy.ext.mutable import MutableList
+
+            class SomeOrmClass(Base):
+                # ...
+
+                data = Column(MutableList.as_mutable(ARRAY(Integer)))
+
+        This extension will allow "in-place" changes such to the array
+        such as ``.append()`` to produce events which will be detected by the
+        unit of work.  Note that changes to elements **inside** the array,
+        including subarrays that are mutated in place, are **not** detected.
+
+        Alternatively, assigning a new array value to an ORM element that
+        replaces the old one will always trigger a change event.
+
     .. seealso::
 
         :class:`_types.ARRAY` - base array type
@@ -204,6 +239,9 @@ class ARRAY(sqltypes.ARRAY):
         def contains(self, other, **kwargs):
             """Boolean expression.  Test if elements are a superset of the
             elements of the argument array expression.
+
+            kwargs may be ignored by this operator but are required for API
+            conformance.
             """
             return self.operate(CONTAINS, other, result_type=sqltypes.Boolean)
 
@@ -224,7 +262,11 @@ class ARRAY(sqltypes.ARRAY):
     comparator_factory = Comparator
 
     def __init__(
-        self, item_type, as_tuple=False, dimensions=None, zero_indexes=False
+        self,
+        item_type: _TypeEngineArgument[Any],
+        as_tuple: bool = False,
+        dimensions: Optional[int] = None,
+        zero_indexes: bool = False,
     ):
         """Construct an ARRAY.
 
@@ -257,9 +299,6 @@ class ARRAY(sqltypes.ARRAY):
          a value of one will be added to all index values before passing
          to the database.
 
-         .. versionadded:: 0.9.5
-
-
         """
         if isinstance(item_type, ARRAY):
             raise ValueError(
@@ -284,41 +323,6 @@ class ARRAY(sqltypes.ARRAY):
     def compare_values(self, x, y):
         return x == y
 
-    def _proc_array(self, arr, itemproc, dim, collection):
-        if dim is None:
-            arr = list(arr)
-        if (
-            dim == 1
-            or dim is None
-            and (
-                # this has to be (list, tuple), or at least
-                # not hasattr('__iter__'), since Py3K strings
-                # etc. have __iter__
-                not arr
-                or not isinstance(arr[0], (list, tuple))
-            )
-        ):
-            if itemproc:
-                return collection(itemproc(x) for x in arr)
-            else:
-                return collection(arr)
-        else:
-            return collection(
-                self._proc_array(
-                    x,
-                    itemproc,
-                    dim - 1 if dim is not None else None,
-                    collection,
-                )
-                for x in arr
-            )
-
-    @util.memoized_property
-    def _require_cast(self):
-        return self._against_native_enum or isinstance(
-            self.item_type, sqltypes.JSON
-        )
-
     @util.memoized_property
     def _against_native_enum(self):
         return (
@@ -326,11 +330,23 @@ class ARRAY(sqltypes.ARRAY):
             and self.item_type.native_enum
         )
 
-    def bind_expression(self, bindvalue):
-        if self._require_cast:
-            return expression.cast(bindvalue, self)
-        else:
-            return bindvalue
+    def literal_processor(self, dialect):
+        item_proc = self.item_type.dialect_impl(dialect).literal_processor(
+            dialect
+        )
+        if item_proc is None:
+            return None
+
+        def to_str(elements):
+            return f"ARRAY[{', '.join(elements)}]"
+
+        def process(value):
+            inner = self._apply_item_processor(
+                value, item_proc, self.dimensions, to_str
+            )
+            return inner
+
+        return process
 
     def bind_processor(self, dialect):
         item_proc = self.item_type.dialect_impl(dialect).bind_processor(
@@ -341,7 +357,7 @@ class ARRAY(sqltypes.ARRAY):
             if value is None:
                 return value
             else:
-                return self._proc_array(
+                return self._apply_item_processor(
                     value, item_proc, self.dimensions, list
                 )
 
@@ -356,7 +372,7 @@ class ARRAY(sqltypes.ARRAY):
             if value is None:
                 return value
             else:
-                return self._proc_array(
+                return self._apply_item_processor(
                     value,
                     item_proc,
                     self.dimensions,
@@ -365,21 +381,46 @@ class ARRAY(sqltypes.ARRAY):
 
         if self._against_native_enum:
             super_rp = process
+            pattern = re.compile(r"^{(.*)}$")
 
             def handle_raw_string(value):
-                inner = re.match(r"^{(.*)}$", value).group(1)
-                return inner.split(",") if inner else []
+                inner = pattern.match(value).group(1)
+                return _split_enum_values(inner)
 
             def process(value):
                 if value is None:
                     return value
-                # isinstance(value, util.string_types) is required to handle
-                # the # case where a TypeDecorator for and Array of Enum is
+                # isinstance(value, str) is required to handle
+                # the case where a TypeDecorator for and Array of Enum is
                 # used like was required in sa < 1.3.17
                 return super_rp(
                     handle_raw_string(value)
-                    if isinstance(value, util.string_types)
+                    if isinstance(value, str)
                     else value
                 )
 
         return process
+
+
+def _split_enum_values(array_string):
+    if '"' not in array_string:
+        # no escape char is present so it can just split on the comma
+        return array_string.split(",") if array_string else []
+
+    # handles quoted strings from:
+    # r'abc,"quoted","also\\\\quoted", "quoted, comma", "esc \" quot", qpr'
+    # returns
+    # ['abc', 'quoted', 'also\\quoted', 'quoted, comma', 'esc " quot', 'qpr']
+    text = array_string.replace(r"\"", "_$ESC_QUOTE$_")
+    text = text.replace(r"\\", "\\")
+    result = []
+    on_quotes = re.split(r'(")', text)
+    in_quotes = False
+    for tok in on_quotes:
+        if tok == '"':
+            in_quotes = not in_quotes
+        elif in_quotes:
+            result.append(tok.replace("_$ESC_QUOTE$_", '"'))
+        else:
+            result.extend(re.findall(r"([^\s,]+),?", tok))
+    return result

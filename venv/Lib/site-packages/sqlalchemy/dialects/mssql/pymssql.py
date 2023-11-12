@@ -1,9 +1,11 @@
 # mssql/pymssql.py
-# Copyright (C) 2005-2020 the SQLAlchemy authors and contributors
+# Copyright (C) 2005-2023 the SQLAlchemy authors and contributors
 # <see AUTHORS file>
 #
 # This module is part of SQLAlchemy and is released under
-# the MIT License: http://www.opensource.org/licenses/mit-license.php
+# the MIT License: https://www.opensource.org/licenses/mit-license.php
+# mypy: ignore-errors
+
 
 """
 .. dialect:: mssql+pymssql
@@ -12,30 +14,11 @@
     :connectstring: mssql+pymssql://<username>:<password>@<freetds_name>/?charset=utf8
 
 pymssql is a Python module that provides a Python DBAPI interface around
-`FreeTDS <http://www.freetds.org/>`_.
+`FreeTDS <https://www.freetds.org/>`_.
 
-.. note::
+.. versionchanged:: 2.0.5
 
-    pymssql is currently not included in SQLAlchemy's continuous integration
-    (CI) testing.
-
-Modern versions of this driver worked very well with SQL Server and FreeTDS
-from Linux and were highly recommended. However, pymssql is currently
-unmaintained and has fallen behind the progress of the Microsoft ODBC driver in
-its support for newer features of SQL Server. The latest official release of
-pymssql at the time of this document is version 2.1.4 (August, 2018) and it
-lacks support for:
-
-1. table-valued parameters (TVPs),
-2. ``datetimeoffset`` columns using timezone-aware ``datetime`` objects
-   (values are sent and retrieved as strings), and
-3. encrypted connections (e.g., to Azure SQL), when pymssql is installed from
-   the pre-built wheels. Support for encrypted connections requires building
-   pymssql from source, which can be a nuisance, especially under Windows.
-
-The above features are all supported by mssql+pyodbc when using Microsoft's
-ODBC Driver for SQL Server (msodbcsql), which is now available for Windows,
-(several flavors of) Linux, and macOS.
+    pymssql was restored to SQLAlchemy's continuous integration testing
 
 
 """  # noqa
@@ -43,9 +26,9 @@ import re
 
 from .base import MSDialect
 from .base import MSIdentifierPreparer
-from ... import processors
 from ... import types as sqltypes
 from ... import util
+from ...engine import processors
 
 
 class _MSNumeric_pymssql(sqltypes.Numeric):
@@ -58,14 +41,16 @@ class _MSNumeric_pymssql(sqltypes.Numeric):
 
 class MSIdentifierPreparer_pymssql(MSIdentifierPreparer):
     def __init__(self, dialect):
-        super(MSIdentifierPreparer_pymssql, self).__init__(dialect)
+        super().__init__(dialect)
         # pymssql has the very unusual behavior that it uses pyformat
         # yet does not require that percent signs be doubled
         self._double_percents = False
 
 
 class MSDialect_pymssql(MSDialect):
+    supports_statement_cache = True
     supports_native_decimal = True
+    supports_native_uuid = True
     driver = "pymssql"
 
     preparer = MSIdentifierPreparer_pymssql
@@ -76,7 +61,7 @@ class MSDialect_pymssql(MSDialect):
     )
 
     @classmethod
-    def dbapi(cls):
+    def import_dbapi(cls):
         module = __import__("pymssql")
         # pymmsql < 2.1.1 doesn't have a Binary method.  we use string
         client_ver = tuple(int(x) for x in module.__version__.split("."))
@@ -92,8 +77,8 @@ class MSDialect_pymssql(MSDialect):
         return module
 
     def _get_server_version_info(self, connection):
-        vers = connection.scalar("select @@version")
-        m = re.match(r"Microsoft .*? - (\d+).(\d+).(\d+).(\d+)", vers)
+        vers = connection.exec_driver_sql("select @@version").scalar()
+        m = re.match(r"Microsoft .*? - (\d+)\.(\d+)\.(\d+)\.(\d+)", vers)
         if m:
             return tuple(int(x) for x in m.group(1, 2, 3, 4))
         else:
@@ -105,7 +90,7 @@ class MSDialect_pymssql(MSDialect):
         port = opts.pop("port", None)
         if port and "host" in opts:
             opts["host"] = "%s:%s" % (opts["host"], port)
-        return [[], opts]
+        return ([], opts)
 
     def is_disconnect(self, e, connection, cursor):
         for msg in (
@@ -124,14 +109,17 @@ class MSDialect_pymssql(MSDialect):
         else:
             return False
 
-    def set_isolation_level(self, connection, level):
+    def get_isolation_level_values(self, dbapi_connection):
+        return super().get_isolation_level_values(dbapi_connection) + [
+            "AUTOCOMMIT"
+        ]
+
+    def set_isolation_level(self, dbapi_connection, level):
         if level == "AUTOCOMMIT":
-            connection.autocommit(True)
+            dbapi_connection.autocommit(True)
         else:
-            connection.autocommit(False)
-            super(MSDialect_pymssql, self).set_isolation_level(
-                connection, level
-            )
+            dbapi_connection.autocommit(False)
+            super().set_isolation_level(dbapi_connection, level)
 
 
 dialect = MSDialect_pymssql

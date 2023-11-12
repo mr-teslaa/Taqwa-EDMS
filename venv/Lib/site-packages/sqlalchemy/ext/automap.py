@@ -1,15 +1,13 @@
 # ext/automap.py
-# Copyright (C) 2005-2020 the SQLAlchemy authors and contributors
+# Copyright (C) 2005-2023 the SQLAlchemy authors and contributors
 # <see AUTHORS file>
 #
 # This module is part of SQLAlchemy and is released under
-# the MIT License: http://www.opensource.org/licenses/mit-license.php
+# the MIT License: https://www.opensource.org/licenses/mit-license.php
 
 r"""Define an extension to the :mod:`sqlalchemy.ext.declarative` system
 which automatically generates mapped classes and relationships from a database
 schema, typically though not necessarily one which is reflected.
-
-.. versionadded:: 0.9.1 Added :mod:`sqlalchemy.ext.automap`.
 
 It is hoped that the :class:`.AutomapBase` system provides a quick
 and modernized solution to the problem that the very famous
@@ -21,6 +19,15 @@ Declarative class techniques, :class:`.AutomapBase` seeks to provide
 a well-integrated approach to the issue of expediently auto-generating ad-hoc
 mappings.
 
+.. tip:: The :ref:`automap_toplevel` extension is geared towards a
+   "zero declaration" approach, where a complete ORM model including classes
+   and pre-named relationships can be generated on the fly from a database
+   schema. For applications that still want to use explicit class declarations
+   including explicit relationship definitions in conjunction with reflection
+   of tables, the :class:`.DeferredReflection` class, described at
+   :ref:`orm_declarative_reflected_deferred_reflection`, is a better choice.
+
+.. _automap_basic_use:
 
 Basic Use
 =========
@@ -41,7 +48,7 @@ asking it to reflect the schema and produce mappings::
     engine = create_engine("sqlite:///mydatabase.db")
 
     # reflect the tables
-    Base.prepare(engine, reflect=True)
+    Base.prepare(autoload_with=engine)
 
     # mapped classes are now created with names by default
     # matching that of the table name.
@@ -56,6 +63,7 @@ asking it to reflect the schema and produce mappings::
 
     # collection-based relationships are by default named
     # "<classname>_collection"
+    u1 = session.query(User).first()
     print (u1.address_collection)
 
 Above, calling :meth:`.AutomapBase.prepare` while passing along the
@@ -118,8 +126,115 @@ explicit table declaration::
     User, Address, Order = Base.classes.user, Base.classes.address,\
         Base.classes.user_order
 
+.. _automap_by_module:
+
+Generating Mappings from Multiple Schemas
+=========================================
+
+The :meth:`.AutomapBase.prepare` method when used with reflection may reflect
+tables from one schema at a time at most, using the
+:paramref:`.AutomapBase.prepare.schema` parameter to indicate the name of a
+schema to be reflected from. In order to populate the :class:`.AutomapBase`
+with tables from multiple schemas, :meth:`.AutomapBase.prepare` may be invoked
+multiple times, each time passing a different name to the
+:paramref:`.AutomapBase.prepare.schema` parameter. The
+:meth:`.AutomapBase.prepare` method keeps an internal list of
+:class:`_schema.Table` objects that have already been mapped, and will add new
+mappings only for those :class:`_schema.Table` objects that are new since the
+last time :meth:`.AutomapBase.prepare` was run::
+
+    e = create_engine("postgresql://scott:tiger@localhost/test")
+
+    Base.metadata.create_all(e)
+
+    Base = automap_base()
+
+    Base.prepare(e)
+    Base.prepare(e, schema="test_schema")
+    Base.prepare(e, schema="test_schema_2")
+
+.. versionadded:: 2.0  The :meth:`.AutomapBase.prepare` method may be called
+   any number of times; only newly added tables will be mapped
+   on each run.   Previously in version 1.4 and earlier, multiple calls would
+   cause errors as it would attempt to re-map an already mapped class.
+   The previous workaround approach of invoking
+   :meth:`_schema.MetaData.reflect` directly remains available as well.
+
+Automapping same-named tables across multiple schemas
+-----------------------------------------------------
+
+For the common case where multiple schemas may have same-named tables and
+therefore would generate same-named classes, conflicts can be resolved either
+through use of the :paramref:`.AutomapBase.prepare.classname_for_table` hook to
+apply different classnames on a per-schema basis, or by using the
+:paramref:`.AutomapBase.prepare.modulename_for_table` hook, which allows
+disambiguation of same-named classes by changing their effective ``__module__``
+attribute. In the example below, this hook is used to create a ``__module__``
+attribute for all classes that is of the form ``mymodule.<schemaname>``, where
+the schema name ``default`` is used if no schema is present::
+
+    e = create_engine("postgresql://scott:tiger@localhost/test")
+
+    Base.metadata.create_all(e)
+
+    def module_name_for_table(cls, tablename, table):
+        if table.schema is not None:
+            return f"mymodule.{table.schema}"
+        else:
+            return f"mymodule.default"
+
+    Base = automap_base()
+
+    Base.prepare(e, modulename_for_table=module_name_for_table)
+    Base.prepare(e, schema="test_schema", modulename_for_table=module_name_for_table)
+    Base.prepare(e, schema="test_schema_2", modulename_for_table=module_name_for_table)
+
+
+The same named-classes are organized into a hierarchical collection available
+at :attr:`.AutomapBase.by_module`.  This collection is traversed using the
+dot-separated name of a particular package/module down into the desired
+class name.
+
+.. note:: When using the :paramref:`.AutomapBase.prepare.modulename_for_table`
+   hook to return a new ``__module__`` that is not ``None``, the class is
+   **not** placed into the :attr:`.AutomapBase.classes` collection; only
+   classes that were not given an explicit modulename are placed here, as the
+   collection cannot represent same-named classes individually.
+
+In the example above, if the database contained a table named ``accounts`` in
+all three of the default schema, the ``test_schema`` schema, and the
+``test_schema_2`` schema, three separate classes will be available as::
+
+    Base.by_module.mymodule.default.accounts
+    Base.by_module.mymodule.test_schema.accounts
+    Base.by_module.mymodule.test_schema_2.accounts
+
+The default module namespace generated for all :class:`.AutomapBase` classes is
+``sqlalchemy.ext.automap``. If no
+:paramref:`.AutomapBase.prepare.modulename_for_table` hook is used, the
+contents of :attr:`.AutomapBase.by_module` will be entirely within the
+``sqlalchemy.ext.automap`` namespace (e.g.
+``MyBase.by_module.sqlalchemy.ext.automap.<classname>``), which would contain
+the same series of classes as what would be seen in
+:attr:`.AutomapBase.classes`. Therefore it's generally only necessary to use
+:attr:`.AutomapBase.by_module` when explicit ``__module__`` conventions are
+present.
+
+.. versionadded: 2.0
+
+    Added the :attr:`.AutomapBase.by_module` collection, which stores
+    classes within a named hierarchy based on dot-separated module names,
+    as well as the :paramref:`.Automap.prepare.modulename_for_table` parameter
+    which allows for custom ``__module__`` schemes for automapped
+    classes.
+
+
+
 Specifying Classes Explicitly
 =============================
+
+.. tip:: If explicit classes are expected to be prominent in an application,
+   consider using :class:`.DeferredReflection` instead.
 
 The :mod:`.sqlalchemy.ext.automap` extension allows classes to be defined
 explicitly, in a way similar to that of the :class:`.DeferredReflection` class.
@@ -151,7 +266,7 @@ established based on the table name we use.  If our schema contains tables
 
     # reflect
     engine = create_engine("sqlite:///mydatabase.db")
-    Base.prepare(engine, reflect=True)
+    Base.prepare(autoload_with=engine)
 
     # we still have Address generated from the tablename "address",
     # but User is the same as Base.classes.User now
@@ -185,7 +300,7 @@ are known as :func:`.classname_for_table`,
 and :func:`.name_for_collection_relationship`.  Any or all of these
 functions are provided as in the example below, where we use a "camel case"
 scheme for class names and a "pluralizer" for collection names using the
-`Inflect <https://pypi.python.org/pypi/inflect>`_ package::
+`Inflect <https://pypi.org/project/inflect>`_ package::
 
     import re
     import inflect
@@ -215,7 +330,7 @@ scheme for class names and a "pluralizer" for collection names using the
 
     engine = create_engine("sqlite:///mydatabase.db")
 
-    Base.prepare(engine, reflect=True,
+    Base.prepare(autoload_with=engine,
                 classname_for_table=camelize_classname,
                 name_for_collection_relationship=pluralize_collection
         )
@@ -263,14 +378,6 @@ follows:
    set of columns, the option :paramref:`_orm.relationship.passive_deletes`
    flag is set to ``True`` in the set of relationship keyword arguments.
    Note that not all backends support reflection of ON DELETE.
-
-   .. versionadded:: 1.0.0 - automap will detect non-nullable foreign key
-      constraints when producing a one-to-many relationship and establish
-      a default cascade of ``all, delete-orphan`` if so; additionally,
-      if the constraint specifies
-      :paramref:`_schema.ForeignKeyConstraint.ondelete`
-      of ``CASCADE`` for non-nullable or ``SET NULL`` for nullable columns,
-      the ``passive_deletes=True`` option is also added.
 
 5. The names of the relationships are determined using the
    :paramref:`.AutomapBase.prepare.name_for_scalar_relationship` and
@@ -333,7 +440,7 @@ options along to all one-to-many relationships::
     Base = automap_base()
 
     engine = create_engine("sqlite:///mydatabase.db")
-    Base.prepare(engine, reflect=True,
+    Base.prepare(autoload_with=engine,
                 generate_relationship=_gen_relationship)
 
 Many-to-Many relationships
@@ -464,7 +571,7 @@ We can resolve this conflict by using an underscore as follows::
         return name
 
 
-    Base.prepare(engine, reflect=True,
+    Base.prepare(autoload_with=engine,
         name_for_scalar_relationship=name_for_scalar_relationship)
 
 Alternatively, we can change the name on the column side.   The columns
@@ -478,7 +585,7 @@ to a new name::
         __tablename__ = 'table_b'
         _table_a = Column('table_a', ForeignKey('table_a.id'))
 
-    Base.prepare(engine, reflect=True)
+    Base.prepare(autoload_with=engine)
 
 
 Using Automap with Explicit Declarations
@@ -529,20 +636,94 @@ the :meth:`.AutomapBase.prepare` method is required; if not called, the classes
 we've declared are in an un-mapped state.
 
 
+.. _automap_intercepting_columns:
+
+Intercepting Column Definitions
+===============================
+
+The :class:`_schema.MetaData` and :class:`_schema.Table` objects support an
+event hook :meth:`_events.DDLEvents.column_reflect` that may be used to intercept
+the information reflected about a database column before the :class:`_schema.Column`
+object is constructed.   For example if we wanted to map columns using a
+naming convention such as ``"attr_<columnname>"``, the event could
+be applied as::
+
+    @event.listens_for(Base.metadata, "column_reflect")
+    def column_reflect(inspector, table, column_info):
+        # set column.key = "attr_<lower_case_name>"
+        column_info['key'] = "attr_%s" % column_info['name'].lower()
+
+    # run reflection
+    Base.prepare(autoload_with=engine)
+
+.. versionadded:: 1.4.0b2 the :meth:`_events.DDLEvents.column_reflect` event
+   may be applied to a :class:`_schema.MetaData` object.
+
+.. seealso::
+
+      :meth:`_events.DDLEvents.column_reflect`
+
+      :ref:`mapper_automated_reflection_schemes` - in the ORM mapping documentation
+
+
 """  # noqa
-from .declarative import declarative_base as _declarative_base
-from .declarative.base import _DeferredMapperConfig
+from __future__ import annotations
+
+import dataclasses
+from typing import Any
+from typing import Callable
+from typing import cast
+from typing import ClassVar
+from typing import Dict
+from typing import List
+from typing import NoReturn
+from typing import Optional
+from typing import overload
+from typing import Set
+from typing import Tuple
+from typing import Type
+from typing import TYPE_CHECKING
+from typing import TypeVar
+from typing import Union
+
 from .. import util
 from ..orm import backref
+from ..orm import declarative_base as _declarative_base
 from ..orm import exc as orm_exc
 from ..orm import interfaces
 from ..orm import relationship
+from ..orm.decl_base import _DeferredMapperConfig
 from ..orm.mapper import _CONFIGURE_MUTEX
 from ..schema import ForeignKeyConstraint
 from ..sql import and_
+from ..util import Properties
+from ..util.typing import Protocol
+
+if TYPE_CHECKING:
+    from ..engine.base import Engine
+    from ..orm.base import RelationshipDirection
+    from ..orm.relationships import ORMBackrefArgument
+    from ..orm.relationships import Relationship
+    from ..sql.schema import Column
+    from ..sql.schema import MetaData
+    from ..sql.schema import Table
+    from ..util import immutabledict
 
 
-def classname_for_table(base, tablename, table):
+_KT = TypeVar("_KT", bound=Any)
+_VT = TypeVar("_VT", bound=Any)
+
+
+class PythonNameForTableType(Protocol):
+    def __call__(self, base: Type[Any], tablename: str, table: Table) -> str:
+        ...
+
+
+def classname_for_table(
+    base: Type[Any],
+    tablename: str,
+    table: Table,
+) -> str:
     """Return the class name that should be used, given the name
     of a table.
 
@@ -575,7 +756,23 @@ def classname_for_table(base, tablename, table):
     return str(tablename)
 
 
-def name_for_scalar_relationship(base, local_cls, referred_cls, constraint):
+class NameForScalarRelationshipType(Protocol):
+    def __call__(
+        self,
+        base: Type[Any],
+        local_cls: Type[Any],
+        referred_cls: Type[Any],
+        constraint: ForeignKeyConstraint,
+    ) -> str:
+        ...
+
+
+def name_for_scalar_relationship(
+    base: Type[Any],
+    local_cls: Type[Any],
+    referred_cls: Type[Any],
+    constraint: ForeignKeyConstraint,
+) -> str:
     """Return the attribute name that should be used to refer from one
     class to another, for a scalar object reference.
 
@@ -600,9 +797,23 @@ def name_for_scalar_relationship(base, local_cls, referred_cls, constraint):
     return referred_cls.__name__.lower()
 
 
+class NameForCollectionRelationshipType(Protocol):
+    def __call__(
+        self,
+        base: Type[Any],
+        local_cls: Type[Any],
+        referred_cls: Type[Any],
+        constraint: ForeignKeyConstraint,
+    ) -> str:
+        ...
+
+
 def name_for_collection_relationship(
-    base, local_cls, referred_cls, constraint
-):
+    base: Type[Any],
+    local_cls: Type[Any],
+    referred_cls: Type[Any],
+    constraint: ForeignKeyConstraint,
+) -> str:
     """Return the attribute name that should be used to refer from one
     class to another, for a collection reference.
 
@@ -628,9 +839,85 @@ def name_for_collection_relationship(
     return referred_cls.__name__.lower() + "_collection"
 
 
+class GenerateRelationshipType(Protocol):
+    @overload
+    def __call__(
+        self,
+        base: Type[Any],
+        direction: RelationshipDirection,
+        return_fn: Callable[..., Relationship[Any]],
+        attrname: str,
+        local_cls: Type[Any],
+        referred_cls: Type[Any],
+        **kw: Any,
+    ) -> Relationship[Any]:
+        ...
+
+    @overload
+    def __call__(
+        self,
+        base: Type[Any],
+        direction: RelationshipDirection,
+        return_fn: Callable[..., ORMBackrefArgument],
+        attrname: str,
+        local_cls: Type[Any],
+        referred_cls: Type[Any],
+        **kw: Any,
+    ) -> ORMBackrefArgument:
+        ...
+
+    def __call__(
+        self,
+        base: Type[Any],
+        direction: RelationshipDirection,
+        return_fn: Union[
+            Callable[..., Relationship[Any]], Callable[..., ORMBackrefArgument]
+        ],
+        attrname: str,
+        local_cls: Type[Any],
+        referred_cls: Type[Any],
+        **kw: Any,
+    ) -> Union[ORMBackrefArgument, Relationship[Any]]:
+        ...
+
+
+@overload
 def generate_relationship(
-    base, direction, return_fn, attrname, local_cls, referred_cls, **kw
-):
+    base: Type[Any],
+    direction: RelationshipDirection,
+    return_fn: Callable[..., Relationship[Any]],
+    attrname: str,
+    local_cls: Type[Any],
+    referred_cls: Type[Any],
+    **kw: Any,
+) -> Relationship[Any]:
+    ...
+
+
+@overload
+def generate_relationship(
+    base: Type[Any],
+    direction: RelationshipDirection,
+    return_fn: Callable[..., ORMBackrefArgument],
+    attrname: str,
+    local_cls: Type[Any],
+    referred_cls: Type[Any],
+    **kw: Any,
+) -> ORMBackrefArgument:
+    ...
+
+
+def generate_relationship(
+    base: Type[Any],
+    direction: RelationshipDirection,
+    return_fn: Union[
+        Callable[..., Relationship[Any]], Callable[..., ORMBackrefArgument]
+    ],
+    attrname: str,
+    local_cls: Type[Any],
+    referred_cls: Type[Any],
+    **kw: Any,
+) -> Union[Relationship[Any], ORMBackrefArgument]:
     r"""Generate a :func:`_orm.relationship` or :func:`.backref`
     on behalf of two
     mapped classes.
@@ -679,6 +966,7 @@ def generate_relationship(
      by the :paramref:`.generate_relationship.return_fn` parameter.
 
     """
+
     if return_fn is backref:
         return return_fn(attrname, **kw)
     elif return_fn is relationship:
@@ -687,7 +975,10 @@ def generate_relationship(
         raise TypeError("Unknown relationship function: %s" % return_fn)
 
 
-class AutomapBase(object):
+ByModuleProperties = Properties[Union["ByModuleProperties", Type[Any]]]
+
+
+class AutomapBase:
     """Base class for an "automap" schema.
 
     The :class:`.AutomapBase` class can be compared to the "declarative base"
@@ -706,54 +997,143 @@ class AutomapBase(object):
 
     __abstract__ = True
 
-    classes = None
+    classes: ClassVar[Properties[Type[Any]]]
     """An instance of :class:`.util.Properties` containing classes.
 
     This object behaves much like the ``.c`` collection on a table.  Classes
     are present under the name they were given, e.g.::
 
         Base = automap_base()
-        Base.prepare(engine=some_engine, reflect=True)
+        Base.prepare(autoload_with=some_engine)
 
         User, Address = Base.classes.User, Base.classes.Address
 
     """
 
+    by_module: ClassVar[ByModuleProperties]
+    """An instance of :class:`.util.Properties` containing a hierarchal
+    structure of dot-separated module names linked to classes.
+
+    This collection is an alternative to the :attr:`.AutomapBase.classes`
+    collection that is useful when making use of the
+    :paramref:`.AutomapBase.prepare.modulename_for_table` parameter, which will
+    apply distinct ``__module__`` attributes to generated classes.
+
+    The default ``__module__`` an automap-generated class is
+    ``sqlalchemy.ext.automap``; to access this namespace using
+    :attr:`.AutomapBase.by_module` looks like::
+
+        User = Base.by_module.sqlalchemy.ext.automap.User
+
+    If a class had a ``__module__`` of ``mymodule.account``, accessing
+    this namespace looks like::
+
+        MyClass = Base.by_module.mymodule.account.MyClass
+
+    .. versionadded:: 2.0
+
+    .. seealso::
+
+        :ref:`automap_by_module`
+
+    """
+
+    metadata: ClassVar[MetaData]
+    """Refers to the :class:`_schema.MetaData` collection that will be used
+    for new :class:`_schema.Table` objects.
+
+    .. seealso::
+
+        :ref:`orm_declarative_metadata`
+
+    """
+
+    _sa_automapbase_bookkeeping: ClassVar[_Bookkeeping]
+
     @classmethod
+    @util.deprecated_params(
+        engine=(
+            "2.0",
+            "The :paramref:`_automap.AutomapBase.prepare.engine` parameter "
+            "is deprecated and will be removed in a future release.  "
+            "Please use the "
+            ":paramref:`_automap.AutomapBase.prepare.autoload_with` "
+            "parameter.",
+        ),
+        reflect=(
+            "2.0",
+            "The :paramref:`_automap.AutomapBase.prepare.reflect` "
+            "parameter is deprecated and will be removed in a future "
+            "release.  Reflection is enabled when "
+            ":paramref:`_automap.AutomapBase.prepare.autoload_with` "
+            "is passed.",
+        ),
+    )
     def prepare(
-        cls,
-        engine=None,
-        reflect=False,
-        schema=None,
-        classname_for_table=classname_for_table,
-        collection_class=list,
-        name_for_scalar_relationship=name_for_scalar_relationship,
-        name_for_collection_relationship=name_for_collection_relationship,
-        generate_relationship=generate_relationship,
-    ):
+        cls: Type[AutomapBase],
+        autoload_with: Optional[Engine] = None,
+        engine: Optional[Any] = None,
+        reflect: bool = False,
+        schema: Optional[str] = None,
+        classname_for_table: Optional[PythonNameForTableType] = None,
+        modulename_for_table: Optional[PythonNameForTableType] = None,
+        collection_class: Optional[Any] = None,
+        name_for_scalar_relationship: Optional[
+            NameForScalarRelationshipType
+        ] = None,
+        name_for_collection_relationship: Optional[
+            NameForCollectionRelationshipType
+        ] = None,
+        generate_relationship: Optional[GenerateRelationshipType] = None,
+        reflection_options: Union[
+            Dict[_KT, _VT], immutabledict[_KT, _VT]
+        ] = util.EMPTY_DICT,
+    ) -> None:
         """Extract mapped classes and relationships from the
-        :class:`_schema.MetaData` and
-        perform mappings.
+        :class:`_schema.MetaData` and perform mappings.
 
-        :param engine: an :class:`_engine.Engine` or
+        For full documentation and examples see
+        :ref:`automap_basic_use`.
+
+        :param autoload_with: an :class:`_engine.Engine` or
          :class:`_engine.Connection` with which
-         to perform schema reflection, if specified.
-         If the :paramref:`.AutomapBase.prepare.reflect` argument is False,
-         this object is not used.
+         to perform schema reflection; when specified, the
+         :meth:`_schema.MetaData.reflect` method will be invoked within
+         the scope of this method.
 
-        :param reflect: if True, the :meth:`_schema.MetaData.reflect`
-         method is called
-         on the :class:`_schema.MetaData` associated with this
-         :class:`.AutomapBase`.
-         The :class:`_engine.Engine` passed via
-         :paramref:`.AutomapBase.prepare.engine` will be used to perform the
-         reflection if present; else, the :class:`_schema.MetaData`
-         should already be
-         bound to some engine else the operation will fail.
+        :param engine: legacy; use :paramref:`.AutomapBase.autoload_with`.
+         Used to indicate the :class:`_engine.Engine` or
+         :class:`_engine.Connection` with which to reflect tables with,
+         if :paramref:`.AutomapBase.reflect` is True.
+
+        :param reflect: legacy; use :paramref:`.AutomapBase.autoload_with`.
+         Indicates that :meth:`_schema.MetaData.reflect` should be invoked.
 
         :param classname_for_table: callable function which will be used to
          produce new class names, given a table name.  Defaults to
          :func:`.classname_for_table`.
+
+        :param modulename_for_table: callable function which will be used to
+         produce the effective ``__module__`` for an internally generated
+         class, to allow for multiple classes of the same name in a single
+         automap base which would be in different "modules".
+
+         Defaults to ``None``, which will indicate that ``__module__`` will not
+         be set explicitly; the Python runtime will use the value
+         ``sqlalchemy.ext.automap`` for these classes.
+
+         When assigning ``__module__`` to generated classes, they can be
+         accessed based on dot-separated module names using the
+         :attr:`.AutomapBase.by_module` collection.   Classes that have
+         an explicit ``__module_`` assigned using this hook do **not** get
+         placed into the :attr:`.AutomapBase.classes` collection, only
+         into :attr:`.AutomapBase.by_module`.
+
+         .. versionadded:: 2.0
+
+         .. seealso::
+
+            :ref:`automap_by_module`
 
         :param name_for_scalar_relationship: callable function which will be
          used to produce relationship names for scalar relationships.  Defaults
@@ -772,56 +1152,163 @@ class AutomapBase(object):
          object is created that represents a
          collection.  Defaults to ``list``.
 
-        :param schema: When present in conjunction with the
-         :paramref:`.AutomapBase.prepare.reflect` flag, is passed to
-         :meth:`_schema.MetaData.reflect`
-         to indicate the primary schema where tables
-         should be reflected from.  When omitted, the default schema in use
-         by the database connection is used.
+        :param schema: Schema name to reflect when reflecting tables using
+         the :paramref:`.AutomapBase.prepare.autoload_with` parameter. The name
+         is passed to the :paramref:`_schema.MetaData.reflect.schema` parameter
+         of :meth:`_schema.MetaData.reflect`. When omitted, the default schema
+         in use by the database connection is used.
 
-         .. versionadded:: 1.1
+         .. note:: The :paramref:`.AutomapBase.prepare.schema`
+            parameter supports reflection of a single schema at a time.
+            In order to include tables from many schemas, use
+            multiple calls to :meth:`.AutomapBase.prepare`.
+
+            For an overview of multiple-schema automap including the use
+            of additional naming conventions to resolve table name
+            conflicts, see the section :ref:`automap_by_module`.
+
+            .. versionadded:: 2.0 :meth:`.AutomapBase.prepare` supports being
+               directly invoked any number of times, keeping track of tables
+               that have already been processed to avoid processing them
+               a second time.
+
+        :param reflection_options: When present, this dictionary of options
+         will be passed to :meth:`_schema.MetaData.reflect`
+         to supply general reflection-specific options like ``only`` and/or
+         dialect-specific options like ``oracle_resolve_synonyms``.
+
+         .. versionadded:: 1.4
 
         """
+
+        for mr in cls.__mro__:
+            if "_sa_automapbase_bookkeeping" in mr.__dict__:
+                automap_base = cast("Type[AutomapBase]", mr)
+                break
+        else:
+            assert False, "Can't locate automap base in class hierarchy"
+
+        glbls = globals()
+        if classname_for_table is None:
+            classname_for_table = glbls["classname_for_table"]
+        if name_for_scalar_relationship is None:
+            name_for_scalar_relationship = glbls[
+                "name_for_scalar_relationship"
+            ]
+        if name_for_collection_relationship is None:
+            name_for_collection_relationship = glbls[
+                "name_for_collection_relationship"
+            ]
+        if generate_relationship is None:
+            generate_relationship = glbls["generate_relationship"]
+        if collection_class is None:
+            collection_class = list
+
+        if autoload_with:
+            reflect = True
+
+        if engine:
+            autoload_with = engine
+
         if reflect:
-            cls.metadata.reflect(
-                engine,
+            assert autoload_with
+            opts = dict(
                 schema=schema,
                 extend_existing=True,
                 autoload_replace=False,
             )
+            if reflection_options:
+                opts.update(reflection_options)
+            cls.metadata.reflect(autoload_with, **opts)  # type: ignore[arg-type]  # noqa: E501
 
-        _CONFIGURE_MUTEX.acquire()
-        try:
-            table_to_map_config = dict(
-                (m.local_table, m)
+        with _CONFIGURE_MUTEX:
+            table_to_map_config: Union[
+                Dict[Optional[Table], _DeferredMapperConfig],
+                Dict[Table, _DeferredMapperConfig],
+            ] = {
+                cast("Table", m.local_table): m
                 for m in _DeferredMapperConfig.classes_for_base(
                     cls, sort=False
                 )
-            )
+            }
 
+            many_to_many: List[
+                Tuple[Table, Table, List[ForeignKeyConstraint], Table]
+            ]
             many_to_many = []
 
-            for table in cls.metadata.tables.values():
+            bookkeeping = automap_base._sa_automapbase_bookkeeping
+            metadata_tables = cls.metadata.tables
+
+            for table_key in set(metadata_tables).difference(
+                bookkeeping.table_keys
+            ):
+                table = metadata_tables[table_key]
+                bookkeeping.table_keys.add(table_key)
+
                 lcl_m2m, rem_m2m, m2m_const = _is_many_to_many(cls, table)
                 if lcl_m2m is not None:
+                    assert rem_m2m is not None
+                    assert m2m_const is not None
                     many_to_many.append((lcl_m2m, rem_m2m, m2m_const, table))
                 elif not table.primary_key:
                     continue
                 elif table not in table_to_map_config:
+                    clsdict: Dict[str, Any] = {"__table__": table}
+                    if modulename_for_table is not None:
+                        new_module = modulename_for_table(
+                            cls, table.name, table
+                        )
+                        if new_module is not None:
+                            clsdict["__module__"] = new_module
+                    else:
+                        new_module = None
+
+                    newname = classname_for_table(cls, table.name, table)
+                    if new_module is None and newname in cls.classes:
+                        util.warn(
+                            "Ignoring duplicate class name "
+                            f"'{newname}' "
+                            "received in automap base for table "
+                            f"{table.key} without "
+                            "``__module__`` being set; consider using the "
+                            "``modulename_for_table`` hook"
+                        )
+                        continue
+
                     mapped_cls = type(
-                        classname_for_table(cls, table.name, table),
-                        (cls,),
-                        {"__table__": table},
+                        newname,
+                        (automap_base,),
+                        clsdict,
                     )
                     map_config = _DeferredMapperConfig.config_for_cls(
                         mapped_cls
                     )
-                    cls.classes[map_config.cls.__name__] = mapped_cls
+                    assert map_config.cls.__name__ == newname
+                    if new_module is None:
+                        cls.classes[newname] = mapped_cls
+
+                    by_module_properties: ByModuleProperties = cls.by_module
+                    for token in map_config.cls.__module__.split("."):
+                        if token not in by_module_properties:
+                            by_module_properties[token] = util.Properties({})
+
+                        props = by_module_properties[token]
+
+                        # we can assert this because the clsregistry
+                        # module would have raised if there was a mismatch
+                        # between modules/classes already.
+                        # see test_cls_schema_name_conflict
+                        assert isinstance(props, Properties)
+                        by_module_properties = props
+
+                    by_module_properties[map_config.cls.__name__] = mapped_cls
+
                     table_to_map_config[table] = map_config
 
             for map_config in table_to_map_config.values():
                 _relationships_for_fks(
-                    cls,
+                    automap_base,
                     map_config,
                     table_to_map_config,
                     collection_class,
@@ -832,7 +1319,7 @@ class AutomapBase(object):
 
             for lcl_m2m, rem_m2m, m2m_const, table in many_to_many:
                 _m2m_relationship(
-                    cls,
+                    automap_base,
                     lcl_m2m,
                     rem_m2m,
                     m2m_const,
@@ -844,10 +1331,10 @@ class AutomapBase(object):
                     generate_relationship,
                 )
 
-            for map_config in _DeferredMapperConfig.classes_for_base(cls):
+            for map_config in _DeferredMapperConfig.classes_for_base(
+                automap_base
+            ):
                 map_config.map()
-        finally:
-            _CONFIGURE_MUTEX.release()
 
     _sa_decl_prepare = True
     """Indicate that the mapping of classes should be deferred.
@@ -871,7 +1358,7 @@ class AutomapBase(object):
     """
 
     @classmethod
-    def _sa_raise_deferred_config(cls):
+    def _sa_raise_deferred_config(cls) -> NoReturn:
         raise orm_exc.UnmappedClassError(
             cls,
             msg="Class %s is a subclass of AutomapBase.  "
@@ -881,7 +1368,16 @@ class AutomapBase(object):
         )
 
 
-def automap_base(declarative_base=None, **kw):
+@dataclasses.dataclass
+class _Bookkeeping:
+    __slots__ = ("table_keys",)
+
+    table_keys: Set[str]
+
+
+def automap_base(
+    declarative_base: Optional[Type[Any]] = None, **kw: Any
+) -> Any:
     r"""Produce a declarative automap base.
 
     This function produces a new base class that is a product of the
@@ -909,11 +1405,20 @@ def automap_base(declarative_base=None, **kw):
     return type(
         Base.__name__,
         (AutomapBase, Base),
-        {"__abstract__": True, "classes": util.Properties({})},
+        {
+            "__abstract__": True,
+            "classes": util.Properties({}),
+            "by_module": util.Properties({}),
+            "_sa_automapbase_bookkeeping": _Bookkeeping(set()),
+        },
     )
 
 
-def _is_many_to_many(automap_base, table):
+def _is_many_to_many(
+    automap_base: Type[Any], table: Table
+) -> Tuple[
+    Optional[Table], Optional[Table], Optional[list[ForeignKeyConstraint]]
+]:
     fk_constraints = [
         const
         for const in table.constraints
@@ -922,7 +1427,7 @@ def _is_many_to_many(automap_base, table):
     if len(fk_constraints) != 2:
         return None, None, None
 
-    cols = sum(
+    cols: List[Column[Any]] = sum(
         [
             [fk.parent for fk in fk_constraint.elements]
             for fk_constraint in fk_constraints
@@ -941,16 +1446,21 @@ def _is_many_to_many(automap_base, table):
 
 
 def _relationships_for_fks(
-    automap_base,
-    map_config,
-    table_to_map_config,
-    collection_class,
-    name_for_scalar_relationship,
-    name_for_collection_relationship,
-    generate_relationship,
-):
-    local_table = map_config.local_table
-    local_cls = map_config.cls  # derived from a weakref, may be None
+    automap_base: Type[Any],
+    map_config: _DeferredMapperConfig,
+    table_to_map_config: Union[
+        Dict[Optional[Table], _DeferredMapperConfig],
+        Dict[Table, _DeferredMapperConfig],
+    ],
+    collection_class: type,
+    name_for_scalar_relationship: NameForScalarRelationshipType,
+    name_for_collection_relationship: NameForCollectionRelationshipType,
+    generate_relationship: GenerateRelationshipType,
+) -> None:
+    local_table = cast("Optional[Table]", map_config.local_table)
+    local_cls = cast(
+        "Optional[Type[Any]]", map_config.cls
+    )  # derived from a weakref, may be None
 
     if local_table is None or local_cls is None:
         return
@@ -975,7 +1485,7 @@ def _relationships_for_fks(
                 automap_base, referred_cls, local_cls, constraint
             )
 
-            o2m_kws = {}
+            o2m_kws: Dict[str, Union[str, bool]] = {}
             nullable = False not in {fk.parent.nullable for fk in fks}
             if not nullable:
                 o2m_kws["cascade"] = "all, delete-orphan"
@@ -1004,7 +1514,7 @@ def _relationships_for_fks(
                         referred_cls,
                         local_cls,
                         collection_class=collection_class,
-                        **o2m_kws
+                        **o2m_kws,
                     )
                 else:
                     backref_obj = None
@@ -1024,7 +1534,7 @@ def _relationships_for_fks(
                     if not create_backref:
                         referred_cfg.properties[
                             backref_name
-                        ].back_populates = relationship_name
+                        ].back_populates = relationship_name  # type: ignore[union-attr] # noqa: E501
             elif create_backref:
                 rel = generate_relationship(
                     automap_base,
@@ -1036,28 +1546,30 @@ def _relationships_for_fks(
                     foreign_keys=[fk.parent for fk in constraint.elements],
                     back_populates=relationship_name,
                     collection_class=collection_class,
-                    **o2m_kws
+                    **o2m_kws,
                 )
                 if rel is not None:
                     referred_cfg.properties[backref_name] = rel
                     map_config.properties[
                         relationship_name
-                    ].back_populates = backref_name
+                    ].back_populates = backref_name  # type: ignore[union-attr]
 
 
 def _m2m_relationship(
-    automap_base,
-    lcl_m2m,
-    rem_m2m,
-    m2m_const,
-    table,
-    table_to_map_config,
-    collection_class,
-    name_for_scalar_relationship,
-    name_for_collection_relationship,
-    generate_relationship,
-):
-
+    automap_base: Type[Any],
+    lcl_m2m: Table,
+    rem_m2m: Table,
+    m2m_const: List[ForeignKeyConstraint],
+    table: Table,
+    table_to_map_config: Union[
+        Dict[Optional[Table], _DeferredMapperConfig],
+        Dict[Table, _DeferredMapperConfig],
+    ],
+    collection_class: type,
+    name_for_scalar_relationship: NameForCollectionRelationshipType,
+    name_for_collection_relationship: NameForCollectionRelationshipType,
+    generate_relationship: GenerateRelationshipType,
+) -> None:
     map_config = table_to_map_config.get(lcl_m2m, None)
     referred_cfg = table_to_map_config.get(rem_m2m, None)
     if map_config is None or referred_cfg is None:
@@ -1075,6 +1587,11 @@ def _m2m_relationship(
 
     create_backref = backref_name not in referred_cfg.properties
 
+    if table in table_to_map_config:
+        overlaps = "__*"
+    else:
+        overlaps = None
+
     if relationship_name not in map_config.properties:
         if create_backref:
             backref_obj = generate_relationship(
@@ -1085,9 +1602,11 @@ def _m2m_relationship(
                 referred_cls,
                 local_cls,
                 collection_class=collection_class,
+                overlaps=overlaps,
             )
         else:
             backref_obj = None
+
         rel = generate_relationship(
             automap_base,
             interfaces.MANYTOMANY,
@@ -1095,13 +1614,14 @@ def _m2m_relationship(
             relationship_name,
             local_cls,
             referred_cls,
+            overlaps=overlaps,
             secondary=table,
             primaryjoin=and_(
                 fk.column == fk.parent for fk in m2m_const[0].elements
-            ),
+            ),  # type: ignore [arg-type]
             secondaryjoin=and_(
                 fk.column == fk.parent for fk in m2m_const[1].elements
-            ),
+            ),  # type: ignore [arg-type]
             backref=backref_obj,
             collection_class=collection_class,
         )
@@ -1111,7 +1631,7 @@ def _m2m_relationship(
             if not create_backref:
                 referred_cfg.properties[
                     backref_name
-                ].back_populates = relationship_name
+                ].back_populates = relationship_name  # type: ignore[union-attr] # noqa: E501
     elif create_backref:
         rel = generate_relationship(
             automap_base,
@@ -1120,13 +1640,14 @@ def _m2m_relationship(
             backref_name,
             referred_cls,
             local_cls,
+            overlaps=overlaps,
             secondary=table,
             primaryjoin=and_(
                 fk.column == fk.parent for fk in m2m_const[1].elements
-            ),
+            ),  # type: ignore [arg-type]
             secondaryjoin=and_(
                 fk.column == fk.parent for fk in m2m_const[0].elements
-            ),
+            ),  # type: ignore [arg-type]
             back_populates=relationship_name,
             collection_class=collection_class,
         )
@@ -1134,4 +1655,4 @@ def _m2m_relationship(
             referred_cfg.properties[backref_name] = rel
             map_config.properties[
                 relationship_name
-            ].back_populates = backref_name
+            ].back_populates = backref_name  # type: ignore[union-attr]

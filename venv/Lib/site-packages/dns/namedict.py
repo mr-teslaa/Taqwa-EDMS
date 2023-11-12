@@ -27,7 +27,8 @@
 
 """DNS name dictionary"""
 
-from collections.abc import MutableMapping
+# pylint seems to be confused about this one!
+from collections.abc import MutableMapping  # pylint: disable=no-name-in-module
 
 import dns.name
 
@@ -62,7 +63,7 @@ class NameDict(MutableMapping):
 
     def __setitem__(self, key, value):
         if not isinstance(key, dns.name.Name):
-            raise ValueError('NameDict key must be a name')
+            raise ValueError("NameDict key must be a name")
         self.__store[key] = value
         self.__update_max_depth(key)
 
@@ -85,7 +86,7 @@ class NameDict(MutableMapping):
         return key in self.__store
 
     def get_deepest_match(self, name):
-        """Find the deepest match to *fname* in the dictionary.
+        """Find the deepest match to *name* in the dictionary.
 
         The deepest match is the longest name in the dictionary which is
         a superdomain of *name*.  Note that *superdomain* includes matching
