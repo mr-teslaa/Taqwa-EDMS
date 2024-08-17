@@ -1,0 +1,35 @@
+{% extends 'layouts/base.html' %}
+{% block body %}
+    <div class="container">
+        <nav class="navbar navbar-expand-lg">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">TAQWAEMS</a>
+                <button class="navbar-toggler"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#navbarText"
+                        aria-controls="navbarText"
+                        aria-expanded="false"
+                        aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarText">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0 gap-2">
+                        <li class="nav-item">
+                            <a class="btn btn-primary" href="#">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="btn btn-secondary" href="#">Register Institute</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <main>
+        <div class="container text-center">
+            <h4 class="fs-1 fw-light mt-5 mb-3">Admission going on</h4>
+            <a href="{{ url_for('admission.student_admission') }}" class="btn btn-secondary">Apply for admission</a>
+        </div>
+    </main>
+{% endblock body %}

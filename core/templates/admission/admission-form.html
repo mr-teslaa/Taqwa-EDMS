@@ -1,0 +1,400 @@
+{% extends 'layouts/base.html' %}
+{% block custom_css %}
+{% endblock custom_css %}
+{% block body %}
+<div class="row m-0">
+    <div class="col-12 p-0">
+        <div class="login-card login-dark">
+            <div class="w-100 mx-3">
+                <div class="text-center">
+                    <a class="mb-2" href="index.html">
+                        <span class="fs-4">TAQWAEMS</span>
+                    </a>
+                    <h4 class="fs-2 fw-light mb-5">Apply for admission</h4>
+                </div>
+                <div>
+                    <form class="theme-form" action="" method="POST">
+                        <!-- START - STUDENT INFORMATION -->
+                        <div class="row">
+                            <div class="col-12">
+                                <p class="fs-4">Student Information</p>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Student Name (English)</label>
+                                    <input type="text" name="student_name_english" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Student Name (বাংলা)</label>
+                                    <input type="text" name="student_name_bangla" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mt-2">
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <label class="form-label">Apply for class</label>
+                                    <select class="form-select" name="" id="">
+                                        <option selected>--- Select Class ---</option>
+                                        <option value="play">Play</option>
+                                        <option value="nursary">Nursary</option>
+                                        <option value="one">One</option>
+                                        <option value="two">Two</option>
+                                        <option value="three">Three</option>
+                                        <option value="four">Four</option>
+                                        <option value="five">Five</option>
+                                        <option value="six">Six</option>
+                                        <option value="seven">Seven</option>
+                                        <option value="eight">Eight</option>
+                                        <option value="nine">Nine</option>
+                                        <option value="ten">Ten</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <label class="form-label">Date Of Birth</label>
+                                    <input type="date" name="date_of_birth" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <label class="form-label">Birth Certificate No</label>
+                                    <input type="text" name="birth_certificate" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <label class="form-label">Gender</label>
+                                    <select class="form-select">
+                                        <option selected>--- Select Gender ---</option>
+                                        <option value="1">Male</option>
+                                        <option value="2">Female</option>
+                                        <option value="3">Other</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <label class="form-label">Religion</label>
+                                    <select class="form-select" aria-label="Default select example">
+                                        <option selected>Choose...</option>
+                                        <option value="1">Islam</option>
+                                        <option value="2">Sonaton</option>
+                                        <option value="3">Christian</option>
+                                        <option value="4">Buddhism</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <label class="form-label">Blood Group</label>
+                                    <select class="form-select" aria-label="Default select example">
+                                        <option selected>Choose...</option>
+                                        <option value="1">A +(ve)</option>
+                                        <option value="2">A -(ve)</option>
+                                        <option value="3">B +(ve)</option>
+                                        <option value="4">B -(ve)</option>
+                                        <option value="5">O +(ve)</option>
+                                        <option value="7">AB + (ve)</option>
+                                        <option value="8">AB -(ve)</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <label class="form-label">Nationality</label>
+                                    <input type="text" name="nationality" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <label class="form-label">Marital status</label>
+                                    <select class="form-select" aria-label="Default select example">
+                                        <option selected>--- select one --</option>
+                                        <option value="1">Married</option>
+                                        <option value="2">Unmarried</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END - STUDENT INFORMATION -->
+
+                        <!-- START - PARENT'S INFORMATION -->
+                        <div class="row mt-2">
+                            <div class="col-12 mt-5">
+                                <p class="fs-4">Parent's Information</p>
+                            </div>
+
+                            <div class="col-md-6">
+                                <!-- FATHER INFORMATION -->
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="mb-3">
+                                            <label class="form-label">Father Name English</label>
+                                            <input type="text" name="father_name_english" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="mb-3">
+                                            <label class="form-label">Father Name (বাংলা)</label>
+                                            <input type="text" name="father_name_bangla" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="mb-3">
+                                            <label class="form-label">Father Mobile No</label>
+                                            <input type="text" name="fater_mobile" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="mb-3">
+                                            <label class="form-label">Father NID/Pasport</label>
+                                            <input type="text" name="father_nid" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <!-- FATHER INFORMATION -->
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="mb-3">
+                                            <label class="form-label">Mother Name (English)</label>
+                                            <input type="text" name="mother_name_english" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="mb-3">
+                                            <label class="form-label">Mother Name (বাংলা)</label>
+                                            <input type="text" name="mother_name_bangla" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="mb-3">
+                                            <label class="form-label">Mother Mobile No</label>
+                                            <input type="text" name="mother_mobile" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="mb-3">
+                                            <label class="form-label">Mother Nid/ Pasport</label>
+                                            <input type="text" name="mother_nid" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- END - PARENT'S INFORMATION -->
+
+                        <!-- START - PRESENT ADDRESS -->
+                        <div class="row mt-4">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label mb-4">Present Address</label>
+                                    <textarea name="present_address" class="form-control" rows="3"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Division</label>
+                                    <input type="text" name="division" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">District/Zilla</label>
+                                    <input type="text" name="district" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Upazilla</label>
+                                    <input type="text" name="upazilla" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Post Office</label>
+                                    <input type="text" name="post_office" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Post Code</label>
+                                    <input type="text" name="post_code" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END - PRESENT ADDRESS -->
+
+
+                        <!-- START - PARMANENT ADDRESS -->
+                        <div class="row mt-4">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Permanant Address</label>
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                                        <label class="form-check-label" for="exampleCheck1">same as present
+                                            address</label>
+                                    </div>
+                                    <textarea name="present_address" class="form-control" rows="3"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Division</label>
+                                    <input type="text" name="division" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">District/Zilla</label>
+                                    <input type="text" name="district" class="form-control">
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Upazilla</label>
+                                    <input type="text" name="upazilla" class="form-control">
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Post Office</label>
+                                    <input type="text" name="post_office" class="form-control">
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Post Code</label>
+                                    <input type="text" name="post_code" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END - PARMANENT ADDRESS -->
+
+                        <!-- START - Guardian Information -->
+                        <div class="row mt-2">
+                            <div class="col-12 mt-5">
+                                <p class="fs-4">Guardian Information</p>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="mb-3">
+                                    <label class="form-label">Guardian Name</label>
+                                    <input type="text" name="guardian_name" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="mb-3">
+                                    <label class="form-label">Raltionship</label>
+                                    <input type="text" name="raltionship" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="mb-3">
+                                    <label class="form-label">Guardian Mobile</label>
+                                    <input type="text" name="guardian_mobile" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="mb-3">
+                                    <label class="form-label">Occupation</label>
+                                    <input type="text" name="guardian_occupation" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END - Guardian Information -->
+
+                        <!-- START - PREVIOUSE ACADEMIC INFO -->
+                        <div class="row mt-3">
+                            <div class="col-12">
+                                <p class="fs-4">
+                                    Previouse Institute Information
+                                    <span class="fs-sm text-warning">(If applicable)</span>
+                                </p>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12">
+                                    <h5>Academic Information</h5>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Institute Name</label>
+                                        <input type="text" name="institute" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Institute Address</label>
+                                        <input type="text" name="institute" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label class="form-label">Passing Year</label>
+                                        <input type="text" name="year" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label class="form-label">Previouse Roll</label>
+                                        <input type="text" name="roll" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label class="form-label">Class</label>
+                                        <input type="text" name="class" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- START - PREVIOUSE ACADEMIC INFO -->
+
+                        <!-- START - IMAGES -->
+                        <div class="row mt-3">
+                            <div class="col-12">
+                                <div class="mb-3">
+                                    <label class="form-label" for="photo">Photo</label>
+                                    <input class="form-control" type="file">
+                                </div>   
+                            </div>
+                        </div>
+                        <!-- END - IMAGES -->
+                        <div class="form-group mb-0">
+                            <div class="checkbox p-0">
+                                <input id="agree_tos" type="checkbox">
+                                <label for="agree_tos">
+                                    Agree with <a class="ms-2" href="#">Terms of service</a> and <a class="ms-2" href="#">Privacy Policy</a>
+                                </label>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary mt-5">Apply fof admission</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock body %}
+{% block custom_js %}
+{% endblock custom_js %}
