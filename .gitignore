@@ -5,3 +5,5 @@ __pycache__
 venv
 .code/
 env
+/core/static/uploads/
+migrations/
