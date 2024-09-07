@@ -19,7 +19,7 @@ def generate_random_filename(filename):
     return f"{random_hex}{file_ext}"
 
 
-@admission_bp.route('/student/admission', methods=['GET', 'POST'])
+@admission_bp.route('/', methods=['GET', 'POST'])
 def student_admission():
     if request.method == 'POST':
         student_data = {
@@ -82,4 +82,4 @@ def student_admission():
         flash('Application submitted successfully!', 'success')
         return redirect(url_for('admission.student_admission'))
 
-    return render_template('admission/admission-form.html')
+    return render_template('admission/admission.html')

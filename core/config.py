@@ -1,22 +1,27 @@
 import os
+from dotenv import load_dotenv
+from dotenv import find_dotenv
+
+load_dotenv(find_dotenv())
 
 class Config:
     SECRET_KEY='248fb9a5bdffa13c0bc136504ebf75c2'
-    # SQLALCHEMY_DATABASE_URI='sqlite:///taqwaems.db'
+    SQLALCHEMY_DATABASE_URI=os.getenv('SQLALCHEMY_DATABASE_URI_SQLITE')
     
-    # =======FOR TEST WITH XAMPP LOCAL SERVER ===========
-    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:@localhost/taqwaems'
+    # --> IF YOU ARE USING MYSQL WITH XAMP
+    # SQLALCHEMY_DATABASE_URI = os.getenv('SQLALCHEMY_DATABASE_URI_MYSQL')
     
     # CREATE PATH FOR UPLOAD
     BASE_DIR = os.path.abspath(os.path.dirname(__file__))
     UPLOAD_FOLDER = os.path.join(BASE_DIR, 'static', 'uploads') 
-    ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'} 
+    ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'} 
+    
     # Ensure the upload folder exists
     if not os.path.exists(UPLOAD_FOLDER):
         os.makedirs(UPLOAD_FOLDER)
 
     # SITE NAME
-    SITE_TITLE = 'TAQWA EMS'
+    SITE_TITLE = 'TAQWA EDMS'
 
     # SQLALCHEMY_TRACK_MODIFICATIONS = False
     # MAIL_SERVER = 'smtp.gmail.com'

@@ -1,0 +1,21 @@
+<nav class="navbar navbar-expand-lg">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">Taqwa EDMS</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="btn btn-outline-dark rounded-pill me-3"
+                        href="{{ url_for('admission.student_admission') }}">Apply for
+                        admission</a>
+                </li>
+                <li class="nav-item">
+                    <a class="btn btn-primary rounded-pill px-4" href="{{ url_for('auth.login') }}">Login</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
