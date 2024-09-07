@@ -39,6 +39,21 @@
               type="text/css"
               href="{{ url_for('static', filename='assets/css/vendors/feather-icon.css') }}">
         <!-- Plugins css start-->
+        <link rel="stylesheet"
+              type="text/css"
+              href="{{ url_for('static', filename='assets/css/vendors/slick.css') }}">
+        <link rel="stylesheet"
+              type="text/css"
+              href="{{ url_for('static', filename='assets/css/vendors/slick-theme.css') }}">
+        <link rel="stylesheet"
+              type="text/css"
+              href="{{ url_for('static', filename='assets/css/vendors/scrollbar.css') }}">
+        <link rel="stylesheet"
+              type="text/css"
+              href="{{ url_for('static', filename='assets/css/vendors/animate.css') }}">
+        <link rel="stylesheet"
+              type="text/css"
+              href="{{ url_for('static', filename='assets/css/vendors/datatables.css') }}">
         <!-- Plugins css Ends-->
         <!-- Bootstrap css-->
         <link rel="stylesheet"
@@ -75,14 +90,29 @@
             <script src="{{ url_for('static', filename='assets/js/icons/feather-icon/feather.min.js') }}"></script>
             <script src="{{ url_for('static', filename='assets/js/icons/feather-icon/feather-icon.js') }}"></script>
             <!-- scrollbar js-->
+            <script src="{{ url_for('static', filename='assets/js/scrollbar/custom.js') }}"></script>
+            <script src="{{ url_for('static', filename='assets/js/scrollbar/simplebar.js') }}"></script>
             <!-- Sidebar jquery-->
             <script src="{{ url_for('static', filename='assets/js/config.js') }}"></script>
             <!-- Plugins JS start-->
+            <script src="{{ url_for('static', filename='assets/js/sidebar-menu.js') }}"></script>
+            <script src="{{ url_for('static', filename='assets/js/sidebar-pin.js') }}"></script>
+            <script src="{{ url_for('static', filename='assets/js/slick/slick.min.js') }}"></script>
+            <script src="{{ url_for('static', filename='assets/js/slick/slick.js') }}"></script>
+            <script src="{{ url_for('static', filename='assets/js/header-slick.js') }}"></script>
+            <script src="{{ url_for('static', filename='assets/js/chart/apex-chart/apex-chart.js') }}"></script>
+            <script src="{{ url_for('static', filename='assets/js/chart/apex-chart/stock-prices.js') }}"></script>
+            <script src="{{ url_for('static', filename='assets/js/chart/apex-chart/moment.min.js') }}"></script>
             <!-- calendar js-->
+            <script src="{{ url_for('static', filename='assets/js/datatable/datatables/jquery.dataTables.min.js') }}"></script>
+            <script src="{{ url_for('static', filename='assets/js/datatable/datatables/datatable.custom.js') }}"></script>
+            <script src="{{ url_for('static', filename='assets/js/datatable/datatables/datatable.custom1.js') }}"></script>
+            <script src="{{ url_for('static', filename='assets/js/dashboard/dashboard_4.js') }}"></script>
             <!-- Plugins JS Ends-->
             <!-- Theme js-->
             <script src="{{ url_for('static', filename='assets/js/script.js') }}"></script>
             <script src="{{ url_for('static', filename='assets/js/script1.js') }}"></script>
+            <script src="{{ url_for('static', filename='assets/js/theme-customizer/customizer.js') }}"></script>
             <!-- Plugin used-->
         </div>
     </body>

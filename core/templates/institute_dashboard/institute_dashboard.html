@@ -1,0 +1,1590 @@
+{% extends 'layouts/base.html' %}
+{% block body %}
+<div class="loader-wrapper"> 
+	<div class="loader loader-1">
+	  <div class="loader-outter"></div>
+	  <div class="loader-inner"></div>
+	  <div class="loader-inner-1"></div>
+	</div>
+  </div>
+  <!-- loader ends-->
+  <!-- tap on top starts-->
+  <div class="tap-top"><i data-feather="chevrons-up"></i></div>
+  <!-- tap on tap ends-->
+  <!-- page-wrapper StartMy Currencies-->
+  <div class="page-wrapper compact-wrapper" id="pageWrapper">
+	<div class="page-header row">
+	  <div class="header-logo-wrapper col-auto">
+		<div class="logo-wrapper"><a href="index.html"><img class="img-fluid for-light" src="../assets/images/logo/logo.png" alt=""/><img class="img-fluid for-dark" src="../assets/images/logo/logo_light.png" alt=""/></a></div>
+	  </div>
+	  <div class="col-4 col-xl-4 page-title">
+		<h4 class="f-w-700"> Education Dashboard</h4>
+		<nav>
+		  <ol class="breadcrumb justify-content-sm-start align-items-center mb-0">
+			<li class="breadcrumb-item"><a href="index.html"> <i data-feather="home"> </i></a></li>
+			<li class="breadcrumb-item f-w-400">Dashboard</li>
+			<li class="breadcrumb-item f-w-400 active">Education</li>
+		  </ol>
+		</nav>
+	  </div>
+	  <!-- Page Header Start-->
+	  <div class="header-wrapper col m-0">
+		<div class="row">
+		  <form class="form-inline search-full col" action="#" method="get">
+			<div class="form-group w-100">
+			  <div class="Typeahead Typeahead--twitterUsers">
+				<div class="u-posRelative">
+				  <input class="demo-input Typeahead-input form-control-plaintext w-100" type="text" placeholder="Search Mofi .." name="q" title="" autofocus>
+				  <div class="spinner-border Typeahead-spinner" role="status"><span class="sr-only">Loading...</span></div><i class="close-search" data-feather="x"></i>
+				</div>
+				<div class="Typeahead-menu"></div>
+			  </div>
+			</div>
+		  </form>
+		  <div class="header-logo-wrapper col-auto p-0">
+			<div class="logo-wrapper"><a href="index.html"><img class="img-fluid" src="../assets/images/logo/logo.png" alt=""></a></div>
+			<div class="toggle-sidebar">
+			  <svg class="stroke-icon sidebar-toggle status_toggle middle">
+				<use href="../assets/svg/icon-sprite.svg#toggle-icon"></use>
+			  </svg>
+			</div>
+		  </div>
+		  <div class="nav-right col-xxl-8 col-xl-6 col-md-7 col-8 pull-right right-header p-0 ms-auto">
+			<ul class="nav-menus">
+			  <li>                         <span class="header-search">
+				  <svg>
+					<use href="../assets/svg/icon-sprite.svg#search"></use>
+				  </svg></span></li>
+			  <li>
+				<div class="form-group w-100">
+				  <div class="Typeahead Typeahead--twitterUsers">
+					<div class="u-posRelative d-flex align-items-center">
+					  <svg class="search-bg svg-color"> 
+						<use href="../assets/svg/icon-sprite.svg#search"></use>
+					  </svg>
+					  <input class="demo-input py-0 Typeahead-input form-control-plaintext w-100" type="text" placeholder="Search Mofi .." name="q" title="">
+					</div>
+				  </div>
+				</div>
+			  </li>
+			  <li class="fullscreen-body">                       <span>
+				  <svg id="maximize-screen">
+					<use href="../assets/svg/icon-sprite.svg#full-screen"></use>
+				  </svg></span></li>
+			  <li class="onhover-dropdown">
+				<div class="notification-box">
+				  <svg>
+					<use href="../assets/svg/icon-sprite.svg#notification"></use>
+				  </svg><span class="badge rounded-pill badge-primary">4 </span>
+				</div>
+				<div class="onhover-show-div notification-dropdown">
+				  <h5 class="f-18 f-w-600 mb-0 dropdown-title">Notifications                               </h5>
+				  <ul class="notification-box">
+					<li class="toast default-show-toast align-items-center border-0 fade show" aria-live="assertive" aria-atomic="true" data-bs-autohide="false">
+					  <div class="d-flex justify-content-between">
+						<div class="toast-body d-flex p-0">
+						  <div class="flex-shrink-0 bg-light-primary"><img class="w-auto" src="../assets/images/dashboard/icon/wallet.png" alt="Wallet"></div>
+						  <div class="flex-grow-1"> <a href="private-chat.html">
+							  <h6 class="m-0">Daily offer added</h6></a>
+							<p class="m-0">User-only offer added</p>
+						  </div>
+						</div>
+						<button class="btn-close btn-close-white shadow-none" type="button" data-bs-dismiss="toast" aria-label="Close"></button>
+					  </div>
+					</li>
+					<li class="toast default-show-toast align-items-center border-0 fade show" aria-live="assertive" aria-atomic="true" data-bs-autohide="false"> 
+					  <div class="d-flex justify-content-between">
+						<div class="toast-body d-flex p-0">
+						  <div class="flex-shrink-0 bg-light-info"><img class="w-auto" src="../assets/images/dashboard/icon/shield-dne.png" alt="Shield-dne"></div>
+						  <div class="flex-grow-1"> <a href="private-chat.html">
+							  <h6 class="m-0">Product Review</h6></a>
+							<p class="m-0">Changed to a workflow</p>
+						  </div>
+						</div>
+						<button class="btn-close btn-close-white shadow-none" type="button" data-bs-dismiss="toast" aria-label="Close"></button>
+					  </div>
+					</li>
+					<li class="toast default-show-toast align-items-center border-0 fade show" aria-live="assertive" aria-atomic="true" data-bs-autohide="false">  
+					  <div class="d-flex justify-content-between">
+						<div class="toast-body d-flex p-0">
+						  <div class="flex-shrink-0 bg-light-warning"><img class="w-auto" src="../assets/images/dashboard/icon/graph.png" alt="Graph"></div>
+						  <div class="flex-grow-1"> <a href="private-chat.html">
+							  <h6 class="m-0">Return Products</h6></a>
+							<p class="m-0">52 items were returned</p>
+						  </div>
+						</div>
+						<button class="btn-close btn-close-white shadow-none" type="button" data-bs-dismiss="toast" aria-label="Close"></button>
+					  </div>
+					</li>
+					<li class="toast default-show-toast align-items-center border-0 fade show" aria-live="assertive" aria-atomic="true" data-bs-autohide="false"> 
+					  <div class="d-flex justify-content-between"> 
+						<div class="toast-body d-flex p-0">
+						  <div class="flex-shrink-0 bg-light-tertiary"><img class="w-auto" src="../assets/images/dashboard/icon/ticket-star.png" alt="Ticket-star"></div>
+						  <div class="flex-grow-1"> <a href="private-chat.html">
+							  <h6 class="m-0">Recently Paid</h6></a>
+							<p class="m-0">Card payment of $343   </p>
+						  </div>
+						</div>
+						<button class="btn-close btn-close-white shadow-none" type="button" data-bs-dismiss="toast" aria-label="Close"></button>
+					  </div>
+					</li>
+				  </ul>
+				</div>
+			  </li>
+			  <li class="onhover-dropdown">
+				<svg>
+				  <use href="../assets/svg/icon-sprite.svg#header-bookmark"></use>
+				</svg>
+				<div class="onhover-show-div bookmark-flip">
+				  <div class="flip-card">
+					<div class="flip-card-inner">
+					  <div class="front">
+						<h5 class="f-18 f-w-600 mb-0 dropdown-title">Bookmark</h5>
+						<ul class="bookmark-dropdown">
+						  <li>
+							<div class="row">
+							  <div class="col-4 text-center">
+								<div class="bookmark-content">
+								  <div class="bookmark-icon bg-light-primary"><i class="stroke-primary" data-feather="file-text"></i></div><span class="font-primary">Forms</span>
+								</div>
+							  </div>
+							  <div class="col-4 text-center">
+								<div class="bookmark-content">
+								  <div class="bookmark-icon bg-light-secondary"><i class="stroke-secondary" data-feather="user"></i></div><span class="font-secondary">Profile</span>
+								</div>
+							  </div>
+							  <div class="col-4 text-center">
+								<div class="bookmark-content">
+								  <div class="bookmark-icon bg-light-warning"><i class="stroke-warning" data-feather="server"></i></div><span class="font-warning">Tables</span>
+								</div>
+							  </div>
+							</div>
+						  </li>
+						  <li class="text-center"><a class="flip-btn f-w-700 btn btn-primary w-100" id="flip-btn" href="javascript:void(0)">Add Bookmark</a></li>
+						</ul>
+					  </div>
+					  <div class="back">
+						<ul>
+						  <li>
+							<div class="bookmark-dropdown flip-back-content">
+							  <input type="text" placeholder="search...">
+							</div>
+						  </li>
+						  <li><a class="f-w-700 d-block flip-back btn btn-primary w-100" id="flip-back" href="javascript:void(0)">Back</a></li>
+						</ul>
+					  </div>
+					</div>
+				  </div>
+				</div>
+			  </li>
+			  <li>
+				<div class="mode">
+				  <svg>
+					<use href="../assets/svg/icon-sprite.svg#moon"></use>
+				  </svg>
+				</div>
+			  </li>
+			  <li class="onhover-dropdown">
+				<div class="notification-box">
+				  <svg>
+					<use href="../assets/svg/icon-sprite.svg#header-message"></use>
+				  </svg><span class="badge rounded-pill badge-info">3 </span>
+				</div>
+				<div class="onhover-show-div notification-dropdown">
+				  <h5 class="f-18 f-w-600 mb-0 dropdown-title">Messages             </h5>
+				  <ul class="messages">
+					<li class="d-flex b-light1-primary gap-2"> 
+					  <div class="flex-shrink-0"><img src="../assets/images/dashboard-2/user/1.png" alt="Graph"></div>
+					  <div class="flex-grow-1"> <a href="private-chat.html">
+						  <h6 class="font-primary f-w-600">Hackett Yessenia</h6></a>
+						<p>Hello Miss...&#128522;</p>
+					  </div><span>2 hours</span>
+					</li>
+					<li class="d-flex b-light1-secondary gap-2"> 
+					  <div class="flex-shrink-0"><img src="../assets/images/dashboard-2/user/2.png" alt="Graph"></div>
+					  <div class="flex-grow-1"> <a href="private-chat.html">
+						  <h6 class="font-secondary f-w-600">schneider Adan</h6></a>
+						<p>Wishing You a Happy Birthday Dear..  🥳&#127882;</p>
+					  </div><span>3 hours</span>
+					</li>
+					<li class="d-flex b-light1-success gap-2"> 
+					  <div class="flex-shrink-0"><img src="../assets/images/dashboard-2/user/3.png" alt="Graph"></div>
+					  <div class="flex-grow-1"> <a href="private-chat.html">
+						  <h6 class="font-success f-w-600">Mahdi Gholizadeh</h6></a>
+						<p>Hello Dear!! This Theme Is Very beautiful</p>
+					  </div><span>5 hours</span>
+					</li>
+					<li class="bg-transparent"><a class="f-w-700 btn btn-primary w-100" href="letter-box.html">View all</a></li>
+				  </ul>
+				</div>
+			  </li>
+			  <li class="cart-nav onhover-dropdown">
+				<div class="cart-box">
+				  <svg>
+					<use href="../assets/svg/icon-sprite.svg#stroke-ecommerce"></use>
+				  </svg>
+				</div>
+				<div class="cart-dropdown onhover-show-div">
+				  <h5 class="f-18 f-w-600 mb-0 dropdown-title">Cart</h5>
+				  <ul>
+					<li>
+					  <div class="d-flex"><img class="img-fluid b-r-5 me-3 img-60" src="../assets/images/other-images/cart-img.jpg" alt="">
+						<div class="flex-grow-1"><span class="f-w-600">Furniture Chair for Home</span>
+						  <div class="qty-box">
+							<div class="input-group"><span class="input-group-prepend">
+								<button class="btn quantity-left-minus" type="button" data-type="minus" data-field="">-</button></span>
+							  <input class="form-control input-number" type="text" name="quantity" value="1"><span class="input-group-prepend">
+								<button class="btn quantity-right-plus" type="button" data-type="plus" data-field="">+</button></span>
+							</div>
+						  </div>
+						  <h6 class="font-primary">$500</h6>
+						</div>
+						<div class="close-circle"><a class="bg-danger" href="#"><i data-feather="x"></i></a></div>
+					  </div>
+					</li>
+					<li>
+					  <div class="d-flex"><img class="img-fluid b-r-5 me-3 img-60" src="../assets/images/other-images/table-img.jpg" alt="">
+						<div class="flex-grow-1"><span class="f-w-600">Furniture Table for Office</span>
+						  <div class="qty-box">
+							<div class="input-group"><span class="input-group-prepend">
+								<button class="btn quantity-left-minus" type="button" data-type="minus" data-field="">-</button></span>
+							  <input class="form-control input-number" type="text" name="quantity" value="1"><span class="input-group-prepend">
+								<button class="btn quantity-right-plus" type="button" data-type="plus" data-field="">+</button></span>
+							</div>
+						  </div>
+						  <h6 class="font-primary">$500.00</h6>
+						</div>
+						<div class="close-circle"><a class="bg-danger" href="#"><i data-feather="x"></i></a></div>
+					  </div>
+					</li>
+					<li class="total">
+					  <h6 class="mb-0">Order Total : <span class="f-w-600 f-right">$1000.00</span></h6>
+					</li>
+					<li class="text-center"><a class="d-block view-cart f-w-700 btn btn-primary w-100" href="cart.html">View Cart</a><a class="btn btn-primary view-checkout w-100 f-w-700" href="checkout.html">Checkout</a></li>
+				  </ul>
+				</div>
+			  </li>
+			  <li class="profile-nav onhover-dropdown px-0 py-0">
+				<div class="d-flex profile-media align-items-center"><img class="img-30" src="../assets/images/dashboard/profile.png" alt="">
+				  <div class="flex-grow-1"><span>Alen Miller</span>
+					<p class="mb-0 font-outfit">UI Designer<i class="fa fa-angle-down"></i></p>
+				  </div>
+				</div>
+				<ul class="profile-dropdown onhover-show-div">
+				  <li><a href="private-chat.html"><i data-feather="user"></i><span>Account </span></a></li>
+				  <li><a href="letter-box.html"><i data-feather="mail"></i><span>Inbox</span></a></li>
+				  <li><a href="task.html"><i data-feather="file-text"></i><span>Taskboard</span></a></li>
+				  <li><a href="edit-profile.html"><i data-feather="settings"></i><span>Settings</span></a></li>
+				  <li><a href="login.html"><i data-feather="log-in"> </i><span>Log out</span></a></li>
+				</ul>
+			  </li>
+			</ul>
+		  </div>
+		  <script class="result-template" type="text/x-handlebars-template">
+			<div class="ProfileCard u-cf">                        
+			<div class="ProfileCard-avatar"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-airplay m-0"><path d="M5 17H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-1"></path><polygon points="12 15 17 21 7 21 12 15"></polygon></svg></div>
+			<div class="ProfileCard-details">
+			<div class="ProfileCard-realName">{{name}}</div>
+			</div>
+			</div>
+		  </script>
+		  <script class="empty-template" type="text/x-handlebars-template"><div class="EmptyMessage">Your search turned up 0 results. This most likely means the backend is down, yikes!</div></script>
+		</div>
+	  </div>
+	  <!-- Page Header Ends                              -->
+	</div>
+	<!-- Page Body Start-->
+	<div class="page-body-wrapper">
+	  <!-- Page Sidebar Start-->
+	  <div class="sidebar-wrapper" data-layout="stroke-svg">
+		<div>
+		  <div class="logo-wrapper"><a href="index.html"><img class="img-fluid" src="../assets/images/logo/logo_light.png" alt=""></a>
+			<div class="back-btn"><i class="fa fa-angle-left"></i></div>
+			<div class="toggle-sidebar">
+			  <svg class="stroke-icon sidebar-toggle status_toggle middle">
+				<use href="../assets/svg/icon-sprite.svg#toggle-icon"></use>
+			  </svg>
+			  <svg class="fill-icon sidebar-toggle status_toggle middle">
+				<use href="../assets/svg/icon-sprite.svg#fill-toggle-icon"></use>
+			  </svg>
+			</div>
+		  </div>
+		  <div class="logo-icon-wrapper"><a href="index.html"><img class="img-fluid" src="../assets/images/logo/logo-icon.png" alt=""></a></div>
+		  <nav class="sidebar-main">
+			<div class="left-arrow" id="left-arrow"><i data-feather="arrow-left"></i></div>
+			<div id="sidebar-menu">
+			  <ul class="sidebar-links" id="simple-bar">
+				<li class="back-btn"><a href="index.html"><img class="img-fluid" src="../assets/images/logo/logo-icon.png" alt=""></a>
+				  <div class="mobile-back text-end"><span>Back</span><i class="fa fa-angle-right ps-2" aria-hidden="true"></i></div>
+				</li>
+				<li class="pin-title sidebar-main-title">
+				  <div> 
+					<h6>Pinned</h6>
+				  </div>
+				</li>
+				<li class="sidebar-main-title">
+				  <div>
+					<h6 class="lan-1">General</h6>
+				  </div>
+				</li>
+				<li class="sidebar-list"><i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title" href="javascript:void(0)">
+					<svg class="stroke-icon">
+					  <use href="../assets/svg/icon-sprite.svg#stroke-home"></use>
+					</svg>
+					<svg class="fill-icon">
+					  <use href="../assets/svg/icon-sprite.svg#fill-home"></use>
+					</svg><span class="lan-3">Dashboard          </span></a>
+				  <ul class="sidebar-submenu">
+					<li><a class="lan-4" href="index.html">Default</a></li>
+					<li><a class="lan-5" href="dashboard-02.html">Project</a></li>
+					<li><a href="dashboard-03.html">Ecommerce</a></li>
+					<li><a href="dashboard-04.html">Education</a></li>
+				  </ul>
+				</li>
+				<li class="sidebar-list"><i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title" href="javascript:void(0)">
+					<svg class="stroke-icon">
+					  <use href="../assets/svg/icon-sprite.svg#stroke-widget"></use>
+					</svg>
+					<svg class="fill-icon">
+					  <use href="../assets/svg/icon-sprite.svg#fill-widget"></use>
+					</svg><span class="lan-6">Widgets</span></a>
+				  <ul class="sidebar-submenu">
+					<li><a href="general-widget.html">General</a></li>
+					<li><a href="chart-widget.html">Chart</a></li>
+				  </ul>
+				</li>
+				<li class="sidebar-list"><i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title" href="javascript:void(0)">
+					<svg class="stroke-icon">
+					  <use href="../assets/svg/icon-sprite.svg#stroke-layout"></use>
+					</svg>
+					<svg class="fill-icon">
+					  <use href="../assets/svg/icon-sprite.svg#fill-layout"></use>
+					</svg><span class="lan-7">Page layout</span></a>
+				  <ul class="sidebar-submenu">
+					<li><a href="box-layout.html">Boxed</a></li>
+					<li><a href="layout-rtl.html">RTL</a></li>
+					<li><a href="layout-dark.html">Dark Layout</a></li>
+					<li><a href="hide-on-scroll.html">Hide Nav Scroll</a></li>
+					<li><a href="footer-light.html">Footer Light</a></li>
+					<li><a href="footer-dark.html">Footer Dark</a></li>
+					<li><a href="footer-fixed.html">Footer Fixed</a></li>
+				  </ul>
+				</li>
+				<li class="sidebar-main-title">
+				  <div>
+					<h6 class="lan-8">Applications</h6>
+				  </div>
+				</li>
+				<li class="sidebar-list"><i class="fa fa-thumb-tack">    </i><a class="sidebar-link sidebar-title" href="javascript:void(0)">
+					<svg class="stroke-icon">
+					  <use href="../assets/svg/icon-sprite.svg#stroke-project"></use>
+					</svg>
+					<svg class="fill-icon">
+					  <use href="../assets/svg/icon-sprite.svg#fill-project"></use>
+					</svg><span>Project           </span></a>
+				  <ul class="sidebar-submenu">
+					<li><a href="projects.html">Project List</a></li>
+					<li><a href="projectcreate.html">Create new</a></li>
+				  </ul>
+				</li>
+				<li class="sidebar-list"><i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title link-nav" href="file-manager.html">
+					<svg class="stroke-icon">
+					  <use href="../assets/svg/icon-sprite.svg#stroke-file"></use>
+					</svg>
+					<svg class="fill-icon">
+					  <use href="../assets/svg/icon-sprite.svg#fill-file"></use>
+					</svg><span>File manager</span></a></li>
+				<li class="sidebar-list"><i class="fa fa-thumb-tack">        </i><a class="sidebar-link sidebar-title link-nav" href="kanban.html">
+					<svg class="stroke-icon">
+					  <use href="../assets/svg/icon-sprite.svg#stroke-board"></use>
+					</svg>
+					<svg class="fill-icon">
+					  <use href="../assets/svg/icon-sprite.svg#fill-board"></use>
+					</svg><span>kanban Board</span></a></li>
+				<li class="sidebar-list"><i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title" href="javascript:void(0)">
+					<svg class="stroke-icon">
+					  <use href="../assets/svg/icon-sprite.svg#stroke-ecommerce"></use>
+					</svg>
+					<svg class="fill-icon">
+					  <use href="../assets/svg/icon-sprite.svg#fill-ecommerce"></use>
+					</svg><span>Ecommerce</span></a>
+				  <ul class="sidebar-submenu">
+					<li><a href="add-products.html">Add Products</a></li>
+					<li><a href="product.html">Product</a></li>
+					<li>
+					  <label class="badge badge-light-success">New</label><a href="category.html">Category page</a>
+					</li>
+					<li><a href="product-page.html">Product page</a></li>
+					<li><a href="list-products.html">Product list</a></li>
+					<li><a href="payment-details.html">Payment Details</a></li>
+					<li><a href="order-history.html">Order History</a></li>
+					<li><a class="submenu-title" href="javascript:void(0)">Invoices<span class="sub-arrow"><i class="fa fa-angle-right"></i></span></a>
+					  <ul class="nav-sub-childmenu submenu-content">
+						<li><a href="invoice-1.html">Invoice-1</a></li>
+						<li><a href="invoice-2.html">Invoice-2</a></li>
+						<li><a href="invoice-3.html">Invoice-3</a></li>
+						<li><a href="invoice-4.html">Invoice-4</a></li>
+						<li> <a href="invoice-5.html">Invoice-5</a></li>
+						<li><a href="invoice-6.html">Invoice-6</a></li>
+					  </ul>
+					</li>
+					<li><a href="cart.html">Cart</a></li>
+					<li><a href="list-wish.html">Wishlist</a></li>
+					<li><a href="checkout.html">Checkout</a></li>
+					<li><a href="pricing.html">Pricing          </a></li>
+				  </ul>
+				</li>
+				<li class="sidebar-list"><i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title link-nav" href="letter-box.html">
+					<svg class="stroke-icon">
+					  <use href="../assets/svg/icon-sprite.svg#stroke-email"></use>
+					</svg>
+					<svg class="fill-icon">
+					  <use href="../assets/svg/icon-sprite.svg#fill-email"> </use>
+					</svg><span>Letter Box</span></a></li>
+				<li class="sidebar-list"><i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title" href="javascript:void(0)">
+					<svg class="stroke-icon">
+					  <use href="../assets/svg/icon-sprite.svg#stroke-chat"></use>
+					</svg>
+					<svg class="fill-icon">
+					  <use href="../assets/svg/icon-sprite.svg#fill-chat"></use>
+					</svg><span>Chat</span></a>
+				  <ul class="sidebar-submenu">
+					<li><a href="private-chat.html">Private Chat</a></li>
+					<li><a href="group-chat.html">Group Chat</a></li>
+				  </ul>
+				</li>
+				<li class="sidebar-list"><i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title" href="javascript:void(0)">
+					<svg class="stroke-icon">
+					  <use href="../assets/svg/icon-sprite.svg#stroke-user"></use>
+					</svg>
+					<svg class="fill-icon">
+					  <use href="../assets/svg/icon-sprite.svg#fill-user"></use>
+					</svg><span>Users</span></a>
+				  <ul class="sidebar-submenu">
+					<li><a href="user-profile.html">Users Profile</a></li>
+					<li><a href="edit-profile.html">Users Edit</a></li>
+					<li><a href="user-cards.html">Users Cards</a></li>
+				  </ul>
+				</li>
+				<li class="sidebar-list"><i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title link-nav" href="bookmark.html">
+					<svg class="stroke-icon">
+					  <use href="../assets/svg/icon-sprite.svg#stroke-bookmark"></use>
+					</svg>
+					<svg class="fill-icon">
+					  <use href="../assets/svg/icon-sprite.svg#fill-bookmark"> </use>
+					</svg><span>Bookmarks</span></a></li>
+				<li class="sidebar-list"><i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title link-nav" href="contacts.html">
+					<svg class="stroke-icon">
+					  <use href="../assets/svg/icon-sprite.svg#stroke-contact"></use>
+					</svg>
+					<svg class="fill-icon">
+					  <use href="../assets/svg/icon-sprite.svg#fill-contact"> </use>
+					</svg><span>Contacts</span></a></li>
+				<li class="sidebar-list"><i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title link-nav" href="task.html">
+					<svg class="stroke-icon">
+					  <use href="../assets/svg/icon-sprite.svg#stroke-task"></use>
+					</svg>
+					<svg class="fill-icon">
+					  <use href="../assets/svg/icon-sprite.svg#fill-task"> </use>
+					</svg><span>Tasks</span></a></li>
+				<li class="sidebar-list"><i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title link-nav" href="calendar-basic.html">
+					<svg class="stroke-icon">
+					  <use href="../assets/svg/icon-sprite.svg#stroke-calendar"></use>
+					</svg>
+					<svg class="fill-icon">
+					  <use href="../assets/svg/icon-sprite.svg#fill-calender"></use>
+					</svg><span>Calendar</span></a></li>
+				<li class="sidebar-list"><i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title link-nav" href="social-app.html">
+					<svg class="stroke-icon">
+					  <use href="../assets/svg/icon-sprite.svg#stroke-social"></use>
+					</svg>
+					<svg class="fill-icon">
+					  <use href="../assets/svg/icon-sprite.svg#fill-social"> </use>
+					</svg><span>Social App</span></a></li>
+				<li class="sidebar-list"><i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title link-nav" href="to-do.html">
+					<svg class="stroke-icon">
+					  <use href="../assets/svg/icon-sprite.svg#stroke-to-do"></use>
+					</svg>
+					<svg class="fill-icon">
+					  <use href="../assets/svg/icon-sprite.svg#fill-to-do"> </use>
+					</svg><span>To-Do</span></a></li>
+				<li class="sidebar-list"><i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title link-nav" href="search.html">
+					<svg class="stroke-icon">
+					  <use href="../assets/svg/icon-sprite.svg#stroke-search"></use>
+					</svg>
+					<svg class="fill-icon">
+					  <use href="../assets/svg/icon-sprite.svg#fill-search"> </use>
+					</svg><span>Search Result</span></a></li>
+				<li class="sidebar-main-title">
+				  <div>
+					<h6>Forms & Table</h6>
+				  </div>
+				</li>
+				<li class="sidebar-list"><i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title" href="javascript:void(0)">
+					<svg class="stroke-icon">
+					  <use href="../assets/svg/icon-sprite.svg#stroke-form"></use>
+					</svg>
+					<svg class="fill-icon">
+					  <use href="../assets/svg/icon-sprite.svg#fill-form"> </use>
+					</svg><span>Forms</span></a>
+				  <ul class="sidebar-submenu">
+					<li><a class="submenu-title" href="javascript:void(0)">Form Controls<span class="sub-arrow"><i class="fa fa-angle-right"></i></span></a>
+					  <ul class="nav-sub-childmenu submenu-content">
+						<li><a href="form-validation.html">Form Validation</a></li>
+						<li><a href="base-input.html">Base Inputs</a></li>
+						<li><a href="radio-checkbox-control.html">Checkbox & Radio</a></li>
+						<li><a href="input-group.html">Input Groups</a></li>
+						<li> <a href="input-mask.html">Input Mask</a></li>
+						<li><a href="megaoptions.html">Mega Options</a></li>
+					  </ul>
+					</li>
+					<li><a class="submenu-title" href="javascript:void(0)">Form Widgets<span class="sub-arrow"><i class="fa fa-angle-right"></i></span></a>
+					  <ul class="nav-sub-childmenu submenu-content">
+						<li><a href="datepicker.html">Datepicker</a></li>
+						<li><a href="touchspin.html">Touchspin</a></li>
+						<li><a href="select2.html">Select2</a></li>
+						<li><a href="switch.html">Switch</a></li>
+						<li><a href="typeahead.html">Typeahead</a></li>
+						<li><a href="clipboard.html">Clipboard</a></li>
+					  </ul>
+					</li>
+					<li><a class="submenu-title" href="javascript:void(0)">Form layout<span class="sub-arrow"><i class="fa fa-angle-right"></i></span></a>
+					  <ul class="nav-sub-childmenu submenu-content">
+						<li><a href="form-wizard.html">Form Wizard 1</a></li>
+						<li><a href="form-wizard-two.html">Form Wizard 2</a></li>
+						<li><a href="two-factor.html">Two Factor</a></li>
+					  </ul>
+					</li>
+				  </ul>
+				</li>
+				<li class="sidebar-list"><i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title" href="javascript:void(0)">
+					<svg class="stroke-icon">
+					  <use href="../assets/svg/icon-sprite.svg#stroke-table"></use>
+					</svg>
+					<svg class="fill-icon">
+					  <use href="../assets/svg/icon-sprite.svg#fill-table"></use>
+					</svg><span>Tables</span></a>
+				  <ul class="sidebar-submenu">
+					<li><a class="submenu-title" href="javascript:void(0)">Bootstrap Tables<span class="sub-arrow"><i class="fa fa-angle-right"></i></span></a>
+					  <ul class="nav-sub-childmenu submenu-content">
+						<li><a href="bootstrap-basic-table.html">Basic Tables</a></li>
+						<li><a href="table-components.html">Table components</a></li>
+					  </ul>
+					</li>
+					<li><a class="submenu-title" href="javascript:void(0)">Data Tables<span class="sub-arrow"><i class="fa fa-angle-right"></i></span></a>
+					  <ul class="nav-sub-childmenu submenu-content">
+						<li><a href="datatable-basic-init.html">Basic Init</a></li>
+						<li> <a href="datatable-advance.html">Advance Init </a></li>
+						<li><a href="datatable-API.html">API</a></li>
+						<li><a href="datatable-data-source.html">Data Sources</a></li>
+					  </ul>
+					</li>
+					<li><a href="datatable-ext-autofill.html">Ex. Data Tables</a></li>
+					<li><a href="jsgrid-table.html">Js Grid Table        </a></li>
+				  </ul>
+				</li>
+				<li class="sidebar-main-title">
+				  <div>
+					<h6>Components</h6>
+				  </div>
+				</li>
+				<li class="sidebar-list"><i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title" href="javascript:void(0)">
+					<svg class="stroke-icon">
+					  <use href="../assets/svg/icon-sprite.svg#stroke-ui-kits"></use>
+					</svg>
+					<svg class="fill-icon">
+					  <use href="../assets/svg/icon-sprite.svg#fill-ui-kits"></use>
+					</svg><span>Ui Kits</span></a>
+				  <ul class="sidebar-submenu">
+					<li><a href="typography.html">Typography</a></li>
+					<li><a href="avatars.html">Avatars</a></li>
+					<li>
+					  <label class="badge badge-light-warning">Trending</label><a href="divider.html">Divider</a>
+					</li>
+					<li><a href="helper-classes.html">helper classes</a></li>
+					<li><a href="grid.html">Grid</a></li>
+					<li><a href="tag-pills.html">Tag & pills</a></li>
+					<li><a href="progress-bar.html">Progress</a></li>
+					<li><a href="modal.html">Modal</a></li>
+					<li><a href="alert.html">Alert</a></li>
+					<li><a href="popover.html">Popover</a></li>
+					<li>
+					  <label class="badge badge-light-success">New</label><a href="placeholders.html">Placeholders</a>
+					</li>
+					<li><a href="tooltip.html">Tooltip</a></li>
+					<li><a href="dropdown.html">Dropdown</a></li>
+					<li><a href="according.html">Accordion</a></li>
+					<li><a href="tab-bootstrap.html">Tabs</a></li>
+					<li>
+					  <label class="badge badge-light-warning">Trending</label><a href="offcanvas.html">Offcanvas</a>
+					</li>
+					<li>
+					  <label class="badge badge-light-success">New</label><a href="navigate-links.html">Navigate Links</a>
+					</li>
+					<li><a href="list.html">Lists</a></li>
+				  </ul>
+				</li>
+				<li class="sidebar-list"><i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title" href="javascript:void(0)">
+					<svg class="stroke-icon">
+					  <use href="../assets/svg/icon-sprite.svg#stroke-bonus-kit"></use>
+					</svg>
+					<svg class="fill-icon">
+					  <use href="../assets/svg/icon-sprite.svg#fill-bonus-kit"></use>
+					</svg><span>Bonus Ui</span></a>
+				  <ul class="sidebar-submenu">
+					<li><a href="scrollable.html">Scrollable</a></li>
+					<li><a href="tree.html">Tree view</a></li>
+					<li><a href="toasts.html">Toasts</a></li>
+					<li><a href="rating.html">Rating</a></li>
+					<li><a href="dropzone.html">dropzone</a></li>
+					<li><a href="tour.html">Tour</a></li>
+					<li><a href="sweet-alert2.html">SweetAlert2</a></li>
+					<li><a href="modal-animated.html">Animated Modal</a></li>
+					<li><a href="owl-carousel.html">Owl Carousel</a></li>
+					<li><a href="ribbons.html">Ribbons</a></li>
+					<li><a href="pagination.html">Pagination</a></li>
+					<li>
+					  <label class="badge badge-light-success">New</label><a href="scrollspy.html">ScrollSpy</a>
+					</li>
+					<li><a href="breadcrumb.html">Breadcrumb</a></li>
+					<li><a href="range-slider.html">Range Slider</a></li>
+					<li>
+					  <label class="badge badge-light-warning">Trending</label><a href="ratios.html">Ratios</a>
+					</li>
+					<li><a href="image-cropper.html">Image cropper</a></li>
+					<li><a href="basic-card.html">Basic Card</a></li>
+					<li><a href="creative-card.html">Creative Card</a></li>
+					<li><a href="dragable-card.html">Draggable Card</a></li>
+					<li><a href="timeline-v-1.html">Timeline </a></li>
+				  </ul>
+				</li>
+				<li class="sidebar-list"><i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title" href="javascript:void(0)">
+					<svg class="stroke-icon">
+					  <use href="../assets/svg/icon-sprite.svg#stroke-animation"></use>
+					</svg>
+					<svg class="fill-icon">
+					  <use href="../assets/svg/icon-sprite.svg#fill-animation"></use>
+					</svg><span>Animation</span></a>
+				  <ul class="sidebar-submenu">
+					<li><a href="animate.html">Animate</a></li>
+					<li><a href="scroll-reval.html">Scroll Reveal</a></li>
+					<li><a href="AOS.html">AOS animation</a></li>
+					<li><a href="tilt.html">Tilt Animation</a></li>
+					<li><a href="wow.html">Wow Animation</a></li>
+					<li>
+					  <label class="badge badge-light-success">New</label><a href="flash-icon.html">Flash Icons</a>
+					</li>
+				  </ul>
+				</li>
+				<li class="sidebar-list"><i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title" href="javascript:void(0)">
+					<svg class="stroke-icon">
+					  <use href="../assets/svg/icon-sprite.svg#stroke-icons"></use>
+					</svg>
+					<svg class="fill-icon">
+					  <use href="../assets/svg/icon-sprite.svg#fill-icons"></use>
+					</svg><span>Icons</span></a>
+				  <ul class="sidebar-submenu">
+					<li><a href="flag-icon.html">Flag icon</a></li>
+					<li><a href="font-awesome.html">Fontawesome Icon</a></li>
+					<li><a href="ico-icon.html">Ico Icon</a></li>
+					<li><a href="themify-icon.html">Themify Icon</a></li>
+					<li><a href="feather-icon.html">Feather icon</a></li>
+					<li><a href="whether-icon.html">Whether Icon</a></li>
+				  </ul>
+				</li>
+				<li class="sidebar-list"><i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title link-nav" href="buttons.html">
+					<svg class="stroke-icon">
+					  <use href="../assets/svg/icon-sprite.svg#stroke-button"></use>
+					</svg>
+					<svg class="fill-icon">
+					  <use href="../assets/svg/icon-sprite.svg#fill-button"></use>
+					</svg><span>Buttons </span></a></li>
+				<li class="sidebar-list"><i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title" href="javascript:void(0)">
+					<svg class="stroke-icon">
+					  <use href="../assets/svg/icon-sprite.svg#stroke-charts"></use>
+					</svg>
+					<svg class="fill-icon">
+					  <use href="../assets/svg/icon-sprite.svg#fill-charts"></use>
+					</svg><span>Charts</span></a>
+				  <ul class="sidebar-submenu">
+					<li><a href="echarts.html">Echarts</a></li>
+					<li><a href="chart-apex.html">Apex Chart</a></li>
+					<li><a href="chart-google.html">Google Chart</a></li>
+					<li><a href="chart-sparkline.html">Sparkline chart</a></li>
+					<li><a href="chart-flot.html">Flot Chart</a></li>
+					<li><a href="chart-knob.html">Knob Chart</a></li>
+					<li><a href="chart-morris.html">Morris Chart</a></li>
+					<li><a href="chartjs.html">Chartjs Chart</a></li>
+					<li><a href="chartist.html">Chartist Chart</a></li>
+					<li><a href="chart-peity.html">Peity Chart</a></li>
+				  </ul>
+				</li>
+				<li class="sidebar-main-title">
+				  <div>
+					<h6>Pages</h6>
+				  </div>
+				</li>
+				<li class="sidebar-list"><i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title link-nav" href="landing-page.html">
+					<svg class="stroke-icon">
+					  <use href="../assets/svg/icon-sprite.svg#stroke-landing-page"></use>
+					</svg>
+					<svg class="fill-icon">
+					  <use href="../assets/svg/icon-sprite.svg#fill-landing-page"></use>
+					</svg><span>Landing page</span></a></li>
+				<li class="sidebar-list"><i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title link-nav" href="sample-page.html">
+					<svg class="stroke-icon">
+					  <use href="../assets/svg/icon-sprite.svg#stroke-sample-page"></use>
+					</svg>
+					<svg class="fill-icon">
+					  <use href="../assets/svg/icon-sprite.svg#fill-sample-page"></use>
+					</svg><span>Sample page</span></a></li>
+				<li class="sidebar-list"><i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title link-nav" href="internationalization.html">
+					<svg class="stroke-icon">
+					  <use href="../assets/svg/icon-sprite.svg#stroke-internationalization"></use>
+					</svg>
+					<svg class="fill-icon">
+					  <use href="../assets/svg/icon-sprite.svg#fill-internationalization"></use>
+					</svg><span>Internationalization</span></a></li>
+				<li class="sidebar-list"><i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title link-nav" href="../starter-kit/index.html" target="_blank">
+					<svg class="stroke-icon">
+					  <use href="../assets/svg/icon-sprite.svg#stroke-starter-kit"></use>
+					</svg>
+					<svg class="fill-icon">
+					  <use href="../assets/svg/icon-sprite.svg#fill-starter-kit"></use>
+					</svg><span>Starter kit</span></a></li>
+				<li class="mega-menu sidebar-list"><i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title" href="javascript:void(0)">
+					<svg class="stroke-icon">
+					  <use href="../assets/svg/icon-sprite.svg#stroke-others"></use>
+					</svg>
+					<svg class="fill-icon">
+					  <use href="../assets/svg/icon-sprite.svg#fill-others"></use>
+					</svg><span>Others</span></a>
+				  <div class="mega-menu-container menu-content">
+					<div class="container-fluid">
+					  <div class="row">
+						<div class="col mega-box">
+						  <div class="link-section">
+							<div class="submenu-title">
+							  <h5>Error Page</h5>
+							</div>
+							<ul class="submenu-content opensubmegamenu">
+							  <li><a href="error-400.html">Error 400</a></li>
+							  <li><a href="error-401.html">Error 401</a></li>
+							  <li><a href="error-403.html">Error 403</a></li>
+							  <li><a href="error-404.html">Error 404</a></li>
+							  <li><a href="error-500.html">Error 500</a></li>
+							  <li><a href="error-503.html">Error 503</a></li>
+							</ul>
+						  </div>
+						</div>
+						<div class="col mega-box">
+						  <div class="link-section">
+							<div class="submenu-title">
+							  <h5> Authentication</h5>
+							</div>
+							<ul class="submenu-content opensubmegamenu">
+							  <li><a href="login.html" target="_blank">Login Simple</a></li>
+							  <li><a href="login_one.html" target="_blank">Login with bg image</a></li>
+							  <li><a href="login_two.html" target="_blank">Login with image two                      </a></li>
+							  <li><a href="login-bs-validation.html" target="_blank">Login With validation</a></li>
+							  <li><a href="login-bs-tt-validation.html" target="_blank">Login with tooltip</a></li>
+							  <li><a href="login-sa-validation.html" target="_blank">Login with sweetalert</a></li>
+							  <li><a href="sign-up.html" target="_blank">Register Simple</a></li>
+							  <li><a href="sign-up-one.html" target="_blank">Register with Bg Image                              </a></li>
+							  <li><a href="sign-up-two.html" target="_blank">Register with image two</a></li>
+							  <li><a href="sign-up-wizard.html" target="_blank">Register wizard</a></li>
+							  <li><a href="unlock.html">Unlock User</a></li>
+							  <li><a href="forget-password.html">Forget Password</a></li>
+							  <li><a href="reset-password.html">Reset Password</a></li>
+							  <li><a href="maintenance.html">Maintenance</a></li>
+							</ul>
+						  </div>
+						</div>
+						<div class="col mega-box">
+						  <div class="link-section">
+							<div class="submenu-title">
+							  <h5>Coming Soon</h5>
+							</div>
+							<ul class="submenu-content opensubmegamenu">
+							  <li><a href="comingsoon.html">Coming Simple</a></li>
+							  <li><a href="comingsoon-bg-video.html">Coming with Bg video</a></li>
+							  <li><a href="comingsoon-bg-img.html">Coming with Bg Image</a></li>
+							</ul>
+						  </div>
+						</div>
+						<div class="col mega-box">
+						  <div class="link-section">
+							<div class="submenu-title">
+							  <h5>Email templates</h5>
+							</div>
+							<ul class="submenu-content opensubmegamenu">
+							  <li><a href="basic-template.html">Basic Email</a></li>
+							  <li><a href="email-header.html">Basic With Header</a></li>
+							  <li><a href="template-email.html">Ecommerce Template</a></li>
+							  <li><a href="template-email-2.html">Email Template 2</a></li>
+							  <li><a href="ecommerce-templates.html">Ecommerce Email</a></li>
+							  <li><a href="email-order-success.html">Order Success</a></li>
+							</ul>
+						  </div>
+						</div>
+					  </div>
+					</div>
+				  </div>
+				</li>
+				<li class="sidebar-main-title">
+				  <div>
+					<h6>Miscellaneous</h6>
+				  </div>
+				</li>
+				<li class="sidebar-list"><i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title" href="javascript:void(0)">
+					<svg class="stroke-icon">
+					  <use href="../assets/svg/icon-sprite.svg#stroke-gallery"></use>
+					</svg>
+					<svg class="fill-icon">
+					  <use href="../assets/svg/icon-sprite.svg#fill-gallery"></use>
+					</svg><span>Gallery</span></a>
+				  <ul class="sidebar-submenu">
+					<li><a href="gallery.html">Gallery Grid</a></li>
+					<li><a href="gallery-with-description.html">Gallery Grid Desc</a></li>
+					<li><a href="gallery-masonry.html">Masonry Gallery</a></li>
+					<li><a href="masonry-gallery-with-disc.html">Masonry with Desc</a></li>
+					<li><a href="gallery-hover.html">Hover Effects</a></li>
+				  </ul>
+				</li>
+				<li class="sidebar-list"><i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title" href="javascript:void(0)">
+					<svg class="stroke-icon">
+					  <use href="../assets/svg/icon-sprite.svg#stroke-blog"></use>
+					</svg>
+					<svg class="fill-icon">
+					  <use href="../assets/svg/icon-sprite.svg#fill-blog"></use>
+					</svg><span>Blog</span></a>
+				  <ul class="sidebar-submenu">
+					<li><a href="blog.html">Blog Details</a></li>
+					<li><a href="blog-single.html">Blog Single</a></li>
+					<li><a href="add-post.html">Add Post</a></li>
+				  </ul>
+				</li>
+				<li class="sidebar-list"><i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title link-nav" href="faq.html">
+					<svg class="stroke-icon">
+					  <use href="../assets/svg/icon-sprite.svg#stroke-faq"></use>
+					</svg>
+					<svg class="fill-icon">
+					  <use href="../assets/svg/icon-sprite.svg#fill-faq"></use>
+					</svg><span>FAQ</span></a></li>
+				<li class="sidebar-list"><i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title" href="javascript:void(0)">
+					<svg class="stroke-icon">
+					  <use href="../assets/svg/icon-sprite.svg#stroke-job-search"></use>
+					</svg>
+					<svg class="fill-icon">
+					  <use href="../assets/svg/icon-sprite.svg#fill-job-search"></use>
+					</svg><span>Job Search</span></a>
+				  <ul class="sidebar-submenu">
+					<li><a href="job-cards-view.html">Cards view</a></li>
+					<li><a href="job-list-view.html">List View</a></li>
+					<li><a href="job-details.html">Job Details</a></li>
+					<li><a href="job-apply.html">Apply</a></li>
+				  </ul>
+				</li>
+				<li class="sidebar-list"><i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title" href="javascript:void(0)">
+					<svg class="stroke-icon">
+					  <use href="../assets/svg/icon-sprite.svg#stroke-learning"></use>
+					</svg>
+					<svg class="fill-icon">
+					  <use href="../assets/svg/icon-sprite.svg#fill-learning"></use>
+					</svg><span>Courses</span></a>
+				  <ul class="sidebar-submenu">
+					<li><a href="course-list-view.html">Course List</a></li>
+					<li><a href="course-detailed.html">Course Details</a></li>
+				  </ul>
+				</li>
+				<li class="sidebar-list"><i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title" href="javascript:void(0)">
+					<svg class="stroke-icon">
+					  <use href="../assets/svg/icon-sprite.svg#stroke-maps"></use>
+					</svg>
+					<svg class="fill-icon">
+					  <use href="../assets/svg/icon-sprite.svg#fill-maps"></use>
+					</svg><span>Maps</span></a>
+				  <ul class="sidebar-submenu">
+					<li><a href="map-js.html">Maps JS</a></li>
+					<li><a href="vector-map.html">Vector Maps</a></li>
+				  </ul>
+				</li>
+				<li class="sidebar-list"><i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title" href="javascript:void(0)">
+					<svg class="stroke-icon">
+					  <use href="../assets/svg/icon-sprite.svg#stroke-editors"></use>
+					</svg>
+					<svg class="fill-icon">
+					  <use href="../assets/svg/icon-sprite.svg#fill-editors"></use>
+					</svg><span>Editors</span></a>
+				  <ul class="sidebar-submenu">
+					<li>
+					  <label class="badge badge-light-warning">Trending</label><a href="quilleditor.html">Quill editor</a>
+					</li>
+					<li><a href="summernote.html">Summer Note</a></li>
+					<li><a href="ckeditor.html">CK editor</a></li>
+					<li><a href="simple-MDE.html">MDE editor</a></li>
+					<li><a href="ace-code-editor.html">ACE code editor </a></li>
+				  </ul>
+				</li>
+				<li class="sidebar-list"><i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title link-nav" href="knowledgebase.html">
+					<svg class="stroke-icon">
+					  <use href="../assets/svg/icon-sprite.svg#stroke-knowledgebase"></use>
+					</svg>
+					<svg class="fill-icon">
+					  <use href="../assets/svg/icon-sprite.svg#fill-knowledgebase"></use>
+					</svg><span>Knowledgebase</span></a></li>
+				<li class="sidebar-list"><i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title link-nav" href="support-ticket.html">
+					<svg class="stroke-icon">
+					  <use href="../assets/svg/icon-sprite.svg#stroke-support-tickets"></use>
+					</svg>
+					<svg class="fill-icon">
+					  <use href="../assets/svg/icon-sprite.svg#fill-support-tickets"></use>
+					</svg><span>Support Ticket</span></a></li>
+			  </ul>
+			</div>
+			<div class="right-arrow" id="right-arrow"><i data-feather="arrow-right"></i></div>
+		  </nav>
+		</div>
+	  </div>
+	  <!-- Page Sidebar Ends-->
+	  <div class="page-body">
+		<!-- Container-fluid starts-->
+		<div class="container-fluid dashboard-4">
+		  <div class="row">
+			<div class="col-xl-6 col-md-12 proorder-md-1">  
+			  <div class="row"> 
+				<div class="col-xl-6 col-sm-6"> 
+				  <div class="card">
+					<div class="card-body student">
+					  <div class="d-flex gap-2 align-items-end"> 
+						<div class="flex-grow-1">
+						  <h2>42,954</h2>
+						  <p class="mb-0 text-truncate"> Total Students</p>
+						  <div class="d-flex student-arrow text-truncate">
+							<p class="mb-0 up-arrow bg-light-danger"><i class="icon-arrow-down font-danger"></i></p><span class="f-w-500 font-danger">- 17.06%</span>than last 6 Month
+						  </div>
+						</div>
+						<div class="flex-shrink-0"><img src="../assets/images/dashboard-4/icon/student.png" alt=""></div>
+					  </div>
+					</div>
+				  </div>
+				</div>
+				<div class="col-xl-6 col-sm-6"> 
+				  <div class="card">
+					<div class="card-body student-2">
+					  <div class="d-flex gap-2 align-items-end"> 
+						<div class="flex-grow-1">
+						  <h2>659</h2>
+						  <p class="mb-0 text-truncate"> Total Teachers</p>
+						  <div class="d-flex student-arrow text-truncate">
+							<p class="mb-0 up-arrow bg-light-success"><i class="icon-arrow-up font-success"></i></p><span class="f-w-500 font-success">+27.02%</span>than last 4 Month
+						  </div>
+						</div>
+						<div class="flex-shrink-0"><img src="../assets/images/dashboard-4/icon/teacher.png" alt=""></div>
+					  </div>
+					</div>
+				  </div>
+				</div>
+				<div class="col-xl-6 col-sm-6"> 
+				  <div class="card">
+					<div class="card-body student-3">
+					  <div class="d-flex gap-2 align-items-end"> 
+						<div class="flex-grow-1">
+						  <h2>984</h2>
+						  <p class="mb-0 text-truncate"> Events</p>
+						  <div class="d-flex student-arrow text-truncate">
+							<p class="mb-0 up-arrow bg-light-success"><i class="icon-arrow-up font-success"></i></p><span class="f-w-500 font-success">+ 12.01%</span>than last 8 Month
+						  </div>
+						</div>
+						<div class="flex-shrink-0"><img src="../assets/images/dashboard-4/icon/calendar.png" alt=""></div>
+					  </div>
+					</div>
+				  </div>
+				</div>
+				<div class="col-xl-6 col-sm-6"> 
+				  <div class="card">
+					<div class="card-body student-4">
+					  <div class="d-flex gap-2 align-items-end"> 
+						<div class="flex-grow-1">
+						  <h2>1,984</h2>
+						  <p class="mb-0 text-truncate"> Invoice Status</p>
+						  <div class="d-flex student-arrow text-truncate">
+							<p class="mb-0 up-arrow bg-light-danger"><i class="icon-arrow-down font-danger"></i></p><span class="f-w-500 font-danger">- 15.02%</span>than last 5 Month
+						  </div>
+						</div>
+						<div class="flex-shrink-0"><img src="../assets/images/dashboard-4/icon/invoice.png" alt=""></div>
+					  </div>
+					</div>
+				  </div>
+				</div>
+			  </div>
+			</div>
+			<div class="col-xl-6 col-md-6 proorder-md-2"> 
+			  <div class="card">
+				<div class="card-header card-no-border pb-0">
+				  <div class="header-top">
+					<h4>Study Statistics</h4>
+					<div class="dropdown icon-dropdown">
+					  <button class="btn dropdown-toggle" id="userdropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="icon-more-alt"></i></button>
+					  <div class="dropdown-menu dropdown-menu-end" aria-labelledby="userdropdown"><a class="dropdown-item" href="#">Weekly</a><a class="dropdown-item" href="#">Monthly</a><a class="dropdown-item" href="#">Yearly</a></div>
+					</div>
+				  </div>
+				</div>
+				<div class="card-body"> 
+				  <div class="studay-statistics"> 
+					<ul class="d-flex align-item-center gap-2">
+					  <li> <span class="bg-primary"> </span>UX Design</li>
+					  <li> <span class="bg-secondary"> </span>Illustrations</li>
+					</ul>
+				  </div>
+				  <div id="study-statistics"></div>
+				</div>
+			  </div>
+			</div>
+			<div class="col-xl-8 col-md-12 proorder-md-4"> 
+			  <div class="card">
+				<div class="card-header card-no-border pb-0">
+				  <div class="header-top">
+					<h4>Assignments</h4>
+					<div class="dropdown icon-dropdown">
+					  <button class="btn dropdown-toggle" id="userdropdown1" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="icon-more-alt"></i></button>
+					  <div class="dropdown-menu dropdown-menu-end" aria-labelledby="userdropdown1"><a class="dropdown-item" href="#">Weekly</a><a class="dropdown-item" href="#">Monthly</a><a class="dropdown-item" href="#">Yearly</a></div>
+					</div>
+				  </div>
+				</div>
+				<div class="card-body pt-0 assignments-table px-0">
+				  <div class="table-responsive theme-scrollbar">
+					<table class="table display" id="assignments-table" style="width:100%">
+					  <thead>
+						<tr>
+						  <th>
+							<div class="form-check">
+							  <input class="form-check-input" type="checkbox" value="">
+							  <label class="form-check-label"></label>
+							</div>
+						  </th>
+						  <th>Id no  </th>
+						  <th>Teacher</th>
+						  <th>Subject  </th>
+						  <th>Start Date</th>
+						  <th>End Date</th>
+						  <th>Progress</th>
+						  <th>Actions</th>
+						</tr>
+					  </thead>
+					  <tbody>
+						<tr>
+						  <td>
+							<div class="form-check">
+							  <input class="form-check-input" type="checkbox" value="">
+							  <label class="form-check-label"></label>
+							</div>
+						  </td>
+						  <td> <span>0542</span></td>
+						  <td>
+							<div class="d-flex align-items-center">
+							  <div class="flex-shrink-0"><img src="../assets/images/dashboard-4/user/1.png" alt=""></div>
+							  <div class="flex-grow-1 ms-2"><a href="product-page.html">
+								  <h6>Gary payi</h6></a></div>
+							  <div class="active-status active-online"></div>
+							</div>
+						  </td>
+						  <td>Accounts</td>
+						  <td>12 May 2024  </td>
+						  <td>20 May 2024 </td>
+						  <td> 
+							<div class="progress-showcase">
+							  <div class="progress sm-progress-bar progress-border-primary">
+								<div class="progress-bar" role="progressbar" style="width: 80%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"> </div>
+							  </div>
+							</div>
+						  </td>
+						  <td class="text-center">
+							<div class="dropdown icon-dropdown">
+							  <button class="btn dropdown-toggle" id="userdropdown2" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="icon-more-alt"></i></button>
+							  <div class="dropdown-menu dropdown-menu-end" aria-labelledby="userdropdown2"><a class="dropdown-item" href="#">Weekly</a><a class="dropdown-item" href="#">Monthly</a><a class="dropdown-item" href="#">Yearly</a></div>
+							</div>
+						  </td>
+						</tr>
+						<tr>
+						  <td>
+							<div class="form-check">
+							  <input class="form-check-input" type="checkbox" value="">
+							  <label class="form-check-label"></label>
+							</div>
+						  </td>
+						  <td><span>9548</span></td>
+						  <td>
+							<div class="d-flex align-items-center">
+							  <div class="flex-shrink-0"><img src="../assets/images/dashboard-4/user/2.png" alt=""></div>
+							  <div class="flex-grow-1 ms-2"><a href="product-page.html">
+								  <h6>Ralph Waters</h6></a></div>
+							  <div class="active-status active-online"></div>
+							</div>
+						  </td>
+						  <td>UI/UX Design</td>
+						  <td>06 May 2024</td>
+						  <td>16 May 2024</td>
+						  <td> 
+							<div class="progress-showcase">
+							  <div class="progress sm-progress-bar progress-border-secondary">
+								<div class="progress-bar" role="progressbar" style="width: 60%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"> </div>
+							  </div>
+							</div>
+						  </td>
+						  <td class="text-center">
+							<div class="dropdown icon-dropdown">
+							  <button class="btn dropdown-toggle" id="userdropdown3" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="icon-more-alt"></i></button>
+							  <div class="dropdown-menu dropdown-menu-end" aria-labelledby="userdropdown3"><a class="dropdown-item" href="#">Weekly</a><a class="dropdown-item" href="#">Monthly</a><a class="dropdown-item" href="#">Yearly</a></div>
+							</div>
+						  </td>
+						</tr>
+						<tr>
+						  <td>
+							<div class="form-check">
+							  <input class="form-check-input" type="checkbox" value="">
+							  <label class="form-check-label"></label>
+							</div>
+						  </td>
+						  <td><span>2950</span></td>
+						  <td>
+							<div class="d-flex align-items-center">
+							  <div class="flex-shrink-0"><img src="../assets/images/dashboard-4/user/3.png" alt=""></div>
+							  <div class="flex-grow-1 ms-2"><a href="product-page.html">
+								  <h6>Edwin Day</h6></a></div>
+							  <div class="active-status active-online"></div>
+							</div>
+						  </td>
+						  <td>Mathematics</td>
+						  <td>25 Sep 2024  </td>
+						  <td>30 May 2024 </td>
+						  <td> 
+							<div class="progress-showcase">
+							  <div class="progress sm-progress-bar progress-border-warning">
+								<div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"> </div>
+							  </div>
+							</div>
+						  </td>
+						  <td class="text-center">
+							<div class="dropdown icon-dropdown">
+							  <button class="btn dropdown-toggle" id="userdropdown4" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="icon-more-alt"></i></button>
+							  <div class="dropdown-menu dropdown-menu-end" aria-labelledby="userdropdown4"><a class="dropdown-item" href="#">Weekly</a><a class="dropdown-item" href="#">Monthly</a><a class="dropdown-item" href="#">Yearly</a></div>
+							</div>
+						  </td>
+						</tr>
+						<tr>
+						  <td>
+							<div class="form-check">
+							  <input class="form-check-input" type="checkbox" value="">
+							  <label class="form-check-label"></label>
+							</div>
+						  </td>
+						  <td><span>9605</span></td>
+						  <td>
+							<div class="d-flex align-items-center">
+							  <div class="flex-shrink-0"><img src="../assets/images/dashboard-4/user/4.png" alt=""></div>
+							  <div class="flex-grow-1 ms-2"><a href="product-page.html">
+								  <h6>Aaron Hogan</h6></a></div>
+							  <div class="active-status active-online"></div>
+							</div>
+						  </td>
+						  <td>Computer App</td>
+						  <td>23 May 2024  </td>
+						  <td>26 May 2024</td>
+						  <td> 
+							<div class="progress-showcase">
+							  <div class="progress sm-progress-bar progress-border-tertiary">
+								<div class="progress-bar" role="progressbar" style="width: 65%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"> </div>
+							  </div>
+							</div>
+						  </td>
+						  <td class="text-center">
+							<div class="dropdown icon-dropdown">
+							  <button class="btn dropdown-toggle" id="userdropdown5" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="icon-more-alt"></i></button>
+							  <div class="dropdown-menu dropdown-menu-end" aria-labelledby="userdropdown5"><a class="dropdown-item" href="#">Weekly</a><a class="dropdown-item" href="#">Monthly</a><a class="dropdown-item" href="#">Yearly</a></div>
+							</div>
+						  </td>
+						</tr>
+						<tr>
+						  <td>
+							<div class="form-check">
+							  <input class="form-check-input" type="checkbox" value="">
+							  <label class="form-check-label"></label>
+							</div>
+						  </td>
+						  <td> <span>1552</span></td>
+						  <td>
+							<div class="d-flex align-items-center">
+							  <div class="flex-shrink-0"><img src="../assets/images/dashboard-4/user/2.png" alt=""></div>
+							  <div class="flex-grow-1 ms-2"><a href="product-page.html">
+								  <h6>Ralph Waters</h6></a></div>
+							  <div class="active-status active-online"></div>
+							</div>
+						  </td>
+						  <td>Accounts</td>
+						  <td>15 May 2024  </td>
+						  <td>26 May 2024 </td>
+						  <td> 
+							<div class="progress-showcase">
+							  <div class="progress sm-progress-bar progress-border-success">
+								<div class="progress-bar" role="progressbar" style="width: 40%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"> </div>
+							  </div>
+							</div>
+						  </td>
+						  <td class="text-center">
+							<div class="dropdown icon-dropdown">
+							  <button class="btn dropdown-toggle" id="userdropdown6" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="icon-more-alt"></i></button>
+							  <div class="dropdown-menu dropdown-menu-end" aria-labelledby="userdropdown6"><a class="dropdown-item" href="#">Weekly</a><a class="dropdown-item" href="#">Monthly</a><a class="dropdown-item" href="#">Yearly</a></div>
+							</div>
+						  </td>
+						</tr>
+						<tr>
+						  <td>
+							<div class="form-check">
+							  <input class="form-check-input" type="checkbox" value="">
+							  <label class="form-check-label"></label>
+							</div>
+						  </td>
+						  <td><span>125</span></td>
+						  <td>
+							<div class="d-flex align-items-center">
+							  <div class="flex-shrink-0"><img src="../assets/images/dashboard-4/user/3.png" alt=""></div>
+							  <div class="flex-grow-1 ms-2"><a href="product-page.html">
+								  <h6>Aaron Hogan</h6></a></div>
+							  <div class="active-status active-online"></div>
+							</div>
+						  </td>
+						  <td>Accounts</td>
+						  <td>05 May 2024  </td>
+						  <td>19 May 2024 </td>
+						  <td> 
+							<div class="progress-showcase">
+							  <div class="progress sm-progress-bar progress-border-danger">
+								<div class="progress-bar" role="progressbar" style="width: 70%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"> </div>
+							  </div>
+							</div>
+						  </td>
+						  <td class="text-center">
+							<div class="dropdown icon-dropdown">
+							  <button class="btn dropdown-toggle" id="userdropdown7" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="icon-more-alt"></i></button>
+							  <div class="dropdown-menu dropdown-menu-end" aria-labelledby="userdropdown7"><a class="dropdown-item" href="#">Weekly</a><a class="dropdown-item" href="#">Monthly</a><a class="dropdown-item" href="#">Yearly</a></div>
+							</div>
+						  </td>
+						</tr>
+						<tr>
+						  <td>
+							<div class="form-check">
+							  <input class="form-check-input" type="checkbox" value="">
+							  <label class="form-check-label"></label>
+							</div>
+						  </td>
+						  <td><span>254</span></td>
+						  <td>
+							<div class="d-flex align-items-center">
+							  <div class="flex-shrink-0"><img src="../assets/images/dashboard-4/user/1.png" alt=""></div>
+							  <div class="flex-grow-1 ms-2"><a href="product-page.html">
+								  <h6>Gary payi</h6></a></div>
+							  <div class="active-status active-online"></div>
+							</div>
+						  </td>
+						  <td>Accounts</td>
+						  <td>22 May 2024  </td>
+						  <td>02 May 2024 </td>
+						  <td> 
+							<div class="progress-showcase">
+							  <div class="progress sm-progress-bar progress-border-info">
+								<div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"> </div>
+							  </div>
+							</div>
+						  </td>
+						  <td class="text-center">
+							<div class="dropdown icon-dropdown">
+							  <button class="btn dropdown-toggle" id="userdropdown8" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="icon-more-alt"></i></button>
+							  <div class="dropdown-menu dropdown-menu-end" aria-labelledby="userdropdown8"><a class="dropdown-item" href="#">Weekly</a><a class="dropdown-item" href="#">Monthly</a><a class="dropdown-item" href="#">Yearly</a></div>
+							</div>
+						  </td>
+						</tr>
+					  </tbody>
+					</table>
+				  </div>
+				</div>
+			  </div>
+			</div>
+			<div class="col-xl-4 col-md-6 proorder-md-5"> 
+			  <div class="card">
+				<div class="card-header card-no-border pb-0">
+				  <div class="header-top">
+					<h4>Live Meeting</h4>
+					<div class="location-menu dropdown">
+					  <button class="btn dropdown-toggle" id="userdropdown9" type="button" data-bs-toggle="dropdown" aria-expanded="false">1pm-2pm</button>
+					  <div class="dropdown-menu dropdown-menu-end" aria-labelledby="userdropdown9"><a class="dropdown-item" href="#">Address Selection</a><a class="dropdown-item" href="#">Geo-Menu</a><a class="dropdown-item" href="#">Place Picker</a></div>
+					</div>
+				  </div>
+				</div>
+				<div class="card-body live-meet">
+				  <div class="live-metting">  <img class="img-fluid" src="../assets/images/dashboard-4/metting/teacher.png" alt="">
+					<div class="star-img"><img class="img-fluid" src="../assets/images/dashboard-4/metting/chart.png" alt=""><img class="img-fluid" src="../assets/images/dashboard-4/metting/message.png" alt=""><img src="../assets/images/dashboard-4/metting/1.png" alt=""><img src="../assets/images/dashboard-4/metting/2.png" alt=""><img src="../assets/images/dashboard-4/metting/3.png" alt=""><img src="../assets/images/dashboard-4/metting/4.png" alt=""><img src="../assets/images/dashboard-4/metting/5.png" alt=""><img src="../assets/images/dashboard-4/metting/6.png" alt=""><img src="../assets/images/dashboard-4/metting/7.png" alt=""><img src="../assets/images/dashboard-4/metting/8.png" alt=""><img src="../assets/images/dashboard-4/metting/9.png" alt=""><img src="../assets/images/dashboard-4/metting/10.png" alt=""></div>
+				  </div>
+				  <ul>
+					<li> 
+					  <h5 class="text-truncate"> <span>Class: </span>Technique of Drawing in One Line</h5>
+					</li>
+					<li>
+					  <h5 class="text-truncate"> <span>Batch: </span>GDM (2/3) </h5>
+					</li>
+					<li><a href="https://support.pixelstrap.com/ " target="_blank">
+						<h5 class="font-primary text-truncate"> <span>Class Link: </span>https://support.pixelstrap.com/ </h5></a></li>
+				  </ul>
+				</div>
+			  </div>
+			</div>
+			<div class="col-xxl-4 col-xl-7 box-col-7 col-md-6 proorder-md-3"> 
+			  <div class="card">
+				<div class="card-header card-no-border pb-0">
+				  <div class="header-top">
+					<h4>Actively Hours</h4>
+					<div class="dropdown icon-dropdown">
+					  <button class="btn dropdown-toggle" id="userdropdown10" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="icon-more-alt"></i></button>
+					  <div class="dropdown-menu dropdown-menu-end" aria-labelledby="userdropdown10"><a class="dropdown-item" href="#">Weekly</a><a class="dropdown-item" href="#">Monthly</a><a class="dropdown-item" href="#">Yearly</a></div>
+					</div>
+				  </div>
+				</div>
+				<div class="card-body">
+				  <div id="actively-hours"></div>
+				</div>
+			  </div>
+			</div>
+			<div class="col-xxl-3 col-xl-5 box-col-5 col-md-6 proorder-md-6"> 
+			  <div class="card">
+				<div class="card-header card-no-border pb-0">
+				  <div class="header-top">
+					<h4>Enrolled Classes</h4>
+					<div class="dropdown icon-dropdown">
+					  <button class="btn dropdown-toggle" id="userdropdown11" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="icon-more-alt"></i></button>
+					  <div class="dropdown-menu dropdown-menu-end" aria-labelledby="userdropdown11"><a class="dropdown-item" href="#">Weekly</a><a class="dropdown-item" href="#">Monthly</a><a class="dropdown-item" href="#">Yearly</a></div>
+					</div>
+				  </div>
+				</div>
+				<div class="card-body pt-0 pb-1">
+				  <ul class="enrolled-class"> 
+					<li class="d-flex align-items-center gap-2"><span class="b-primary bg-primary"></span>
+					  <div class="flex-grow-1"> <a href="">
+						  <h5 class="text-truncate">After Effects CC Masterclass </h5></a>
+						<p>10:20 -11:30</p>
+					  </div>
+					  <div class="flex-shrink-0"> 
+						<div class="dropdown icon-dropdown">
+						  <button class="btn dropdown-toggle" id="userdropdown12" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="icon-angle-right"></i></button>
+						  <div class="dropdown-menu dropdown-menu-end" aria-labelledby="userdropdown12"><a class="dropdown-item" href="#">Weekly</a><a class="dropdown-item" href="#">Monthly</a><a class="dropdown-item" href="#">Yearly</a></div>
+						</div>
+					  </div>
+					</li>
+					<li class="d-flex align-items-center gap-2"><span class="b-secondary bg-secondary"></span>
+					  <div class="flex-grow-1"> <a href="">
+						  <h5 class="text-truncate">Design from A to Z</h5></a>
+						<p>09:00 -10:30</p>
+					  </div>
+					  <div class="flex-shrink-0"> 
+						<div class="dropdown icon-dropdown">
+						  <button class="btn dropdown-toggle" id="userdropdown13" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="icon-angle-right"></i></button>
+						  <div class="dropdown-menu dropdown-menu-end" aria-labelledby="userdropdown13"><a class="dropdown-item" href="#">Weekly</a><a class="dropdown-item" href="#">Monthly</a><a class="dropdown-item" href="#">Yearly</a></div>
+						</div>
+					  </div>
+					</li>
+					<li class="d-flex align-items-center gap-2"><span class="b-warning bg-warning"></span>
+					  <div class="flex-grow-1"> <a href="">
+						  <h5 class="text-truncate">Graphic Design Bootcamp</h5></a>
+						<p>15:00 -16:00</p>
+					  </div>
+					  <div class="flex-shrink-0"> 
+						<div class="dropdown icon-dropdown">
+						  <button class="btn dropdown-toggle" id="userdropdown14" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="icon-angle-right"></i></button>
+						  <div class="dropdown-menu dropdown-menu-end" aria-labelledby="userdropdown14"><a class="dropdown-item" href="#">Weekly</a><a class="dropdown-item" href="#">Monthly</a><a class="dropdown-item" href="#">Yearly</a></div>
+						</div>
+					  </div>
+					</li>
+					<li class="d-flex align-items-center gap-2"><span class="b-tertiary bg-tertiary"></span>
+					  <div class="flex-grow-1"> <a href="">
+						  <h5 class="text-truncate">The Ultimate Guide to Usabillity</h5></a>
+						<p>13:25 -14:30</p>
+					  </div>
+					  <div class="flex-shrink-0"> 
+						<div class="dropdown icon-dropdown">
+						  <button class="btn dropdown-toggle" id="userdropdown15" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="icon-angle-right"></i></button>
+						  <div class="dropdown-menu dropdown-menu-end" aria-labelledby="userdropdown15"><a class="dropdown-item" href="#">Weekly</a><a class="dropdown-item" href="#">Monthly</a><a class="dropdown-item" href="#">Yearly</a></div>
+						</div>
+					  </div>
+					</li>
+					<li class="d-flex align-items-center gap-2"><span class="b-success bg-success"></span>
+					  <div class="flex-grow-1"> <a href="">
+						  <h5 class="text-truncate">After Effects CC Masterclass</h5></a>
+						<p>12:45 -14:20</p>
+					  </div>
+					  <div class="flex-shrink-0"> 
+						<div class="dropdown icon-dropdown">
+						  <button class="btn dropdown-toggle" id="userdropdown16" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="icon-angle-right"></i></button>
+						  <div class="dropdown-menu dropdown-menu-end" aria-labelledby="userdropdown16"><a class="dropdown-item" href="#">Weekly</a><a class="dropdown-item" href="#">Monthly</a><a class="dropdown-item" href="#">Yearly</a></div>
+						</div>
+					  </div>
+					</li>
+				  </ul>
+				</div>
+			  </div>
+			</div>
+			<div class="col-xxl-5 col-xl-6 box-col-6 proorder-4-xl-1 proorder-md-7"> 
+			  <div class="card">
+				<div class="card-header card-no-border pb-0">
+				  <div class="header-top">
+					<h4>Featured Courses</h4>
+					<div class="dropdown icon-dropdown">
+					  <button class="btn dropdown-toggle" id="userdropdown17" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="icon-more-alt"></i></button>
+					  <div class="dropdown-menu dropdown-menu-end" aria-labelledby="userdropdown17"><a class="dropdown-item" href="#">Weekly</a><a class="dropdown-item" href="#">Monthly</a><a class="dropdown-item" href="#">Yearly</a></div>
+					</div>
+				  </div>
+				</div>
+				<div class="card-body p-0 featured-table">
+				  <div class="table-responsive theme-scrollbar">
+					<table class="table display" id="featured-table" style="width:100%">
+					  <thead>
+						<tr>
+						  <th>Course Name</th>
+						  <th>Start</th>
+						  <th>Rate</th>
+						  <th>Type</th>
+						  <th>Save</th>
+						</tr>
+					  </thead>
+					  <tbody>
+						<tr>
+						  <td>
+							<div class="d-flex align-items-center gap-2">
+							  <div class="flex-shrink-0"> <img src="../assets/images/dashboard-4/featured/1.png" alt=""></div>
+							  <div class="flex-grow-1"><a href="product-page.html">
+								  <h5>Mobile UX</h5></a><span>Erin Mooney</span></div>
+							</div>
+						  </td>
+						  <td>Feb 15</td>
+						  <td> <span class="d-flex align-item-center gap-2 font-primary"> <i class="font-primary" data-feather="star"> </i>4.8</span></td>
+						  <td>UX/UI Design</td>
+						  <td class="initial-color" id="colorChangeButton"><i data-feather="bookmark"> </i></td>
+						</tr>
+						<tr>
+						  <td>
+							<div class="d-flex align-items-center gap-2"> 
+							  <div class="flex-shrink-0"><img src="../assets/images/dashboard-4/featured/2.png" alt=""></div>
+							  <div class="flex-grow-1"><a href="product-page.html">
+								  <h5>Illustration</h5></a><span>Elsie Lemon</span></div>
+							</div>
+						  </td>
+						  <td>Mar 22</td>
+						  <td> <span class="d-flex align-item-center gap-2 font-primary"> <i class="font-primary" data-feather="star"> </i>2.3</span></td>
+						  <td>Web Designer</td>
+						  <td class="initial-color" id="colorChangeButton1"><i data-feather="bookmark"> </i></td>
+						</tr>
+						<tr>
+						  <td>
+							<div class="d-flex align-items-center gap-2">
+							  <div class="flex-shrink-0"><img src="../assets/images/dashboard-4/featured/3.png" alt=""></div>
+							  <div class="flex-grow-1"><a href="product-page.html">
+								  <h5>Design System</h5></a><span>Anna Green</span></div>
+							</div>
+						  </td>
+						  <td>Jun 28</td>
+						  <td> <span class="d-flex align-item-center gap-2 font-primary"> <i class="font-primary" data-feather="star"> </i>1.5</span></td>
+						  <td>Developer</td>
+						  <td class="initial-color" id="colorChangeButton2"><i data-feather="bookmark"> </i></td>
+						</tr>
+						<tr>
+						  <td>
+							<div class="d-flex align-items-center gap-2">
+							  <div class="flex-shrink-0"><img src="../assets/images/dashboard-4/featured/4.png" alt=""></div>
+							  <div class="flex-grow-1"><a href="product-page.html">
+								  <h5>Leadership</h5></a><span>John  Elliot</span></div>
+							</div>
+						  </td>
+						  <td>Apr 04</td>
+						  <td> <span class="d-flex align-item-center gap-2 font-primary"> <i class="font-primary" data-feather="star"> </i>2.4</span></td>
+						  <td>UX/UI Design</td>
+						  <td class="initial-color" id="colorChangeButton3"><i data-feather="bookmark"> </i></td>
+						</tr>
+						<tr>
+						  <td>
+							<div class="d-flex align-items-center gap-2">
+							  <div class="flex-shrink-0"><img src="../assets/images/dashboard-4/featured/5.png" alt=""></div>
+							  <div class="flex-grow-1"><a href="product-page.html">
+								  <h5>Latest Figma</h5></a><span>Dylan Field</span></div>
+							</div>
+						  </td>
+						  <td>jun 01</td>
+						  <td><span class="d-flex align-item-center gap-2 font-primary"> <i class="font-primary" data-feather="star"> </i>5.4</span></td>
+						  <td>Graphic Designer</td>
+						  <td class="initial-color" id="colorChangeButton4"><i data-feather="bookmark"> </i></td>
+						</tr>
+					  </tbody>
+					</table>
+				  </div>
+				</div>
+			  </div>
+			</div>
+			<div class="col-xxl-7 col-xl-12 box-col-12 proorder-md-8"> 
+			  <div class="card">
+				<div class="card-header card-no-border pb-0">
+				  <div class="header-top">
+					<h4>Monthly  Attendance Report (Feb)</h4>
+					<div class="dropdown icon-dropdown">
+					  <button class="btn dropdown-toggle" id="userdropdown18" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="icon-more-alt"></i></button>
+					  <div class="dropdown-menu dropdown-menu-end" aria-labelledby="userdropdown18"><a class="dropdown-item" href="#">Weekly</a><a class="dropdown-item" href="#">Monthly</a><a class="dropdown-item" href="#">Yearly</a></div>
+					</div>
+				  </div>
+				</div>
+				<div class="card-body pb-0">
+				  <div class="monthly-report">
+					<ul class="d-flex align-item-center gap-2">
+					  <li> <span class="bg-primary"> </span>Teacher</li>
+					  <li> <span class="bg-secondary"> </span>Student</li>
+					</ul>
+				  </div>
+				  <div id="monthly-reportchart"></div>
+				</div>
+			  </div>
+			</div>
+			<div class="col-xxl-5 col-xl-6 box-col-6 proorder-md-9"> 
+			  <div class="card">
+				<div class="card-header card-no-border pb-0">
+				  <div class="header-top">
+					<h4>Schedule</h4>
+					<div class="dropdown icon-dropdown">
+					  <button class="btn dropdown-toggle" id="userdropdown19" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="icon-more-alt"></i></button>
+					  <div class="dropdown-menu dropdown-menu-end" aria-labelledby="userdropdown19"><a class="dropdown-item" href="#">Weekly</a><a class="dropdown-item" href="#">Monthly</a><a class="dropdown-item" href="#">Yearly</a></div>
+					</div>
+				  </div>
+				</div>
+				<div class="card-body schedult-calendar pt-0">
+				  <div class="schedule-container"> 
+					<div id="schedulechart"></div>
+				  </div>
+				</div>
+			  </div>
+			</div>
+		  </div>
+		</div>
+		<!-- Container-fluid Ends-->
+	  </div>
+	  <!-- footer start-->
+	  <footer class="footer">
+		<div class="container-fluid">
+		  <div class="row">
+			<div class="col-md-12 footer-copyright d-flex flex-wrap align-items-center justify-content-between">
+			  <p class="mb-0 f-w-600">Copyright <span class="year-update"> </span> © Mofi theme by pixelstrap  </p>
+			  <p class="mb-0 f-w-600">Hand crafted & made with
+				<svg class="footer-icon">
+				  <use href="../assets/svg/icon-sprite.svg#footer-heart"> </use>
+				</svg>
+			  </p>
+			</div>
+		  </div>
+		</div>
+	  </footer>
+	</div>
+  </div>
+{% endblock body %}
