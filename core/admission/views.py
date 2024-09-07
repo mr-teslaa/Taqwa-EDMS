@@ -1,8 +1,23 @@
-from flask import request, redirect, url_for, flash, render_template, Blueprint
+import os
+from werkzeug.utils import secure_filename
+import secrets
+from flask import request, redirect, url_for, flash, render_template, Blueprint, current_app
 from core import db
 from core.models import Student, Application
 
 admission_bp = Blueprint('admission', __name__)
+
+
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in current_app.config['ALLOWED_EXTENSIONS']
+
+def generate_random_filename(filename):
+    # Generate a random hex string and append the file extension
+    random_hex = secrets.token_hex(8)
+    _, file_ext = os.path.splitext(filename)
+    return f"{random_hex}{file_ext}"
+
 
 @admission_bp.route('/student/admission', methods=['GET', 'POST'])
 def student_admission():
@@ -42,18 +57,27 @@ def student_admission():
             "prev_passing_year": request.form.get('year'),
             "prev_roll": request.form.get('roll'),
             "prev_class": request.form.get('class'),
-            "photo": request.form.get('photo')
+            "photo": None
         }
+
+        # Handle the photo upload
+        photo = request.files.get('photo')
+        if photo and allowed_file(photo.filename):
+            original_filename = secure_filename(photo.filename)
+            new_filename = generate_random_filename(original_filename)
+            file_path = os.path.join(current_app.config['UPLOAD_FOLDER'], new_filename)
+            photo.save(file_path)
+            student_data["photo"] = new_filename  # Save the new filename in your data
 
         print('Student data: ')
         print(student_data)
-        # new_student = Student(**student_data)
-        # db.session.add(new_student)
-        # db.session.commit()
+        new_student = Student(**student_data)
+        db.session.add(new_student)
+        db.session.commit()
 
-        # new_application = Application(student_id=new_student.id)
-        # db.session.add(new_application)
-        # db.session.commit()
+        new_application = Application(student_id=new_student.id)
+        db.session.add(new_application)
+        db.session.commit()
 
         flash('Application submitted successfully!', 'success')
         return redirect(url_for('admission.student_admission'))
