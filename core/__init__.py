@@ -40,5 +40,6 @@ def create_app(config_class=Config):
     app.register_blueprint(auth_bp)
     from core.admin_dashboard.views import admin_dashboard_bp
     app.register_blueprint(admin_dashboard_bp)
-
+    from core.institute_dashboard.views import institute_dashboard_bp
+    app.register_blueprint(institute_dashboard_bp)
     return app
