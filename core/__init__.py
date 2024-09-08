@@ -31,13 +31,16 @@ def create_app(config_class=Config):
     mail.init_app(app)
     migrate.init_app(app, db)
 
-
     from core.public.views import public_bp
+
     app.register_blueprint(public_bp)
     from core.admission.views import admission_bp
-    app.register_blueprint(admission_bp, url_prefix='/admission')
+
+    app.register_blueprint(admission_bp, url_prefix="/admission")
     from core.auth.views import auth_bp
-    app.register_blueprint(auth_bp, url_prefix='/auth')
+
+    app.register_blueprint(auth_bp, url_prefix="/auth")
     from core.institute_dashboard.views import institute_dashboard_bp
+
     app.register_blueprint(institute_dashboard_bp)
     return app

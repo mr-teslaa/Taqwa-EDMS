@@ -10,13 +10,41 @@
         {% endblock page_css %}
     </head>
     <body>
+        <div class="container">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div id="flash-message" class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+        </div>
+            <!-- FLASH MESSEGE  -->
+            
+        
         {% block body %}
         {% endblock body %}
 
-
+        <!-- for autohide flash messege  -->
+        <!-- <script>
+            setTimeout(function() {
+                var alert = document.getElementById('flash-message');
+                if (alert) {
+                    alert.classList.remove('show');
+                    setTimeout(function() {
+                        alert.remove();
+                    }, 500); // Bootstrap's fade out transition duration is 150ms
+                }
+            }, 1000); 
+        </script> -->
 
         <script src="{{ url_for('static', filename='assets/bootstrap5/js/bootstrap.min.js') }}"></script>
         {% block page_js %}
+    
         {% endblock page_js %}
     </body>
 </html>

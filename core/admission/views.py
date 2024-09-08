@@ -4,6 +4,7 @@ import secrets
 from flask import request, redirect, url_for, flash, render_template, Blueprint, current_app
 from core import db
 from core.models import Student, Application
+from core.admission.forms import StudentAdmissionForm
 
 admission_bp = Blueprint('admission', __name__)
 
@@ -21,53 +22,61 @@ def generate_random_filename(filename):
 
 @admission_bp.route('/', methods=['GET', 'POST'])
 def student_admission():
-    if request.method == 'POST':
+    form = StudentAdmissionForm()
+
+    if request.method == 'POST' and form.validate_on_submit():
         student_data = {
-            "name_english": request.form.get('student_name_english'),
-            "name_bangla": request.form.get('student_name_bangla'),
-            "apply_class": request.form.get('apply_class'),
-            "date_of_birth": request.form.get('date_of_birth'),
-            "birth_certificate_no": request.form.get('birth_certificate'),
-            "gender": request.form.get('gender'),
-            "religion": request.form.get('religion'),
-            "blood_group": request.form.get('blood_group'),
-            "nationality": request.form.get('nationality'),
-            "marital_status": request.form.get('marital_status'),
-            "father_name_english": request.form.get('father_name_english'),
-            "father_name_bangla": request.form.get('father_name_bangla'),
-            "father_mobile": request.form.get('father_mobile'),
-            "father_nid": request.form.get('father_nid'),
-            "mother_name_english": request.form.get('mother_name_english'),
-            "mother_name_bangla": request.form.get('mother_name_bangla'),
-            "mother_mobile": request.form.get('mother_mobile'),
-            "mother_nid": request.form.get('mother_nid'),
-            "present_address": request.form.get('present_address'),
-            "division": request.form.get('division'),
-            "district": request.form.get('district'),
-            "upazilla": request.form.get('upazilla'),
-            "post_office": request.form.get('post_office'),
-            "post_code": request.form.get('post_code'),
-            "permanent_address": request.form.get('permanent_address'),
-            "guardian_name": request.form.get('guardian_name'),
-            "relationship": request.form.get('relationship'),
-            "guardian_mobile": request.form.get('guardian_mobile'),
-            "guardian_occupation": request.form.get('guardian_occupation'),
-            "prev_institute_name": request.form.get('institute'),
-            "prev_institute_address": request.form.get('institute_address'),
-            "prev_passing_year": request.form.get('year'),
-            "prev_roll": request.form.get('roll'),
-            "prev_class": request.form.get('class'),
+            "name_english": form.student_name_english.data,
+            "name_bangla": form.student_name_bangla.data,
+            "apply_class": form.apply_class.data,
+            "date_of_birth": form.date_of_birth.data,
+            "birth_certificate_no": form.birth_certificate_no.data,
+            "gender": form.gender.data,
+            "religion": form.religion.data,
+            "blood_group": form.blood_group.data,
+            "nationality": form.nationality.data,
+            "marital_status": form.marital_status.data,
+            "father_name_english": form.father_name_english.data,
+            "father_name_bangla": form.father_name_bangla.data,
+            "father_mobile": form.father_mobile.data,
+            "father_nid": form.father_nid.data,
+            "mother_name_english": form.mother_name_english.data,
+            "mother_name_bangla": form.mother_name_bangla.data,
+            "mother_mobile": form.mother_mobile.data,
+            "mother_nid": form.mother_nid.data,
+            "present_address": form.present_address.data,
+            "present_division": form.present_division.data,
+            "present_district": form.present_district.data,
+            "present_upazilla": form.present_upazilla.data,
+            "present_post_office": form.present_post_office.data,
+            "present_post_code": form.present_post_code.data,
+            "permanent_address": form.permanent_address.data,
+            "permanent_division": form.permanent_division.data,
+            "permanent_district": form.permanent_district.data,
+            "permanent_upazilla": form.permanent_upazilla.data,
+            "permanent_post_office": form.permanent_post_office.data,
+            "permanent_post_code": form.permanent_post_code.data,
+            "guardian_name": form.guardian_name.data,
+            "relationship": form.relationship.data,
+            "guardian_mobile": form.guardian_mobile.data,
+            "guardian_occupation": form.guardian_occupation.data,
+            "prev_institute_name": form.prev_institute_name.data,
+            "prev_institute_address": form.prev_institute_address.data,
+            "prev_passing_year": form.prev_passing_year.data,
+            "prev_roll": form.prev_roll.data,
+            "prev_class": form.prev_class.data,
             "photo": None
         }
 
         # Handle the photo upload
-        photo = request.files.get('photo')
-        if photo and allowed_file(photo.filename):
-            original_filename = secure_filename(photo.filename)
-            new_filename = generate_random_filename(original_filename)
-            file_path = os.path.join(current_app.config['UPLOAD_FOLDER'], new_filename)
-            photo.save(file_path)
-            student_data["photo"] = new_filename  # Save the new filename in your data
+        if form.photo.data:
+            photo = form.photo.data
+            if allowed_file(photo.filename):
+                original_filename = secure_filename(photo.filename)
+                new_filename = generate_random_filename(original_filename)
+                file_path = os.path.join(current_app.config['UPLOAD_FOLDER'], new_filename)
+                photo.save(file_path)
+                student_data["photo"] = new_filename  # Save the new filename in the database
 
         print('Student data: ')
         print(student_data)
@@ -80,6 +89,11 @@ def student_admission():
         db.session.commit()
 
         flash('Application submitted successfully!', 'success')
-        return redirect(url_for('admission.student_admission'))
+        return redirect(url_for('public.landing_page'))
+    
+    elif request.method == 'POST':
+        
+        flash('Please fill in all required fields.','danger')
 
-    return render_template('admission/admission.html')
+
+    return render_template('admission/admission.html', form=form)

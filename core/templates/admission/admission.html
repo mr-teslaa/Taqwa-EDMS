@@ -6,404 +6,773 @@
 </div>
 
 <div class="container mt-md-5 mt-3">
-    <div class="row">
-        <div class="col-12">
-            <div class="text-center">
-                <h4 class="fs-2 fw-light mb-5">Apply for admission</h4>
-            </div>
-            <div>
-                <form class="theme-form" action="{{ url_for('admission.student_admission') }}" method="POST"
-                    enctype="multipart/form-data">
-                    <!-- START - STUDENT INFORMATION -->
-                    <div class="row">
-                        <div class="col-12">
-                            <p class="fs-4">Student Information</p>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label">Student Name (English)</label>
-                                <input type="text" name="student_name_english" class="form-control">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label">Student Name (বাংলা)</label>
-                                <input type="text" name="student_name_bangla" class="form-control">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row mt-2">
-                        <div class="col-md-4">
-                            <div class="mb-3">
-                                <label class="form-label" for="apply_class">Apply for class</label>
-                                <select class="form-select" name="apply_class" id="apply_class">
-                                    <option selected>--- Select Class ---</option>
-                                    <option value="play">Play</option>
-                                    <option value="nursary">Nursary</option>
-                                    <option value="one">One</option>
-                                    <option value="two">Two</option>
-                                    <option value="three">Three</option>
-                                    <option value="four">Four</option>
-                                    <option value="five">Five</option>
-                                    <option value="six">Six</option>
-                                    <option value="seven">Seven</option>
-                                    <option value="eight">Eight</option>
-                                    <option value="nine">Nine</option>
-                                    <option value="ten">Ten</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="mb-3">
-                                <label class="form-label">Date Of Birth</label>
-                                <input type="date" name="date_of_birth" class="form-control">
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="mb-3">
-                                <label class="form-label">Birth Certificate No</label>
-                                <input type="text" name="birth_certificate" class="form-control">
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="mb-3">
-                                <label class="form-label" for="gender">Gender</label>
-                                <select class="form-select" name="gender" id="gender">
-                                    <option selected>--- Select Gender ---</option>
-                                    <option value="male">Male</option>
-                                    <option value="female">Female</option>
-                                    <option value="other">Other</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="mb-3">
-                                <label class="form-label" for="religion">Religion</label>
-                                <select class="form-select" name="religion" id="religion"
-                                    aria-label="Default select example" required>
-                                    <option selected>Choose...</option>
-                                    <option value="islam">Islam</option>
-                                    <option value="sonaton">Sonaton</option>
-                                    <option value="christian">Christian</option>
-                                    <option value="buddhism">Buddhism</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="mb-3">
-                                <label class="form-label" for="blood_group">Blood Group</label>
-                                <select class="form-select" name="blood_group" id="blood_group"
-                                    aria-label="Default select example" required>
-                                    <option selected>Choose...</option>
-                                    <option value="a+">A +(ve)</option>
-                                    <option value="a-">A -(ve)</option>
-                                    <option value="b+">B +(ve)</option>
-                                    <option value="b-">B -(ve)</option>
-                                    <option value="o+">O +(ve)</option>
-                                    <option value="ab+">AB + (ve)</option>
-                                    <option value="ab-">AB -(ve)</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="mb-3">
-                                <label class="form-label">Nationality</label>
-                                <input type="text" name="nationality" class="form-control" required>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="mb-3">
-                                <label class="form-label" for="marital_status">Marital status</label>
-                                <select class="form-select" name="marital_status" id="marital_status"
-                                    aria-label="Default select example" required>
-                                    <option selected>--- select one --</option>
-                                    <option value="married">Married</option>
-                                    <option value="unmarried">Unmarried</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- END - STUDENT INFORMATION -->
-
-                    <!-- START - PARENT'S INFORMATION -->
-                    <div class="row mt-2">
-                        <div class="col-12 mt-5">
-                            <p class="fs-4">Parent's Information</p>
-                        </div>
-
-                        <div class="col-md-6">
-                            <!-- FATHER INFORMATION -->
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="mb-3">
-                                        <label class="form-label">Father Name English</label>
-                                        <input type="text" name="father_name_english" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="mb-3">
-                                        <label class="form-label">Father Name (বাংলা)</label>
-                                        <input type="text" name="father_name_bangla" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="mb-3">
-                                        <label class="form-label">Father Mobile No</label>
-                                        <input type="text" name="father_mobile" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="mb-3">
-                                        <label class="form-label">Father NID/Pasport</label>
-                                        <input type="text" name="father_nid" class="form-control">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
-                            <!-- MOTHER INFORMATION -->
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="mb-3">
-                                        <label class="form-label">Mother Name (English)</label>
-                                        <input type="text" name="mother_name_english" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="mb-3">
-                                        <label class="form-label">Mother Name (বাংলা)</label>
-                                        <input type="text" name="mother_name_bangla" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="mb-3">
-                                        <label class="form-label">Mother Mobile No</label>
-                                        <input type="text" name="mother_mobile" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="mb-3">
-                                        <label class="form-label">Mother Nid/ Pasport</label>
-                                        <input type="text" name="mother_nid" class="form-control">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                    <!-- END - PARENT'S INFORMATION -->
-
-
-                    <div class="row mt-4">
-                        <!-- START - PRESENT ADDRESS -->
-                        <div class="col-md-6">
-
-                            <div class="mt-5">
-                                <p class="fs-4">Present Address</p>
-                            </div>
-
-                            <div class="mb-3">
-                                <label class="form-label" for="present_address"> Address</label>
-                                <textarea name="present_address" id="present_address" class="form-control" rows="3"
-                                    required></textarea>
-                            </div>
-
-                            <div class="mb-3">
-                                <label class="form-label" for="present_division">Division</label>
-                                <input type="text" id="present_division" name="division" class="form-control" required>
-                            </div>
-
-                            <div class="mb-3">
-                                <label class="form-label" for="present_district">District/Zilla</label>
-                                <input type="text" id="present_district" name="district" class="form-control" required>
-                            </div>
-
-                            <div class="mb-3">
-                                <label class="form-label" for="present_upazilla">Upazilla</label>
-                                <input type="text" id="present_upazilla" name="upazilla" class="form-control" required>
-                            </div>
-
-                            <div class="mb-3">
-                                <label class="form-label" for="present_post_office">Post Office</label>
-                                <input type="text" id="present_post_office" name="post_office" class="form-control"
-                                    required>
-                            </div>
-
-                            <div class="mb-3">
-                                <label class="form-label" for="present_post_code">Post Code</label>
-                                <input type="text" id="present_post_code" name="post_code" class="form-control"
-                                    required>
-                            </div>
-
-                        </div>
-                        <!-- END - PRESENT ADDRESS -->
-                        <!-- START - PARMANENT ADDRESS -->
-                        <div class="col-md-6">
-                            <div class="mt-4">
-                                <p class="fs-4 m-0">Permanent Address</p>
-                            </div>
-
-                            <div class="form-check form-switch me-2">
-                                <input type="checkbox" class="form-check-input checkbox" role="switch"
-                                    id="same_as_present">
-                                <label class="form-check-label" for="same_as_present">
-                                    same as present address</label>
-                            </div>
-
-                            <div class="mb-3">
-                                <label class="form-label" for="permanent_address">Address</label>
-                                <textarea name="permanent_address" id="permanent_address" class="form-control"
-                                    rows="3"></textarea>
-                            </div>
-
-                            <div class="mb-3">
-                                <label class="form-label" for="permanent_division">Division</label>
-                                <input type="text" id="permanent_division" name="division" class="form-control">
-                            </div>
-
-                            <div class="mb-3">
-                                <label class="form-label" for="permanent_district">District/Zilla</label>
-                                <input type="text" id="permanent_district" name="district" class="form-control">
-                            </div>
-
-                            <div class="mb-3">
-                                <label class="form-label" for="permanent_upazilla">Upazilla</label>
-                                <input type="text" id="permanent_upazilla" name="upazilla" class="form-control">
-                            </div>
-
-                            <div class="mb-3">
-                                <label class="form-label" for="permanent_post_office">Post Office</label>
-                                <input type="text" id="permanent_post_office" name="post_office" class="form-control">
-                            </div>
-
-                            <div class="mb-3">
-                                <label class="form-label" for="permanent_post_code">Post Code</label>
-                                <input type="text" id="permanent_post_code" name="post_code" class="form-control">
-                            </div>
-                        </div>
-                        <!-- END - PARMANENT ADDRESS -->
-                    </div>
-
-
-                    <!-- START - Guardian Information -->
-                    <div class="row mt-2">
-                        <div class="col-12 mt-5">
-                            <p class="fs-4">Guardian Information</p>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="mb-3">
-                                <label class="form-label">Guardian Name</label>
-                                <input type="text" name="guardian_name" class="form-control">
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="mb-3">
-                                <label class="form-label">Raltionship</label>
-                                <input type="text" name="raltionship" class="form-control">
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="mb-3">
-                                <label class="form-label">Guardian Mobile</label>
-                                <input type="text" name="guardian_mobile" class="form-control">
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="mb-3">
-                                <label class="form-label">Occupation</label>
-                                <input type="text" name="guardian_occupation" class="form-control">
-                            </div>
-                        </div>
-                    </div>
-                    <!-- END - Guardian Information -->
-
-                    <!-- START - PREVIOUSE ACADEMIC INFO -->
-                    <div class="row mt-3">
-                        <div class="col-12">
-                            <p class="fs-4">
-                                Previouse Institute Information
-                                <span class="fs-sm text-warning">(If applicable)</span>
-                            </p>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label class="form-label">Institute Name</label>
-                                    <input type="text" name="institute" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label class="form-label">Institute Address</label>
-                                    <input type="text" name="institute" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="mb-3">
-                                    <label class="form-label">Passing Year</label>
-                                    <input type="text" name="year" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="mb-3">
-                                    <label class="form-label">Previouse Roll</label>
-                                    <input type="text" name="roll" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="mb-3">
-                                    <label class="form-label">Class</label>
-                                    <input type="text" name="class" class="form-control">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- START - PREVIOUSE ACADEMIC INFO -->
-
-                    <!-- START - IMAGES -->
-                    <div class="row mt-3">
-                        <div class="col-12">
-                            <div class="mb-3">
-                                <label class="form-label" for="photo">Photo</label>
-                                <input class="form-control" name="photo" type="file">
-                            </div>
-                        </div>
-                    </div>
-                    <!-- END - IMAGES -->
-                    <div class="form-group mb-0">
-                        <div class="checkbox p-0">
-                            <input id="agree_tos" type="checkbox">
-                            <label for="agree_tos">
-                                Agree with <a class="ms-2" href="#">Terms of service</a> and <a class="ms-2"
-                                    href="#">Privacy Policy</a>
-                            </label>
-                        </div>
-                    </div>
-                    <button type="submit" class="btn btn-primary mt-5">Apply For Admission</button>
-                </form>
-            </div>
+    <div class="form content my-4">
+        <!-- Form header  -->
+        <div class="text-center">
+            <h4 class="fs-2 fw-light mb-5">Apply for admission</h4>
         </div>
+        <form action=""  method="POST" enctype="multipart/form-data" novalidate>
+            {{ form.hidden_tag() }}
+                <!-- START - STUDENT INFORMATION -->
+                <div class="row">
+                    <div class="col-12">
+                        <p class="fs-4">Student Information</p>
+                    </div>
+                    <!-- student_name_english -->
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            {{ form.student_name_english.label(class="form-label") }}
+                            {% if form.student_name_english.errors %}
+                                {{ form.student_name_english(class="form-control is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.student_name_english.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.student_name_english(class="form-control") }}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <!-- student_name_bangla -->
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            {{ form.student_name_bangla.label(class="form-label") }}
+                            {% if form.student_name_bangla.errors %}
+                                {{ form.student_name_bangla(class="form-control is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.student_name_bangla.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.student_name_bangla(class="form-control") }}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="row mt-2">
+                    <!-- apply_class -->
+                    <div class="col-md-4">
+                        <div class="mb-3">
+                            {{ form.apply_class.label(class="form-label") }}
+                            {% if form.apply_class.errors %}
+                                {{ form.apply_class(class="form-select is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.apply_class.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.apply_class(class="form-select") }}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <!-- date_of_birth -->
+                    <div class="col-md-4">
+                        <div class="mb-3">
+                            {{ form.date_of_birth.label(class="form-label") }}
+                            {% if form.date_of_birth.errors %}
+                                {{ form.date_of_birth(class="form-control is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.date_of_birth.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.date_of_birth(class="form-control") }}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <!-- birth_certificate_no -->
+                    <div class="col-md-4">
+                        <div class="mb-3">
+                            {{ form.birth_certificate_no.label(class="form-label") }}
+                            {% if form.birth_certificate_no.errors %}
+                                {{ form.birth_certificate_no(class="form-control is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.birth_certificate_no.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.birth_certificate_no(class="form-control") }}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <!-- gender -->
+                    <div class="col-md-4">
+                        <div class="mb-3">
+                            {{ form.gender.label(class="form-label") }}
+                            {% if form.gender.errors %}
+                                {{ form.gender(class="form-select is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.gender.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.gender(class="form-select") }}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <!-- religion -->
+                    <div class="col-md-4">
+                        <div class="mb-3">
+                            {{ form.religion.label(class="form-label") }}
+                            {% if form.religion.errors %}
+                                {{ form.religion(class="form-select is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.religion.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.religion(class="form-select") }}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <!-- blood_group -->
+                    <div class="col-md-4">
+                        <div class="mb-3">
+                            {{ form.blood_group.label(class="form-label") }}
+                            {% if form.blood_group.errors %}
+                                {{ form.blood_group(class="form-select is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.blood_group.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.blood_group(class="form-select") }}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <!-- nationality -->
+                    <div class="col-md-4">
+                        <div class="mb-3">
+                            {{ form.nationality.label(class="form-label") }}
+                            {% if form.nationality.errors %}
+                                {{ form.nationality(class="form-control is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.nationality.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.nationality(class="form-control") }}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <!-- marital_status -->
+                    <div class="col-md-4">
+                        <div class="mb-3">
+                            {{ form.marital_status.label(class="form-label") }}
+                            {% if form.marital_status.errors %}
+                                {{ form.marital_status(class="form-select is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.marital_status.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.marital_status(class="form-select") }}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <!-- END - STUDENT INFORMATION -->
+            
+                <!-- START - PARENT'S INFORMATION -->
+                <div class="row mt-2">
+                    <div class="col-12 mt-5">
+                        <p class="fs-4">Parent's Information</p>
+                    </div>
+            
+                    <div class="col-md-6">
+                        <!-- FATHER INFORMATION -->
+                        <div class="row">
+                            <!-- father_name_english -->
+                            <div class="col-12">
+                                <div class="mb-3">
+                                    {{ form.father_name_english.label(class="form-label") }}
+                                    {% if form.father_name_english.errors %}
+                                        {{ form.father_name_english(class="form-control is-invalid") }}
+                                        <div class="invalid-feedback">
+                                            {% for error in form.father_name_english.errors %}
+                                                <span>{{ error }}</span>
+                                            {% endfor %}
+                                        </div>
+                                    {% else %}
+                                        {{ form.father_name_english(class="form-control") }}
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <!-- father_name_bangla -->
+                            <div class="col-12">
+                                <div class="mb-3">
+                                    {{ form.father_name_bangla.label(class="form-label") }}
+                                    {% if form.father_name_bangla.errors %}
+                                        {{ form.father_name_bangla(class="form-control is-invalid") }}
+                                        <div class="invalid-feedback">
+                                            {% for error in form.father_name_bangla.errors %}
+                                                <span>{{ error }}</span>
+                                            {% endfor %}
+                                        </div>
+                                    {% else %}
+                                        {{ form.father_name_bangla(class="form-control") }}
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <!-- father_mobile -->
+                            <div class="col-12">
+                                <div class="mb-3">
+                                    {{ form.father_mobile.label(class="form-label") }}
+                                    {% if form.father_mobile.errors %}
+                                        {{ form.father_mobile(class="form-control is-invalid") }}
+                                        <div class="invalid-feedback">
+                                            {% for error in form.father_mobile.errors %}
+                                                <span>{{ error }}</span>
+                                            {% endfor %}
+                                        </div>
+                                    {% else %}
+                                        {{ form.father_mobile(class="form-control") }}
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <!-- father_nid -->
+                            <div class="col-12">
+                                <div class="mb-3">
+                                    {{ form.father_nid.label(class="form-label") }}
+                                    {% if form.father_nid.errors %}
+                                        {{ form.father_nid(class="form-control is-invalid") }}
+                                        <div class="invalid-feedback">
+                                            {% for error in form.father_nid.errors %}
+                                                <span>{{ error }}</span>
+                                            {% endfor %}
+                                        </div>
+                                    {% else %}
+                                        {{ form.father_nid(class="form-control") }}
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            
+                    <div class="col-md-6">
+                        <!-- MOTHER INFORMATION -->
+                        <div class="row">
+                            <!-- mother_name_english -->
+                            <div class="col-12">
+                                <div class="mb-3">
+                                    {{ form.mother_name_english.label(class="form-label") }}
+                                    {% if form.mother_name_english.errors %}
+                                        {{ form.mother_name_english(class="form-control is-invalid") }}
+                                        <div class="invalid-feedback">
+                                            {% for error in form.mother_name_english.errors %}
+                                                <span>{{ error }}</span>
+                                            {% endfor %}
+                                        </div>
+                                    {% else %}
+                                        {{ form.mother_name_english(class="form-control") }}
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <!-- mother_name_bangla -->
+                            <div class="col-12">
+                                <div class="mb-3">
+                                    {{ form.mother_name_bangla.label(class="form-label") }}
+                                    {% if form.mother_name_bangla.errors %}
+                                        {{ form.mother_name_bangla(class="form-control is-invalid") }}
+                                        <div class="invalid-feedback">
+                                            {% for error in form.mother_name_bangla.errors %}
+                                                <span>{{ error }}</span>
+                                            {% endfor %}
+                                        </div>
+                                    {% else %}
+                                        {{ form.mother_name_bangla(class="form-control") }}
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <!-- mother_mobile -->
+                            <div class="col-12">
+                                <div class="mb-3">
+                                    {{ form.mother_mobile.label(class="form-label") }}
+                                    {% if form.mother_mobile.errors %}
+                                        {{ form.mother_mobile(class="form-control is-invalid") }}
+                                        <div class="invalid-feedback">
+                                            {% for error in form.mother_mobile.errors %}
+                                                <span>{{ error }}</span>
+                                            {% endfor %}
+                                        </div>
+                                    {% else %}
+                                        {{ form.mother_mobile(class="form-control") }}
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <!-- mother_nid -->
+                            <div class="col-12">
+                                <div class="mb-3">
+                                    {{ form.mother_nid.label(class="form-label") }}
+                                    {% if form.mother_nid.errors %}
+                                        {{ form.mother_nid(class="form-control is-invalid") }}
+                                        <div class="invalid-feedback">
+                                            {% for error in form.mother_nid.errors %}
+                                                <span>{{ error }}</span>
+                                            {% endfor %}
+                                        </div>
+                                    {% else %}
+                                        {{ form.mother_nid(class="form-control") }}
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- END - PARENT'S INFORMATION -->
+            
+                <!-- START - ADDRESS -->
+                <div class="row mt-2">
+                    <div class="col-12 mt-5">
+                        <p class="fs-4 m-0">Address</p>
+                    </div>
+                    <!-- START PRESENT ADDRESS-->
+                    <div class="col-md-6">
+                        <div class="row">
+                            <!-- present_address -->
+                             <div class="col-12 mt-4">
+                                <div class="mb-3">
+                                    {{ form.present_address.label(class="form-label") }}
+                                    {% if form.present_address.errors %}
+                                        {{ form.present_address(class="form-control is-invalid", id="present_address") }}
+                                        <div class="invalid-feedback">
+                                            {% for error in form.present_address.errors %}
+                                                <span>{{ error }}</span>
+                                            {% endfor %}
+                                        </div>
+                                    {% else %}
+                                        {{ form.present_address(class="form-control", id="present_address") }}
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <!-- present_division -->   
+                            <div class="col-12">
+                                <div class="mb-3">
+                                    {{ form.present_division.label(class="form-label") }}
+                                    {% if form.present_division.errors %}
+                                        {{ form.present_division(class="form-control is-invalid", id="present_division") }}
+                                        <div class="invalid-feedback">
+                                            {% for error in form.present_division.errors %}
+                                                <span>{{ error }}</span>
+                                            {% endfor %}
+                                        </div>
+                                    {% else %}
+                                        {{ form.present_division(class="form-control", id="present_division") }}
+                                    {% endif %}
+                                </div>
+                            </div>
+                               <!-- present_district -->   
+                            <div class="col-12">
+                                <div class="mb-3">
+                                    {{ form.present_district.label(class="form-label") }}
+                                    {% if form.present_district.errors %}
+                                        {{ form.present_district(class="form-control is-invalid", id="present_district") }}
+                                        <div class="invalid-feedback">
+                                            {% for error in form.present_district.errors %}
+                                                <span>{{ error }}</span>
+                                            {% endfor %}
+                                        </div>
+                                    {% else %}
+                                        {{ form.present_district(class="form-control", id="present_district") }}
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <!-- present_upazilla -->   
+                            <div class="col-12">
+                                <div class="mb-3">
+                                    {{ form.present_upazilla.label(class="form-label") }}
+                                    {% if form.present_upazilla.errors %}
+                                        {{ form.present_upazilla(class="form-control is-invalid", id="present_upazilla") }}
+                                        <div class="invalid-feedback">
+                                            {% for error in form.present_upazilla.errors %}
+                                                <span>{{ error }}</span>
+                                            {% endfor %}
+                                        </div>
+                                    {% else %}
+                                        {{ form.present_upazilla(class="form-control", id="present_upazilla") }}
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <!-- present_post_office -->   
+                            <div class="col-12">
+                                <div class="mb-3">
+                                    {{ form.present_post_office.label(class="form-label") }}
+                                    {% if form.present_post_office.errors %}
+                                        {{ form.present_post_office(class="form-control is-invalid", id="present_post_office") }}
+                                        <div class="invalid-feedback">
+                                            {% for error in form.present_post_office.errors %}
+                                                <span>{{ error }}</span>
+                                            {% endfor %}
+                                        </div>
+                                    {% else %}
+                                        {{ form.present_post_office(class="form-control", id="present_post_office") }}
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <!-- present_post_code -->   
+                            <div class="col-12">
+                                <div class="mb-3">
+                                    {{ form.present_post_code.label(class="form-label") }}
+                                    {% if form.present_post_code.errors %}
+                                        {{ form.present_post_code(class="form-control is-invalid", id="present_post_code") }}
+                                        <div class="invalid-feedback">
+                                            {% for error in form.present_post_code.errors %}
+                                                <span>{{ error }}</span>
+                                            {% endfor %}
+                                        </div>
+                                    {% else %}
+                                        {{ form.present_post_code(class="form-control", id="present_post_code") }}
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- END PRESENT ADDRESS-->
+
+                    <!-- START PERMANENT ADDRESS  -->
+                    <div class="col-md-6">
+                        <div class="row">
+                            
+                            
+                            <!-- permanent_address -->
+                             <div class="col-12">
+                                <div class="mb-3">
+                                    {{ form.permanent_address.label(class="form-label") }}
+                                    <div>
+                                        <input class="m-0 p-0" type="checkbox" name="" id="same_as_present">
+                                        <label class="m-0 p-0" for="same_as_present">Same As Present</label>
+                                    </div>
+                                    {% if form.permanent_address.errors %}
+                                        {{ form.permanent_address(class="form-control is-invalid", id="permanent_address") }}
+                                        <div class="invalid-feedback">
+                                            {% for error in form.permanent_address.errors %}
+                                                <span>{{ error }}</span>
+                                            {% endfor %}
+                                        </div>
+                                    {% else %}
+                                        {{ form.permanent_address(class="form-control", id="permanent_address") }}
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <!-- permanent_division -->   
+                            <div class="col-12">
+                                <div class="mb-3">
+                                    {{ form.permanent_division.label(class="form-label") }}
+                                    {% if form.permanent_division.errors %}
+                                        {{ form.permanent_division(class="form-control is-invalid", id="permanent_division") }}
+                                        <div class="invalid-feedback">
+                                            {% for error in form.permanent_division.errors %}
+                                                <span>{{ error }}</span>
+                                            {% endfor %}
+                                        </div>
+                                    {% else %}
+                                        {{ form.permanent_division(class="form-control", id="permanent_division") }}
+                                    {% endif %}
+                                </div>
+                            </div>
+                               <!-- permanent_district -->   
+                            <div class="col-12">
+                                <div class="mb-3">
+                                    {{ form.permanent_district.label(class="form-label") }}
+                                    {% if form.permanent_district.errors %}
+                                        {{ form.permanent_district(class="form-control is-invalid", id="permanent_district") }}
+                                        <div class="invalid-feedback">
+                                            {% for error in form.permanent_district.errors %}
+                                                <span>{{ error }}</span>
+                                            {% endfor %}
+                                        </div>
+                                    {% else %}
+                                        {{ form.permanent_district(class="form-control", id="permanent_district") }}
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <!-- permanent_upazilla -->   
+                            <div class="col-12">
+                                <div class="mb-3">
+                                    {{ form.permanent_upazilla.label(class="form-label") }}
+                                    {% if form.permanent_upazilla.errors %}
+                                        {{ form.permanent_upazilla(class="form-control is-invalid", id="permanent_upazilla") }}
+                                        <div class="invalid-feedback">
+                                            {% for error in form.permanent_upazilla.errors %}
+                                                <span>{{ error }}</span>
+                                            {% endfor %}
+                                        </div>
+                                    {% else %}
+                                        {{ form.permanent_upazilla(class="form-control", id="permanent_upazilla") }}
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <!-- permanent_post_office -->   
+                            <div class="col-12">
+                                <div class="mb-3">
+                                    {{ form.permanent_post_office.label(class="form-label") }}
+                                    {% if form.permanent_post_office.errors %}
+                                        {{ form.permanent_post_office(class="form-control is-invalid", id="permanent_post_office") }}
+                                        <div class="invalid-feedback">
+                                            {% for error in form.permanent_post_office.errors %}
+                                                <span>{{ error }}</span>
+                                            {% endfor %}
+                                        </div>
+                                    {% else %}
+                                        {{ form.permanent_post_office(class="form-control", id="permanent_post_office") }}
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <!-- permanent_post_code -->   
+                            <div class="col-12">
+                                <div class="mb-3">
+                                    {{ form.permanent_post_code.label(class="form-label") }}
+                                    {% if form.permanent_post_code.errors %}
+                                        {{ form.permanent_post_code(class="form-control is-invalid", id="permanent_post_code") }}
+                                        <div class="invalid-feedback">
+                                            {% for error in form.permanent_post_code.errors %}
+                                                <span>{{ error }}</span>
+                                            {% endfor %}
+                                        </div>
+                                    {% else %}
+                                        {{ form.permanent_post_code(class="form-control", id="permanent_post_code") }}
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- END PERMANENT ADDRESS  -->
+                </div>
+                <!-- END - ADDRESS -->
+
+                 <!-- START GUARDIAN INFORMATION  -->
+                <div class="row mt-2">
+                    <div class="col-12 mt-5">
+                        <p class="fs-4">Guardian Information</p>
+                    </div>
+                    <!-- guardian_name -->
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            {{ form.guardian_name.label(class="form-label") }}
+                            {% if form.guardian_name.errors %}
+                                {{ form.guardian_name(class="form-control is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.guardian_name.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.guardian_name(class="form-control") }}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <!-- relationship -->
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            {{ form.relationship.label(class="form-label") }}
+                            {% if form.relationship.errors %}
+                                {{ form.relationship(class="form-control is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.relationship.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.relationship(class="form-control") }}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <!-- guardian_mobile -->
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            {{ form.guardian_mobile.label(class="form-label") }}
+                            {% if form.guardian_mobile.errors %}
+                                {{ form.guardian_mobile(class="form-control is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.guardian_mobile.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.guardian_mobile(class="form-control") }}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <!-- guardian_occupation -->
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            {{ form.guardian_occupation.label(class="form-label") }}
+                            {% if form.guardian_occupation.errors %}
+                                {{ form.guardian_occupation(class="form-control is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.guardian_occupation.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.guardian_occupation(class="form-control") }}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                 <!-- END GUARDIAN INFORMATION  -->
+                
+
+                <!-- START -PREVIOUS ACADEMIC INFORMATION -->
+                <div class="row mt-2">
+                    <div class="col-12 mt-5">
+                        <p class="fs-4">Previous Academic Information</p>
+                    </div>
+                    <!-- prev_institute_name -->
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            {{ form.prev_institute_name.label(class="form-label") }}
+                            {% if form.prev_institute_name.errors %}
+                                {{ form.prev_institute_name(class="form-control is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.prev_institute_name.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.prev_institute_name(class="form-control") }}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <!-- prev_institute_address -->
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            {{ form.prev_institute_address.label(class="form-label") }}
+                            {% if form.prev_institute_address.errors %}
+                                {{ form.prev_institute_address(class="form-control is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.prev_institute_address.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.prev_institute_address(class="form-control") }}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <!-- prev_passing_year -->
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            {{ form.prev_passing_year.label(class="form-label") }}
+                            {% if form.prev_passing_year.errors %}
+                                {{ form.prev_passing_year(class="form-control is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.prev_passing_year.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.prev_passing_year(class="form-control") }}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <!-- prev_roll -->
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            {{ form.prev_roll.label(class="form-label") }}
+                            {% if form.prev_roll.errors %}
+                                {{ form.prev_roll(class="form-control is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.prev_roll.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.prev_roll(class="form-control") }}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <!-- prev_class -->
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            {{ form.prev_class.label(class="form-label") }}
+                            {% if form.prev_class.errors %}
+                                {{ form.prev_class(class="form-control is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.prev_class.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.prev_class(class="form-control") }}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <!-- END -PREVIOUS ACADEMIC INFORMATION -->
+                    
+                <!-- START - PHOTO UPLOAD -->
+                <div class="row mt-2">
+                    <div class="col-12 mt-5">
+                        <p class="fs-4">Upload Photo</p>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            {{ form.photo.label(class="form-label") }}
+                            {% if form.photo.errors %}
+                                {{ form.photo(class="form-control is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.photo.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.photo(class="form-control") }}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <!-- END - PHOTO UPLOAD -->
+                <div class="form-group mb-0">
+                    <div class="checkbox p-0">
+                        {% if form.agree_tos.errors %}
+                            {{ form.agree_tos(class="form-check-input is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.agree_tos.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.agree_tos(class="form-check-input") }}
+                        {% endif %}
+                        {{ form.agree_tos.label(class="form-check-label") }}
+                    </div>
+                    
+                </div>
+                <!-- Submit button -->
+                <button type="submit" class="btn btn-primary mt-5">Apply For Admission</button>
+        </form>
     </div>
 </div>
+
+
 {% endblock body %}
 
 {% block page_js %}
 <script>
     document.getElementById('same_as_present').addEventListener('change', function () {
-        const fields = ['address', 'division', 'district', 'upazilla', 'post_office', 'post_code'];
-        if (this.checked) {
-            fields.forEach(field => {
-                document.getElementById(`permanent_${field}`).value = document.getElementById(`present_${field}`).value;
-            });
-        } else {
-            fields.forEach(field => {
-                document.getElementById(`permanent_${field}`).value = '';
-            });
-        }
-    });
+    const fields = ['address', 'division', 'district', 'upazilla', 'post_office', 'post_code'];
+    if (this.checked) {
+        fields.forEach(field => {
+            document.getElementById(`permanent_${field}`).value = document.getElementById(`present_${field}`).value;
+        });
+    } else {
+        fields.forEach(field => {
+            document.getElementById(`permanent_${field}`).value = '';
+        });
+    }
+});
 
 </script>
 {% endblock page_js %}
