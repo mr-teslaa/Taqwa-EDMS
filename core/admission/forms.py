@@ -38,13 +38,13 @@ class StudentAdmissionForm(FlaskForm):
     ], validators=[Optional()])
     blood_group = SelectField('Blood Group', choices=[
         ('', 'Choose...'),
-        ('a+', 'A +(ve)'),
-        ('a-', 'A -(ve)'),
-        ('b+', 'B +(ve)'),
-        ('b-', 'B -(ve)'),
-        ('o+', 'O +(ve)'),
-        ('ab+', 'AB + (ve)'),
-        ('ab-', 'AB -(ve)')
+        ('A+', 'A +(ve)'),
+        ('A-', 'A -(ve)'),
+        ('B+', 'B +(ve)'),
+        ('B-', 'B -(ve)'),
+        ('O+', 'O +(ve)'),
+        ('AB+', 'AB + (ve)'),
+        ('AB-', 'AB -(ve)')
     ], validators=[Optional()])
     nationality = StringField('Nationality', validators=[DataRequired(), Length(max=50)])
     marital_status = SelectField('Marital status', choices=[

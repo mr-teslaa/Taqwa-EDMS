@@ -5,9 +5,15 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>TAQWA EDMS</title>
         <link rel="stylesheet" href="{{ url_for('static', filename='assets/bootstrap5/css/bootstrap.min.css') }}">
-
+        <!-- Include Bootstrap Icons -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.min.css" rel="stylesheet">
+        <!-- Datatables css  -->
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
         {% block page_css %}
         {% endblock page_css %}
+
+        {% block head %}
+        {% endblock head %}
     </head>
     <body>
         <div class="container">
@@ -29,22 +35,12 @@
         {% block body %}
         {% endblock body %}
 
-        <!-- for autohide flash messege  -->
-        <!-- <script>
-            setTimeout(function() {
-                var alert = document.getElementById('flash-message');
-                if (alert) {
-                    alert.classList.remove('show');
-                    setTimeout(function() {
-                        alert.remove();
-                    }, 500); // Bootstrap's fade out transition duration is 150ms
-                }
-            }, 1000); 
-        </script> -->
 
         <script src="{{ url_for('static', filename='assets/bootstrap5/js/bootstrap.min.js') }}"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+
         {% block page_js %}
-    
         {% endblock page_js %}
     </body>
 </html>
