@@ -29,10 +29,10 @@ users = Blueprint('users', __name__)
 
 
 #   admission route
-@users.route('/admission', methods=['GET', 'POST'])
-def admission():
-    form = AdmissionForm()
-    return render_template('admission.html', title='Admission', form=form)
+# @users.route('/admission', methods=['GET', 'POST'])
+# def admission():
+#     form = AdmissionForm()
+#     return render_template('admission.html', title='Admission', form=form)
 
 
 #   apply for a parents accout route

@@ -4,13 +4,16 @@ from itsdangerous import URLSafeTimedSerializer as Serializer
 from core import db
 from flask_login import UserMixin
 
+
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), unique=True, nullable=False)
     phone = db.Column(db.String(20), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
-    photo = db.Column(db.String(20), nullable=False, default='default-photo.jpg')
-    signature = db.Column(db.String(20), nullable=False, default='default-signature.jpg')
+    photo = db.Column(db.String(20), nullable=False, default="default-photo.jpg")
+    signature = db.Column(
+        db.String(20), nullable=False, default="default-signature.jpg"
+    )
     password = db.Column(db.String(60), nullable=False)
     institute_name = db.Column(db.String(60), nullable=False)
     institute_unique_id = db.Column(db.String(60), nullable=False)
@@ -18,17 +21,20 @@ class User(db.Model, UserMixin):
     institute_address = db.Column(db.String(60), nullable=False)
 
     def get_reset_token(self, expires_sec=1800):
-        s = Serializer(current_app.config['SECRET_KEY'])
-        return s.dumps({'user_id': self.id}, salt='password-reset-salt')
+        s = Serializer(current_app.config["SECRET_KEY"])
+        return s.dumps({"user_id": self.id}, salt="password-reset-salt")
 
     @staticmethod
     def verify_reset_token(token, expires_sec=1800):
-        s = Serializer(current_app.config['SECRET_KEY'])
+        s = Serializer(current_app.config["SECRET_KEY"])
         try:
-            user_id = s.loads(token, salt='password-reset-salt', max_age=expires_sec)['user_id']
+            user_id = s.loads(token, salt="password-reset-salt", max_age=expires_sec)[
+                "user_id"
+            ]
         except Exception:
             return None
         return User.query.get(user_id)
+
 
 class Student(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -53,12 +59,17 @@ class Student(db.Model):
     mother_mobile = db.Column(db.String(15), nullable=False)
     mother_nid = db.Column(db.String(20))
     present_address = db.Column(db.Text, nullable=False)
-    division = db.Column(db.String(50), nullable=False)
-    district = db.Column(db.String(50), nullable=False)
-    upazilla = db.Column(db.String(50), nullable=False)
-    post_office = db.Column(db.String(50), nullable=False)
-    post_code = db.Column(db.String(10), nullable=False)
+    present_division = db.Column(db.String(50), nullable=False)
+    present_district = db.Column(db.String(50), nullable=False)
+    present_upazilla = db.Column(db.String(50), nullable=False)
+    present_post_office = db.Column(db.String(50), nullable=False)
+    present_post_code = db.Column(db.String(10), nullable=False)
     permanent_address = db.Column(db.Text)
+    permanent_division = db.Column(db.String(50), nullable=False)
+    permanent_district = db.Column(db.String(50), nullable=False)
+    permanent_upazilla = db.Column(db.String(50), nullable=False)
+    permanent_post_office = db.Column(db.String(50), nullable=False)
+    permanent_post_code = db.Column(db.String(10), nullable=False)
     guardian_name = db.Column(db.String(100))
     relationship = db.Column(db.String(50))
     guardian_mobile = db.Column(db.String(15))
@@ -76,15 +87,15 @@ class Student(db.Model):
         self.application_number = self.generate_application_number()
 
     def generate_unique_id(self):
-        return f'ST-{int(datetime.utcnow().timestamp())}'
+        return f"ST-{int(datetime.utcnow().timestamp())}"
 
     def generate_application_number(self):
-        return f'APP-{int(datetime.utcnow().timestamp())}'
+        return f"APP-{int(datetime.utcnow().timestamp())}"
+
 
 class Application(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    student_id = db.Column(db.Integer, db.ForeignKey('student.id'), nullable=False)
+    student_id = db.Column(db.Integer, db.ForeignKey("student.id"), nullable=False)
     status = db.Column(db.String(20), nullable=False, default="Pending")
     submission_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    student = db.relationship('Student', backref=db.backref('applications', lazy=True))
-
+    student = db.relationship("Student", backref=db.backref("applications", lazy=True))

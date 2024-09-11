@@ -1,7 +1,238 @@
 {% extends 'layouts/base.html' %}
 
+{% block head %}
+    <!-- Dashboard CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}">
+{% endblock %}
+
+{% block page_css %}
+    <style>
+        .bi{font-size: 1rem;}
+    </style>
+{% endblock page_css %}
+
 {% block body %}
-<div class="container">
-    <h1>institute dashboard</h1>
-</div>
+
+<header class="navbar sticky-top bg-dark flex-md-nowrap p-0 shadow" data-bs-theme="dark">
+    <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6 text-white" href="#">Company name</a>
+  
+    <ul class="navbar-nav flex-row d-md-none">
+      <li class="nav-item text-nowrap">
+        <button class="nav-link px-3 text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSearch" aria-controls="navbarSearch" aria-expanded="false" aria-label="Toggle search">
+            <i class="bi bi-search"></i>
+        </button>
+      </li>
+      <li class="nav-item text-nowrap">
+        <button class="nav-link px-3 text-white" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-list"></i>
+        </button>
+      </li>
+    </ul>
+  
+    <div id="navbarSearch" class="navbar-search w-100 collapse">
+      <input class="form-control w-100 rounded-0 border-0" type="text" placeholder="Search" aria-label="Search">
+    </div>
+  </header>
+  
+  <div class="container-fluid">
+    <div class="row">
+
+            <!-- START SIDEBAR  -->
+          <div class="sidebar border border-right col-md-3 col-lg-2 p-0 bg-body-tertiary">
+            <div class="offcanvas-md offcanvas-end bg-body-tertiary" tabindex="-1" id="sidebarMenu" aria-labelledby="sidebarMenuLabel">
+              <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="sidebarMenuLabel">Company name</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebarMenu" aria-label="Close"></button>
+              </div>
+              <div class="offcanvas-body d-md-flex flex-column p-0 pt-lg-3 overflow-y-auto">
+                <ul class="nav flex-column">
+                  <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center gap-2 active" aria-current="page" href="#">
+                        <i class="bi bi-house"></i>
+                      Dashboard
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center gap-2" href="#">
+                        <i class="bi bi-file-earmark"></i>
+                      Orders
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center gap-2" href="#">
+                        <i class="bi bi-cart"></i>
+                      Products
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center gap-2" href="#">
+                        <i class="bi bi-people"></i>
+                      Customers
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center gap-2" href="#">
+                        <i class="bi bi-graph-up"></i>
+                      Reports
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center gap-2" href="#">
+                        <i class="bi bi-puzzle"></i>
+                      Integrations
+                    </a>
+                  </li>
+                </ul>
+      
+                <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-body-secondary text-uppercase">
+                  <span>Saved reports</span>
+                  <a class="link-secondary" href="#" aria-label="Add a new report">
+                    <svg class="bi"><use xlink:href="#plus-circle"/></svg>
+                  </a>
+                </h6>
+                <ul class="nav flex-column mb-auto">
+                  <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center gap-2" href="#">
+                      <i class="bi bi-file-earmark-text"></i>
+                      Current month
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center gap-2" href="#">
+                      <i class="bi bi-file-earmark-text"></i>
+                      Last quarter
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center gap-2" href="#">
+                      <i class="bi bi-file-earmark-text"></i>
+                      Social engagement
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center gap-2" href="#">
+                      <i class="bi bi-file-earmark-text"></i>
+                      Year-end sale
+                    </a>
+                  </li>
+                </ul>
+      
+                <hr class="my-3">
+      
+                <ul class="nav flex-column mb-auto">
+                  <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center gap-2" href="#">
+                        <i class="bi bi-gear-wide-connected"></i>
+                      Settings
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center gap-2" href="#">
+                        <i class="bi bi-door-open"></i>
+                      Sign out
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+            <!-- END SIDEBAR  -->
+      
+          <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+            <!-- START DASHBOARD HEADER  -->
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+              <h1 class="h2">Dashboard</h1>
+              <div class="btn-toolbar mb-2 mb-md-0">
+                <div class="btn-group me-2">
+                  <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
+                  <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
+                </div>
+                <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle d-flex align-items-center gap-1">
+                  <svg class="bi"><use xlink:href="#calendar3"/></svg>
+                  This week
+                </button>
+              </div>
+            </div>
+            <!-- END DASHBOARD HEADER  -->
+
+            <!-- START COUNTER  -->
+            <div class="my-4">
+                <div class="row g-3">
+                    <div class="col-md-3">
+                        <div class="bg-warning-subtle rounded p-3 text-center">
+                            <h4>Total students</h4>
+                            <h1 class="m-0 text-warning">{{ num_students }}</h1>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="bg-info-subtle rounded p-3 text-center">
+                            <h4>Male students</h4>
+                            <h1 class="m-0 text-info">{{ male_students}}</h1>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="bg-dark-subtle rounded p-3 text-center">
+                            <h4 class="">Female students</h4>
+                            <h1 class="m-0 text-secondary">{{female_students}}</h1>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="bg-primary-subtle rounded p-3 text-center">
+                            <h4>New students</h4>
+                            <h1 class="m-0 text-primary">2</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END COUNTER  -->
+
+            <!-- START ALL STUDENTS TABLE  -->
+            <div class="container border rounded p-2 my-3">
+                <h3>All Students</h3>
+                <div class="table-responsive small">
+                    <table id="studentsTable" class="display table table-striped table-sm">
+                        <thead>
+                            <tr>
+                                <th>Student ID</th>
+                                <th>Name (English)</th>
+                                <th>Name (Bangla)</th>
+                                <th>Apply Class</th>
+                                <th>Marital Status</th>
+                                <th>Details</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for student in students %}
+                            <tr>
+                                <td>{{ student.student_id }}</td>
+                                <td>{{ student.name_english }}</td>
+                                <td>{{ student.name_bangla }}</td>
+                                <td>{{ student.apply_class }}</td>
+                                <td>{{ student.marital_status }}</td>
+                                <td><a href="{{ url_for('institute_dashboard.student_details', student_id=student.student_id) }}" class="btn btn-info btn-sm text-white">Details</a></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- END ALL STUDENTS TABLE  -->
+          </main>
+    </div>
+<!-- ============================================= -->
+
+
 {% endblock body %}
+{% block page_js %}
+    <script>
+        $(document).ready(function() {
+            $('#studentsTable').DataTable({
+                "paging": true,
+                "searching": true,
+                "ordering": true,
+                "info": true,
+                "responsive": true
+            });
+        });
+    </script>
+{% endblock page_js %}

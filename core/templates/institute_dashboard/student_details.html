@@ -1,0 +1,277 @@
+{% extends 'layouts/base.html' %}
+
+{% block page_css %}
+<style>
+    /* Hide the navigation section when printing */
+    @media print {
+        .no-print {
+            display: none !important;
+        }
+    }
+</style>
+{% endblock page_css %}
+
+{% block body %}
+
+<div class="container no-print">
+    {% include '_includes/_nav_public.html' %}
+</div>
+
+<div class="container">
+    <h1 class="text-center mt-5">Student Details</h1>
+    <hr class="text-secondary">
+
+    <!-- Student Photo -->
+    <div class="d-flex justify-content-end">
+        {% if student.photo %}
+            <img class="border rounded" src="{{ url_for('static', filename='uploads/' + student.photo) }}" alt="Student Photo" style="max-width: 100px;">
+        {% else %}
+            Not Available
+        {% endif %}
+    </div>
+
+    <!-- Student Basic Information -->
+    <h2 class="text-primary">Basic Information</h2>
+    <div class="row my-2">
+        <div class="col-md-6">
+            <table class="table table-striped table-hover table-bordered">
+                <tbody>
+                    <tr>
+                        <th>Student ID</th>
+                        <td>{{ student.student_id }}</td>
+                    </tr>
+                    <tr>
+                        <th>Application Number</th>
+                        <td>{{ student.application_number }}</td>
+                    </tr>
+                    <tr>
+                        <th>Name (English)</th>
+                        <td>{{ student.name_english }}</td>
+                    </tr>
+                    <tr>
+                        <th>Name (Bangla)</th>
+                        <td>{{ student.name_bangla }}</td>
+                    </tr>
+                    <tr>
+                        <th>Apply Class</th>
+                        <td>{{ student.apply_class }}</td>
+                    </tr>
+                    <tr>
+                        <th>Date of Birth</th>
+                        <td>{{ student.date_of_birth.strftime('%Y-%m-%d') }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-6">
+            <table class="table table-striped table-hover table-bordered">
+                <tbody>
+                    <tr>
+                        <th>Birth Certificate No</th>
+                        <td>{{ student.birth_certificate_no }}</td>
+                    </tr>
+                    <tr>
+                        <th>Gender</th>
+                        <td>{{ student.gender }}</td>
+                    </tr>
+                    <tr>
+                        <th>Religion</th>
+                        <td>{{ student.religion }}</td>
+                    </tr>
+                    <tr>
+                        <th>Blood Group</th>
+                        <td>{{ student.blood_group }}</td>
+                    </tr>
+                    <tr>
+                        <th>Nationality</th>
+                        <td>{{ student.nationality }}</td>
+                    </tr>
+                    <tr>
+                        <th>Marital Status</th>
+                        <td>{{ student.marital_status }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Parents Information -->
+    <div class="row mt-4">
+        <h2 class="text-primary">Parents Information</h2>
+        <div class="col-md-6">
+            <h5>Father's Information</h5>
+            <table class="table table-striped table-hover table-bordered">
+                <tbody>
+                    <tr>
+                        <th>Father's Name (English)</th>
+                        <td>{{ student.father_name_english }}</td>
+                    </tr>
+                    <tr>
+                        <th>Father's Name (Bangla)</th>
+                        <td>{{ student.father_name_bangla }}</td>
+                    </tr>
+                    <tr>
+                        <th>Father's Mobile</th>
+                        <td>{{ student.father_mobile }}</td>
+                    </tr>
+                    <tr>
+                        <th>Father's NID</th>
+                        <td>{{ student.father_nid }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-6">
+            <h5>Mother's Information</h5>
+            <table class="table table-striped table-hover table-bordered">
+                <tbody>
+                    <tr>
+                        <th>Mother's Name (English)</th>
+                        <td>{{ student.mother_name_english }}</td>
+                    </tr>
+                    <tr>
+                        <th>Mother's Name (Bangla)</th>
+                        <td>{{ student.mother_name_bangla }}</td>
+                    </tr>
+                    <tr>
+                        <th>Mother's Mobile</th>
+                        <td>{{ student.mother_mobile }}</td>
+                    </tr>
+                    <tr>
+                        <th>Mother's NID</th>
+                        <td>{{ student.mother_nid }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Address Information -->
+    <div class="row mt-4">
+        <h2 class="text-primary">Address Information</h2>
+        <div class="col-md-6">
+            <table class="table table-striped table-hover table-bordered">
+                <tbody>
+                    <tr>
+                        <th>Present Address</th>
+                        <td>{{ student.present_address }}</td>
+                    </tr>
+                    <tr>
+                        <th>Present Division</th>
+                        <td>{{ student.present_division }}</td>
+                    </tr>
+                    <tr>
+                        <th>Present District</th>
+                        <td>{{ student.present_district }}</td>
+                    </tr>
+                    <tr>
+                        <th>Present Upazilla</th>
+                        <td>{{ student.present_upazilla }}</td>
+                    </tr>
+                    <tr>
+                        <th>Present Post Office</th>
+                        <td>{{ student.present_post_office }}</td>
+                    </tr>
+                    <tr>
+                        <th>Present Post Code</th>
+                        <td>{{ student.present_post_code }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-6">
+            <table class="table table-striped table-hover table-bordered">
+                <tbody>
+                    <tr>
+                        <th>Permanent Address</th>
+                        <td>{{ student.permanent_address }}</td>
+                    </tr>
+                    <tr>
+                        <th>Permanent Division</th>
+                        <td>{{ student.permanent_division }}</td>
+                    </tr>
+                    <tr>
+                        <th>Permanent District</th>
+                        <td>{{ student.permanent_district }}</td>
+                    </tr>
+                    <tr>
+                        <th>Permanent Upazilla</th>
+                        <td>{{ student.permanent_upazilla }}</td>
+                    </tr>
+                    <tr>
+                        <th>Permanent Post Office</th>
+                        <td>{{ student.permanent_post_office }}</td>
+                    </tr>
+                    <tr>
+                        <th>Permanent Post Code</th>
+                        <td>{{ student.permanent_post_code }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Guardian and Previous School Information -->
+    <div class="row mt-4">
+        <h2 class="text-primary">Guardian & Previous School Information</h2>
+        <div class="col-md-6">
+            <table class="table table-striped table-hover table-bordered">
+                <tbody>
+                    <tr>
+                        <th>Guardian's Name</th>
+                        <td>{{ student.guardian_name }}</td>
+                    </tr>
+                    <tr>
+                        <th>Relationship with Guardian</th>
+                        <td>{{ student.relationship }}</td>
+                    </tr>
+                    <tr>
+                        <th>Guardian's Mobile</th>
+                        <td>{{ student.guardian_mobile }}</td>
+                    </tr>
+                    <tr>
+                        <th>Guardian's Occupation</th>
+                        <td>{{ student.guardian_occupation }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-6">
+            <table class="table table-striped table-hover table-bordered">
+                <tbody>
+                    <tr>
+                        <th>Previous Institute Name</th>
+                        <td>{{ student.prev_institute_name }}</td>
+                    </tr>
+                    <tr>
+                        <th>Previous Institute Address</th>
+                        <td>{{ student.prev_institute_address }}</td>
+                    </tr>
+                    <tr>
+                        <th>Previous Passing Year</th>
+                        <td>{{ student.prev_passing_year }}</td>
+                    </tr>
+                    <tr>
+                        <th>Previous Roll</th>
+                        <td>{{ student.prev_roll }}</td>
+                    </tr>
+                    <tr>
+                        <th>Previous Class</th>
+                        <td>{{ student.prev_class }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- PRINT  -->
+<div class="text-end d-block container my-5 no-print">
+	<button class="btn btn-primary" onclick="window.print();"><i class="bi bi-printer h5"></i> print</button>
+</div>
+
+{% endblock body %}
+{% block page_js %}
+<!-- Add any specific JavaScript for this page if needed -->
+
+{% endblock page_js %}
