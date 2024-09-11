@@ -9,17 +9,6 @@ from core.admission.forms import StudentAdmissionForm
 admission_bp = Blueprint('admission', __name__)
 
 
-
-def allowed_file(filename):
-    return '.' in filename and filename.rsplit('.', 1)[1].lower() in current_app.config['ALLOWED_EXTENSIONS']
-
-def generate_random_filename(filename):
-    # Generate a random hex string and append the file extension
-    random_hex = secrets.token_hex(8)
-    _, file_ext = os.path.splitext(filename)
-    return f"{random_hex}{file_ext}"
-
-
 @admission_bp.route('/', methods=['GET', 'POST'])
 def student_admission():
     form = StudentAdmissionForm()

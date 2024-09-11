@@ -1,0 +1,36 @@
+{% extends 'layouts/institute_dashboard_base.html' %}
+
+{% block body %}
+<!-- START ALL STUDENTS TABLE  -->
+<div class="container">
+    <p class="fs-2 my-3">Students</p>
+    <div class="table-responsive small">
+        <table id="studentsTable" class="display table table-striped table-sm">
+            <thead>
+                <tr>
+                    <th>Student ID</th>
+                    <th>Name (English)</th>
+                    <th>Name (Bangla)</th>
+                    <th>Apply Class</th>
+                    <th>Marital Status</th>
+                    <th>Details</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for student in students %}
+                <tr>
+                    <td>{{ student.student_id }}</td>
+                    <td>{{ student.name_english }}</td>
+                    <td>{{ student.name_bangla }}</td>
+                    <td>{{ student.apply_class }}</td>
+                    <td>{{ student.marital_status }}</td>
+                    <td><a href="{{ url_for('institute_dashboard.student_details', student_id=student.student_id) }}"
+                            class="btn btn-info btn-sm text-white">Details</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+<!-- END ALL STUDENTS TABLE  -->
+{% endblock body %}

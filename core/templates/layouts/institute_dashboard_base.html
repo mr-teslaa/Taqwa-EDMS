@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>TAQWA EDMS</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='assets/bootstrap5/css/bootstrap.min.css') }}">
+        <!-- GOOGLE FONTS -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+            rel="stylesheet">
+        <!-- BOX ICONS -->
+        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+        <!-- Datatables css  -->
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+        <!-- Dashboard CSS -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='assets/dashboard/dashboard.css') }}">
+        {% block page_css %}
+        {% endblock page_css %}
+    </head>
+    <body>
+        <!-- START - HEADER -->
+        <header class="navbar sticky-top bg__dark flex-md-nowrap p-0 shadow" data-bs-theme="dark">
+            <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6 text-white" href="#">
+                Taqwa EDMS
+            </a>
+
+            <ul class="navbar-nav flex-row d-md-none">
+                <li class="nav-item text-nowrap">
+                    <button class="nav-link px-3 text-white" type="button" data-bs-toggle="offcanvas"
+                        data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false"
+                        aria-label="Toggle navigation">
+                        <i class='bx bx-menu-alt-right'></i>
+                    </button>
+                </li>
+            </ul>
+        </header>
+        <!-- END - HEADER -->
+
+        <div class="container-fluid">
+            <div class="row">
+                {% include '_includes/_nav/_dashboard_sidebar.html' %}
+
+                <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                    <!-- START - FLASH MESSEGE  -->
+                    <div class="container">
+                        {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                        {% for category, message in messages %}
+                        <div id="flash-message" class="alert alert-{{ category }} alert-dismissible fade show"
+                            role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                        {% endfor %}
+                        {% endif %}
+                        {% endwith %}
+                    </div>
+                    <!-- END - FLASH MESSEGE  -->
+
+                    {% block body %}
+                    {% endblock body %}
+                </main>
+            </div>
+        </div>
+
+        <script src="{{ url_for('static', filename='assets/bootstrap5/js/bootstrap.min.js') }}"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+
+        {% block page_js %}
+        {% endblock page_js %}
+    </body>
+</html>

@@ -1,0 +1,73 @@
+:root {
+  --bg-deep-cove: #130f40;
+  --bg-pallet-1: #008ab0;
+  --bg-pallet-2: #00b5bc;
+  --bg-pallet-3: #007e62;
+  --bg-pallet-4: #9781ea;
+  --bg-pallet-5: #e8d5b5;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+}
+
+.bg__dark {
+  background-color: var(--bg-deep-cove) !important;
+}
+
+.bg__pallet_1 {
+  color: #fff;
+  background-color: var(--bg-pallet-1);
+}
+
+.bg__pallet_2 {
+  color: #fff;
+  background-color: var(--bg-pallet-2);
+}
+
+.bg__pallet_3 {
+  color: #fff;
+  background-color: var(--bg-pallet-3);
+}
+
+.bg__pallet_4 {
+  color: #fff;
+  background-color: var(--bg-pallet-4);
+}
+
+.bg__pallet_5 {
+  background-color: var(--bg-pallet-5);
+}
+
+
+/*
+ * Sidebar
+ */
+.sidebar .nav-item>.nav-link {
+  color: #fff;
+}
+
+.sidebar .nav-item:hover {
+  background-color: #fff;
+}
+
+.sidebar .nav-item.active {
+  color: var(--bg-deep-cove) !important;
+  background-color: #fff;
+}
+
+.sidebar .nav-item.active>.nav-link {
+  color: var(--bg-deep-cove) !important;
+}
+
+.sidebar .nav-item:hover .nav-link {
+  color: var(--bg-deep-cove) !important;
+}
+
+@media (min-width: 768px) {
+  .sidebar .offcanvas-lg {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 48px;
+  }
+}

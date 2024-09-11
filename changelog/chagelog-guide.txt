@@ -1,0 +1,6 @@
+How changelog will be maintain in future
+
+1.0.0: The initial release of your project.
+1.1.0: A new feature has been added in a backwards-compatible way.
+1.1.1: A bug fix has been made to the 1.1.0 release without changing any functionality.
+2.0.0: An incompatible API change has been made, requiring users to update their code to work with the new version.

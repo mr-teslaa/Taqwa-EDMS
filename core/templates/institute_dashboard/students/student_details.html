@@ -14,7 +14,7 @@
 {% block body %}
 
 <div class="container no-print">
-    {% include '_includes/_nav_public.html' %}
+    {% include '_includes/_nav/_nav_public.html' %}
 </div>
 
 <div class="container">
@@ -24,9 +24,10 @@
     <!-- Student Photo -->
     <div class="d-flex justify-content-end">
         {% if student.photo %}
-            <img class="border rounded" src="{{ url_for('static', filename='uploads/' + student.photo) }}" alt="Student Photo" style="max-width: 100px;">
+        <img class="border rounded" src="{{ url_for('static', filename='uploads/' + student.photo) }}"
+            alt="Student Photo" style="max-width: 100px;">
         {% else %}
-            Not Available
+        Not Available
         {% endif %}
     </div>
 
@@ -267,7 +268,7 @@
 
 <!-- PRINT  -->
 <div class="text-end d-block container my-5 no-print">
-	<button class="btn btn-primary" onclick="window.print();"><i class="bi bi-printer h5"></i> print</button>
+    <button class="btn btn-primary" onclick="window.print();"><i class="bi bi-printer h5"></i> print</button>
 </div>
 
 {% endblock body %}

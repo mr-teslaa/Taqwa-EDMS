@@ -1,0 +1,47 @@
+<!-- START SIDEBAR  -->
+<div class="sidebar col-md-3 col-lg-2 p-0 h-100">
+    <div class="offcanvas-md offcanvas-end bg__dark" tabindex="-1" id="sidebarMenu" aria-labelledby="sidebarMenuLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="sidebarMenuLabel">
+                Taqwa EDMS
+            </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebarMenu"
+                aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body d-md-flex flex-column overflow-y-auto" style="min-height: 100vh">
+            <ul class="nav flex-column">
+                <li
+                    class="nav-item m-2 mb-0 rounded {{ 'active' if request.endpoint == 'institute_dashboard.institute_dashboard' else '' }}">
+                    <a class="nav-link d-flex align-items-center gap-2" aria-current="page"
+                        href="{{ url_for('institute_dashboard.institute_dashboard') }}">
+                        <i class="bi bi-house"></i>
+                        Dashboard
+                    </a>
+                </li>
+                <li
+                    class="nav-item m-2 mb-0 rounded {{ 'active' if request.endpoint == 'institute_dashboard.admission_center' else '' }}">
+                    <a class="nav-link text-white d-flex align-items-center gap-2"
+                        href="{{ url_for('institute_dashboard.admission_center') }}">
+                        <i class="bi bi-cart"></i>
+                        Admission Center
+                    </a>
+                </li>
+                <li
+                    class="nav-item m-2 mb-0 rounded {{ 'active' if request.endpoint == 'institute_dashboard.students' or request.endpoint == 'institute_dashboard.student_details' else '' }}">
+                    <a class="nav-link text-white d-flex align-items-center gap-2"
+                        href="{{ url_for('institute_dashboard.students') }}">
+                        <i class="bi bi-file-earmark"></i>
+                        Students
+                    </a>
+                </li>
+                <li class="nav-item m-2 mb-0 rounded">
+                    <a class="nav-link text-white d-flex align-items-center gap-2" href="#">
+                        <i class="bi bi-graph-up"></i>
+                        Logout
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- END SIDEBAR  -->
