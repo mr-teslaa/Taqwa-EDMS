@@ -6,10 +6,10 @@ load_dotenv(find_dotenv())
 
 class Config:
     SECRET_KEY='248fb9a5bdffa13c0bc136504ebf75c2'
-    SQLALCHEMY_DATABASE_URI=os.getenv('SQLALCHEMY_DATABASE_URI_SQLITE')
+    # SQLALCHEMY_DATABASE_URI=os.getenv('SQLALCHEMY_DATABASE_URI_SQLITE')
     
     # --> IF YOU ARE USING MYSQL WITH XAMP
-    # SQLALCHEMY_DATABASE_URI = os.getenv('SQLALCHEMY_DATABASE_URI_MYSQL')
+    SQLALCHEMY_DATABASE_URI = os.getenv('SQLALCHEMY_DATABASE_URI_MYSQL')
     
     # CREATE PATH FOR UPLOAD
     BASE_DIR = os.path.abspath(os.path.dirname(__file__))

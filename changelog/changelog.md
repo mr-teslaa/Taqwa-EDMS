@@ -11,3 +11,7 @@ All notable changes to this project will be documented in this file.
 
 ## REMOVE
 - Remove some helper function form `views.py` file to `utils` folder for better code management
+
+## [0.0.1] - 2024-12-09
+### RENAME
+- Rename the file name `utlis` to `utils` 
