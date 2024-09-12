@@ -1,0 +1,71 @@
+{% extends 'layouts/base.html' %}
+
+{% block body %}
+		<div class="container">
+			<h2 class="mt-5">Register As Institute</h2>
+			<form method="POST" action="{{ url_for('auth.institute_register') }}" novalidate>
+				{{ form.hidden_tag() }}
+			
+				<div class="mb-3">
+					{{ form.name.label(class="form-label") }}
+					{% if form.name.errors %}
+						{{ form.name(class="form-control is-invalid") }}
+						<div class="invalid-feedback">
+							{% for error in form.name.errors %}
+								<span>{{ error }}</span>
+							{% endfor %}
+						</div>
+					{% else %}
+						{{ form.name(class="form-control") }}
+					{% endif %}
+				</div>
+			
+				<div class="mb-3">
+					{{ form.email.label(class="form-label") }}
+					{% if form.email.errors %}
+						{{ form.email(class="form-control is-invalid") }}
+						<div class="invalid-feedback">
+							{% for error in form.email.errors %}
+								<span>{{ error }}</span>
+							{% endfor %}
+						</div>
+					{% else %}
+						{{ form.email(class="form-control") }}
+					{% endif %}
+				</div>
+			
+				<div class="mb-3">
+					{{ form.password.label(class="form-label") }}
+					{% if form.password.errors %}
+						{{ form.password(class="form-control is-invalid") }}
+						<div class="invalid-feedback">
+							{% for error in form.password.errors %}
+								<span>{{ error }}</span>
+							{% endfor %}
+						</div>
+					{% else %}
+						{{ form.password(class="form-control") }}
+					{% endif %}
+				</div>
+			
+				<div class="mb-3">
+					{{ form.confirm_password.label(class="form-label") }}
+					{% if form.confirm_password.errors %}
+						{{ form.confirm_password(class="form-control is-invalid") }}
+						<div class="invalid-feedback">
+							{% for error in form.confirm_password.errors %}
+								<span>{{ error }}</span>
+							{% endfor %}
+						</div>
+					{% else %}
+						{{ form.confirm_password(class="form-control") }}
+					{% endif %}
+				</div>
+			
+				<div class="mb-3">
+					{{ form.submit(class="btn btn-primary") }}
+				</div>
+			</form>
+			<p>Already have an account? <a href="{{ url_for('auth.institute_login') }}">Login here</a></p>
+		</div>
+{% endblock body %}
