@@ -5,7 +5,7 @@ from flask import request, redirect, url_for, flash, render_template, Blueprint,
 from core import db
 from core.models import Student, Application
 from core.admission.forms import StudentAdmissionForm
-
+from core.utils.save_file import save_file, allowed_file
 admission_bp = Blueprint('admission', __name__)
 
 
@@ -61,11 +61,9 @@ def student_admission():
         if form.photo.data:
             photo = form.photo.data
             if allowed_file(photo.filename):
-                original_filename = secure_filename(photo.filename)
-                new_filename = generate_random_filename(original_filename)
-                file_path = os.path.join(current_app.config['UPLOAD_FOLDER'], new_filename)
-                photo.save(file_path)
-                student_data["photo"] = new_filename  # Save the new filename in the database
+                file_path = save_file(photo)
+                new_filename = os.path.basename(file_path)
+                student_data["photo"] = new_filename
 
         print('Student data: ')
         print(student_data)
