@@ -15,26 +15,6 @@ def login():
     return render_template('auth/login.html')
 
 
-@auth_bp.route("institute/register", methods=["GET", "POST"])
-def institute_register():
-    form = InstituteRegistrationForm()
-
-    if form.validate_on_submit():
-        existing_institute = Institute.query.filter_by(email=form.email.data).first()
-        if existing_institute:
-            flash("An institute with this email already exists.", "danger")
-            return redirect(url_for("auth.institute_register"))
-        institute = Institute(name=form.name.data, email=form.email.data)
-        institute.set_password(form.password.data)
-        db.session.add(institute)
-        db.session.commit()
-        flash("Your institute has been registered! You can now log in.", "success")
-        return redirect(url_for("auth.institute_login"))
-    print("Form validation errors:", form.errors)
-
-    return render_template("auth/institute_register.html", form=form)
-
-
 
 @auth_bp.route("/institute/login", methods=["GET", "POST"])
 def institute_login():

@@ -43,4 +43,22 @@ def create_app(config_class=Config):
     from core.institute_dashboard.views import institute_dashboard_bp
     app.register_blueprint(institute_dashboard_bp, url_prefix="/institute")
     
+    with app.app_context():
+        create_default_institute()
+	        
     return app
+
+
+# ================CREATE DEFAULT INSTITUTE===============
+
+def create_default_institute():
+    from core.models import Institute  #importing institute 
+    existing_institute = Institute.query.filter_by(email="taqwaschool@gmail.com").first()
+    if not existing_institute:
+        # Create the default institute
+        default_institute = Institute(name="Taqwa School", email="taqwaschool@gmail.com")
+        default_institute.set_password("123456")  
+        db.session.add(default_institute)
+        db.session.commit()
+        print("Default institute created.")
+    
